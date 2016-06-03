@@ -135,7 +135,7 @@ From the code of Window_Options class, we can find some rules (limitations).
 * If a symbol contains "Volume", the data type is 0-100%
 * If a symbol doesn't contain "Volume", the data type is ON/OFF
 
-If you want to add a optioon menu which are in these 2 data types, it looks easy. But you need to enhance the logics, if you want to use other types.
+If you want to add a option menu which are in these 2 data types, it looks easy. But you need to enhance the logics, if you want to use other types.
 
 ## Save function of Config Manager
 
@@ -189,7 +189,7 @@ Follow the code of StorageManager class;
         return this.localFileDirectoryPath() + name;
     };
 
-Now, We find the 'config.rpgsave' file contains Options setting.
+Now, we find the 'config.rpgsave' file contains Options setting.
 
 The files are not easy to read, because of LZString.compressToBase64 process. So, for the future study, I try to add the following code into the last of StorageManager.saveToLocalFile function.
 
@@ -229,7 +229,7 @@ The lode code of Options menu looks simple;
 
 OK, let's find the call point of this. It must be found the start block of the game, to keep the game settings.
 
-I want to suggest to use JavaScript's trace technique to save your time. Let's add 3 lines trace code into the ConfigManager.load function.
+I want to suggest to use JavaScript's trace technique to save your time. Let's add 3 lines trace code into the target code, ConfigManager.load function.
 
     ConfigManager.load = function() {
         var o = {};
@@ -244,11 +244,11 @@ So, you can see the stack trace in the dev console during the test play.
 
 ![stack trace on dev tool screenshot](i/201606-enhance-options-02.png)
 
-I'm happy to use JavaScript techniques on the RPG Maker MV. :-)
+I'm happy to use JavaScript techniques not only on usual Web development work, but also game development on the RPG Maker MV. :-)
 
 ## Add Select type
 
-For the test purpose, let't try to add a new type, select. At first, add follwoing new functions.
+For the test purpose, let't try to add a new type, select. It's a function to choose one String from String list. At first, add follwoing new functions.
 
     Window_Options.prototype.addSelectValues = function(symbol, values) {
         this._selctValueList = this._selctValueList || {};
@@ -262,7 +262,7 @@ For the test purpose, let't try to add a new type, select. At first, add follwoi
 Then, add the following code into the middle of Window_Options.statusText function;
 
     } else if (this.isSelectSymbol(symbol)) {
-        return return value || this._selctValueList[symbol][0];
+        return value || this._selctValueList[symbol][0];
 
 Then, add 2 lines test code into Window_Options.makeCommandList function;
 
@@ -303,4 +303,4 @@ To load the addtional data is also easy, add one line into ConfigManager.applyDa
 
 That's all. Now, you can use select type option menu item like "Language" in your game.
 
-Of course, if you will add "Language" item into your game option, you should add translated text values into your game. This is another try to enhance the game, so I will write another memo.
+Of course, if you will add "Language" item into your game option, you should add translated text values into your game. This is another try to enhance the game, so I will write another memo. soon.
