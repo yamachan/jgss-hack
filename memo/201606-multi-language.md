@@ -1,6 +1,6 @@
 # 201606-multi-language
 
-## Term setting
+## Terms setting
 
 RPG Maker MV has a term setting tab in game database. It looks good for tranlation of game terms.
 
@@ -13,7 +13,7 @@ Terms can be referd by TextManager like follows;
         this.addCommand(TextManager.commandRemember, 'commandRemember');
     };
 
-Let's see TextManager's code. It's very JavaScript flavor, depends on Object.defineProperties method and closure.
+Let's see TextManager's code. It has very JavaScript like flavor, depends on Object.defineProperties method and closure.
 
     Object.defineProperties(TextManager, {
         level           : TextManager.getter('basic', 0),
@@ -81,12 +81,6 @@ It's easy. For example, I will create another RPG Maker MV project for Japanese 
 
 For example;
 
-    ConfigManager.terms_English = {
-        "basic":["Level","Lv","HP","HP","MP","MP","TP","TP","EXP","EXP"],
-        "commands":["Fight","Escape","Attack","Guard","Item",,,],
-        ...
-      };
-
     ConfigManager.terms_Japanese = {
         "basic":["Level","Lv","HP","HP","MP","MP","TP","TP","EXP","EXP"],
         "commands":["戦う","逃げる","攻撃","防御","アイテム",,,],
@@ -142,11 +136,11 @@ My RPG Maker MV is an English version, but it can handle Japanese message in Eve
         src: url("mplus-1m-regular.ttf");
     }
 
-Oh! It's a entry level mistake... I forgot to change "UTF-8" code in JSON file... Try again!
+Oh! It's an entry level mistake... I forgot to change "UTF-8" code mode in JSON file... Try again!
 
 ![Game font no problem screenshot](i/201606-multi-language-05.png)
 
-The Language option menu in game also can work, and affect the game immediately.
+The Language option menu in game also can work, and affect the game immediately. Good.
 
 ![Language option in game screenshot](i/201606-multi-language-06.png)
 
