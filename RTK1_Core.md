@@ -44,19 +44,40 @@ RTK.trace() function is also useful. It outputs the stack trace to console. It d
 
 ## json parameter
 
-PC環境でゲームをプレイすると save フォルダにセーブデータが幾つか作成されます。 この中身は json 形式のデータなのですが、圧縮されていて中身の参照が困難です。
+In PC enviroment, you can find some save files in 'save' folder. These files are compressed, so not easy to read for us.
 
 ![Screen shot - Parameter](i/RTK1_Core-06.png)
 
-json パラメータを 1 に変更すると、セーブデータ作成の際に圧縮されない json ファイルも同時に生成します。 開発中にセーブデータを参照することが容易になります。
+If you set json parameter by 1, plugin will automatically create uncompressed version of save files in same place. These files are useful for your development work.
 
 ## onReady service
 
-TBD
+You can implement your init function easily with using RTK.onReady() function, as follows;
+
+    RTK.onReady(function(){
+      // your init code here
+    });
+
+onReady service will wait the initiation of game data, then sets up itself, finally calls all registered functions in a sequential order.
+
+You don't worry about init timing and order with this service.
 
 ## onCall service
 
-TBD
+To implement your original olugin command, you need to replace (hook) Game_Interpreter.prototype.pluginCommand(command, args) function. But you can implement it easily with RTK.onCall() function, as follows;
+
+    RTK.onCall(command, function(args){
+      // your plugin command code here
+    });
+
+With RTK.onCall() function, your code will be simple because you don't need to check command match. As the result, it will reduce the processing cost with skipping unncesessary functions.
+
+If you have a function which processes more than 2 command String, you can refer the 2nd argument, as follwos;
+
+    RTK.onCall(command, function(args, command){
+      // your plugin command code here
+    });
+
 
 ## License
 

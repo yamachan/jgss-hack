@@ -53,15 +53,33 @@ PC環境でゲームをプレイすると save フォルダにセーブデータ
 
 ![Screen shot - Parameter](i/RTK1_Core-06.png)
 
-json パラメータを 1 に変更すると、セーブデータ作成の際に圧縮されない json ファイルも同時に生成します。 開発中にセーブデータを参照することが容易になります。
+json パラメータを 1 に変更すると、セーブデータ作成の際に圧縮されない json ファイルも同時に同じ場所に生成します。 開発中にセーブデータを参照することが容易になります。
 
 ## onReady サービス
 
-TBD
+RTK.onReady() 関数で自分のプラグイン用の初期化関数を登録しておくと、ゲームデータが生成され、RTK1_Core が準備された後の適切なタイミングで、登録された関数が登録順に呼び出されます。
+
+    RTK.onReady(function(){
+      // your init code here
+    });
+
+初期化ルーチンの実行タイミングを気にしなくて済み、またこのサービスを使っているプラグイン間では登録順に初期化処理が実行されますので、コーディングが楽になります。
 
 ## onCall サービス
 
-TBD
+プラグインコマンドを実装するためには Game_Interpreter.prototype.pluginCommand(command, args) を置き換える必要があったが、RTK.onCall() 関数を使えば以下のように簡単に実装できる。
+
+    RTK.onCall(command, function(args){
+      // your plugin command code here
+    });
+
+この仕組みを利用すれば、登録した command に一致する場合にだけ登録した関数がコールされるので、command の判断文が不要でコードが簡潔になり、また処理速度も向上する。
+
+もし1つの関数で複数の command に対応したい場合には、以下のように第2引数で渡される値を利用する。
+
+    RTK.onCall(command, function(args, command){
+      // your plugin command code here
+    });
 
 ## ライセンス
 
