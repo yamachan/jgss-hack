@@ -54,9 +54,11 @@ If you set json parameter by 1, plugin will automatically create uncompressed ve
 
 You can implement your init function easily with using RTK.onReady() function, as follows;
 
-    RTK.onReady(function(){
-      // your init code here
-    });
+```js
+RTK.onReady(function(){
+  // your init code here
+});
+```
 
 onReady service will wait the initiation of game data, then sets up itself, finally calls all registered functions in a sequential order.
 
@@ -66,21 +68,25 @@ You don't worry about init timing and order with this service.
 
 To implement your original plugin command, you need to replace (hook) Game_Interpreter.prototype.pluginCommand(command, args) function. But you can implement it easily with RTK.onCall() function, as follows;
 
-    RTK.onCall(command, function(args){
-      // your plugin command code here
-    });
+```js
+RTK.onCall(command, function(args){
+  // your plugin command code here
+});
+```
 
 With RTK.onCall() function, your code will be simple because you don't need to check command match. As the result, it will reduce the processing cost with skipping unncesessary functions.
 
 If you have a function which processes more than 2 command String, you can refer the 2nd argument, as follwos;
 
-    RTK.onCall(command, function(args, command){
-      // your plugin command code here
-    });
+```js
+RTK.onCall(command, function(args, command){
+  // your plugin command code here
+});
+```
 
 
 ## License
 
-[The MIT License (MIT)](https://opensource.org/licenses/mit-license.php) です。
+[The MIT License (MIT)](https://opensource.org/licenses/mit-license.php)
 
 You don't need to display my copyright, if you keep my comments in .js files. Of course, I'll be happy, when you will display it. :-)

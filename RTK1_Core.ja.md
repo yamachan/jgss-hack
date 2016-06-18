@@ -59,9 +59,11 @@ json パラメータを 1 に変更すると、セーブデータ作成の際に
 
 RTK.onReady() 関数で自分のプラグイン用の初期化関数を登録しておくと、ゲームデータが生成され、RTK1_Core が準備された後の適切なタイミングで、登録された関数が登録順に呼び出されます。
 
-    RTK.onReady(function(){
-      // your init code here
-    });
+```js
+RTK.onReady(function(){
+  // your init code here
+});
+```
 
 初期化ルーチンの実行タイミングを気にしなくて済み、またこのサービスを使っているプラグイン間では登録順に初期化処理が実行されますので、コーディングが楽になります。
 
@@ -77,9 +79,11 @@ RTK.onReady() 関数で自分のプラグイン用の初期化関数を登録し
 
 もし1つの関数で複数の command に対応したい場合、以下のように第2引数で渡される値を利用できます。
 
-    RTK.onCall(command, function(args, command){
-      // your plugin command code here
-    });
+```js
+RTK.onCall(command, function(args, command){
+  // your plugin command code here
+});
+```
 
 ## ライセンス
 
