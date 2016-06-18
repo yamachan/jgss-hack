@@ -1,7 +1,7 @@
+[English version](RTK1_Core.md)
+
 # RTK1_Core プラグイン
-<div style="text-align: right;">
-[English version](RTK1_Core.ja.md)
-</div>
+
 RPGツクール MV 用に作成された RTK1ライブラリの基本(Core)部分です。
 
 ## 概要
@@ -16,13 +16,15 @@ RTK1系プラグインを利用する場合には、それらより前に本プ�
 
 ![Screen shot - Plugin](i/RTK1_Core-02.png)
 
+以下、必要があれば読んでください。
+
 ## language パラメータ
 
-language パラメータは、開発に使用しているRPGツクール MVの言語環境を指定します。 初期値は 0:Auto detect となっており、動作に問題がなければこのままでかまいません。
+language パラメータは、開発に使用しているRPGツクール MVの言語環境を指定します。 初期値は "0:Auto detect" となっており、動作に問題がなければこのままでかまいません。
 
 ![Screen shot - Parameter](i/RTK1_Core-03.png)
 
-Auto detect はデータベースの用語に設定した値をいくつか確認し、英語かそれ以外(日本語)か判断しています。
+"0:Auto detect" はデータベースの用語に設定した値をいくつか確認し、英語かそれ以外(日本語)か判断しています。
 
 よって例えば、日本語環境で用語の幾つかをあえて英語にしている場合、RTK1_Core プラグインはそれを英語環境で開発されたゲームだと誤解しまうことがあります。 この場合には language パラメータを 2 に変更して、日本語環境であることを明示してください。
 
