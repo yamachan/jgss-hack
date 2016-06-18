@@ -67,15 +67,15 @@ RTK.onReady() 関数で自分のプラグイン用の初期化関数を登録し
 
 ## onCall サービス
 
-プラグインコマンドを実装するためには Game_Interpreter.prototype.pluginCommand(command, args) を置き換える必要があったが、RTK.onCall() 関数を使えば以下のように簡単に実装できる。
+プラグインコマンドを実装するためには Game_Interpreter.prototype.pluginCommand(command, args) を置き換える必要がありましたが、RTK.onCall() 関数を使えば以下のように簡単に実装できます。
 
     RTK.onCall(command, function(args){
       // your plugin command code here
     });
 
-この仕組みを利用すれば、登録した command に一致する場合にだけ登録した関数がコールされるので、command の判断文が不要でコードが簡潔になり、また処理速度も向上する。
+この仕組みを利用すれば、登録した command に一致する場合にだけ登録した関数がコールされるので、command の判断文が不要でコードが簡潔になり、また処理速度も向上します。
 
-もし1つの関数で複数の command に対応したい場合には、以下のように第2引数で渡される値を利用する。
+もし1つの関数で複数の command に対応したい場合、以下のように第2引数で渡される値を利用できます。
 
     RTK.onCall(command, function(args, command){
       // your plugin command code here
@@ -85,4 +85,4 @@ RTK.onReady() 関数で自分のプラグイン用の初期化関数を登録し
 
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php) です。
 
-提供されるjsファイルをそのまま配布している（圧縮による難読化やコメント削除などをしていない）場合、著作権表示は不要です。 ただし表示いただければ喜びます。
+提供されるjsファイルからコメント等を削除しないのであれば、著作権表示は不要です。 むろん表示いただくのは歓迎します！

@@ -64,7 +64,7 @@ You don't worry about init timing and order with this service.
 
 ## onCall service
 
-To implement your original olugin command, you need to replace (hook) Game_Interpreter.prototype.pluginCommand(command, args) function. But you can implement it easily with RTK.onCall() function, as follows;
+To implement your original plugin command, you need to replace (hook) Game_Interpreter.prototype.pluginCommand(command, args) function. But you can implement it easily with RTK.onCall() function, as follows;
 
     RTK.onCall(command, function(args){
       // your plugin command code here
@@ -83,4 +83,4 @@ If you have a function which processes more than 2 command String, you can refer
 
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php) です。
 
-You don't need to display my copyright, if you keep my comments in .js files. Of course, I'm happy, when you display it. :-)
+You don't need to display my copyright, if you keep my comments in .js files. Of course, I'll be happy, when you will display it. :-)
