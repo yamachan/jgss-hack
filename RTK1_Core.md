@@ -4,6 +4,8 @@
 
 Core functions of RTK1 library for RPG Maker MV.
 
+Download: [RTK1_Core.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Core.js)
+
 ## Overview
 
 RTK1_Core Plugin is Core function library for RTK1　series plugins (RTK1_*.js). It includes some useful functions for development, so please feel free to use it.

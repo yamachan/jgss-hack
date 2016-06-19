@@ -4,6 +4,8 @@
 
 RPGツクール MV 用に作成された RTK1ライブラリの基本(Core)部分です。
 
+ダウンロード: [RTK1_Core.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Core.js)
+
 ## 概要
 
 RPGツクール MV 用に作成された RTK1系プラグイン(RTK1_*.js)で利用している共通部分をまとめたもの（Coreライブラリ）です。 開発に便利な機能をまとめていますので、ご自由にお使いください。

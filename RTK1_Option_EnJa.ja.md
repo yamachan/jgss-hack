@@ -4,6 +4,8 @@
 
 RPGツクール MV 用に作成した、英語/日本語環境の切り替えを実現するプラグインです。
 
+ダウンロード: [RTK1_Option_EnJa.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Option_EnJa.js)
+
 ## 概要
 
 私は英語版のRPG Maker MVを利用していますが、自作のゲームを英語が苦手な息子にプレイして貰うためこのプラグインを作成してみました。 組み込むだけでシステム部分の言語を簡単に切り替えできるようになりますので、ぜひ利用してみてください。

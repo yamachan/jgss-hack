@@ -4,6 +4,8 @@
 
 Plugin to select English/Japanese language in Option menu for RPG Maker MV.
 
+Download: [RTK1_Option_EnJa.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Option_EnJa.js)
+
 ## Overview
 
 I'm using English version of RPG Maker MV. I hope my son to play my game, but he can't read English well. So I need to handle Japanese text in my game.
