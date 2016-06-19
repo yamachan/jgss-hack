@@ -1,6 +1,6 @@
 [English version](RTK1_Core.md)
 
-# RTK1_Core プラグイン
+# [RTK1_Core](RTK1_Core.js) プラグイン
 
 RPGツクール MV 用に作成された RTK1ライブラリの基本(Core)部分です。
 

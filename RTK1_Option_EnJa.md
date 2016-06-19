@@ -1,6 +1,6 @@
 [Japanese version](RTK1_Option_EnJa.ja.md)
 
-# RTK1_Option_EnJa Plugin
+# [RTK1_Option_EnJa](RTK1_Option_EnJa.js) Plugin
 
 Plugin to select English/Japanese language in Option menu for RPG Maker MV.
 

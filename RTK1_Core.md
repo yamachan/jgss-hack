@@ -1,6 +1,6 @@
 [Japanese version](RTK1_Core.ja.md)
 
-# RTK1_Core Plugin
+# [RTK1_Core](RTK1_Core.js) Plugin
 
 Core functions of RTK1 library for RPG Maker MV.
 

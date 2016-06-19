@@ -1,6 +1,6 @@
 [English version](RTK1_Option_EnJa.md)
 
-# RTK1_Option_EnJa プラグイン
+# [RTK1_Option_EnJa](RTK1_Option_EnJa.js) プラグイン
 
 RPGツクール MV 用に作成した、英語/日本語環境の切り替えを実現するプラグインです。
 
