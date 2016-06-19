@@ -84,7 +84,6 @@ RTK.onCall(command, function(args, command){
 });
 ```
 
-
 ## License
 
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php)
