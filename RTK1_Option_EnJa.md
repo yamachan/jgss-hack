@@ -18,25 +18,25 @@ The parameters are set by 0. Normally, you don't need to change it.
 
 ![Screen shot - Plugin](i/RTK1_Option_EnJa-02.png)
 
-Then, you can use Language setting in Option　menu from the title screen and the game menu.
+Finished!
+
+Now, you can use Language setting in Option　menu from the title screen and the game menu. It will switch system language (basic terms) during English and Japanese.
 
 ![Screen shot - Game option](i/RTK1_Option_EnJa-03.png)
 
-The following is in English mode.
+The following is game screen in English mode.
 
 ![Screen shot - Game english](i/RTK1_Option_EnJa-04.png)
 
-The following is in Japanese mode.
+The following is game screen in Japanese mode.
 
 ![Screen shot - Game japanese](i/RTK1_Option_EnJa-05.png)
 
-If system level translation is not enough for your game, please read the following sections. You can translate more - avator name, class name, text message, and so on. This plugin has more functions which will support your development.
+If system level (basic terms) translation is not enough for you, please read the following sections. You can translate more - avator name, class name, text message, and so on. This plugin has some functions which will support your development.
 
 ## switch parameter
 
-If you need to know the language selection in game, you should use switch parameter of this plugin.
-
-For example, you can show English text in English mode, and Japanese text in Japanese mode.
+If you need to know the language selection in game, you should use switch parameter of this plugin. For example, you can show English text in English mode, and Japanese text in Japanese mode.
 
 In plugin setting, please set 1-999 value for switch parameter. The following sample set "8" value.
 
@@ -44,19 +44,23 @@ In plugin setting, please set 1-999 value for switch parameter. The following sa
 
 This value shows the number of switch in RPG maker MV. The switch will engage the language selection - it will be ON in Japanese mode, OFF in English mode.
 
-In this case, let's set the intelligible name for 8th switch.
+In this case, let's set the intelligible name (Japanese_Mode) for the 8th switch.
 
 ![Screen shot - Switch Selector](i/RTK1_Option_EnJa-07.png)
 
-Then, let's use this switch for "IF..Else..End" block in the event contents;
+Then, let's use this 8th switch (Japanese_Mode) for "IF..Else..End" block in the event contents;
 
 ![Screen shot - Event](i/RTK1_Option_EnJa-08.png)
 
-This is a simple coding style to support English/Japanese mode, and it looks enough for small games.
+The following is game screen in Japanese mode.
 
 ![Screen shot - Event japanese](i/RTK1_Option_EnJa-10.png)
 
+The following is game screen in English mode.
+
 ![Screen shot - Event english](i/RTK1_Option_EnJa-11.png)
+
+This is a simple coding style to support English/Japanese mode, and it looks enough for small games.
 
 ## Language change plugin command
 
@@ -70,17 +74,17 @@ The following commands applys Japanese mode;
 * RTK1_Option_EnJa japanese
 * RTK1_Option_EnJa ja
 
-The following is the sample event which uses these plugin commands. When you talk with the blond girl, you will ask the question about the language change.
+The following is the sample event which uses these plugin commands. When you talk with the blond girl, you will see the question about the language change.
 
 This sample event also uses switch parameter which I described before.
 
 ![Screen shot - Event](i/RTK1_Option_EnJa-12.png)
 
-The following is in Japanese mode.
+The following is game screen in Japanese mode.
 
 ![Screen shot - Event japanese](i/RTK1_Option_EnJa-13.png)
 
-The following is in English mode.
+The following is game screen in English mode.
 
 ![Screen shot - Event english](i/RTK1_Option_EnJa-14.png)
 
