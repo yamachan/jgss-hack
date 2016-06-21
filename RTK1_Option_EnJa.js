@@ -362,12 +362,18 @@
 	var _Game_Actor_setup = Game_Actor.prototype.setup;
 	Game_Actor.prototype.setup = function(actorId) {
 		_Game_Actor_setup.call(this, actorId);
-		this._name = actors_E[this._actorId].name;
-		this._nickname = actors_E[this._actorId].nickname;
-		this._profile = actors_E[this._actorId].profile;
-		this[NK + "n"] = actors_J[this._actorId].name;
-		this[NK + "nn"] = actors_J[this._actorId].nickname;
-		this[NK + "p"] = actors_J[this._actorId].profile;
+		if (RTK._ready) {
+			this._name = actors_E[this._actorId].name;
+			this._nickname = actors_E[this._actorId].nickname;
+			this._profile = actors_E[this._actorId].profile;
+			this[NK + "n"] = actors_J[this._actorId].name;
+			this[NK + "nn"] = actors_J[this._actorId].nickname;
+			this[NK + "p"] = actors_J[this._actorId].profile;
+		} else {
+			this[NK + "n"] = this._name;
+			this[NK + "nn"] = this._nickname;
+			this[NK + "p"] = this._profile;
+		}
 	};
 	var _Game_Actor_name = Game_Actor.prototype.name;
 	Game_Actor.prototype.name = function() {
