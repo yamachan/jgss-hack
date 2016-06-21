@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Option_EnJa.js  ver1.00 2016/06/19
+// RTK1_Option_EnJa.js  ver1.01 2016/06/21
 //=============================================================================
 
 /*:
@@ -18,6 +18,22 @@
  * @param message
  * @desc Expand text message with dictionary (0:OFF 1:ON)
  * @default 0
+ *
+ * @param meta_ja
+ * @desc Meta tag name for Japanese text in Note area
+ * @default ja
+ *
+ * @param meta_en
+ * @desc Meta tag name for English text in Note area
+ * @default en
+ *
+ * @param separator
+ * @desc Separator string for setName,Nickname,Profile
+ * @default ||
+ *
+ * @param 2nd_language
+ * @desc The name of 2nd language
+ * @default Japanese
  *
  * @help
  * This plugin requires RTK1_Core plugin previously.
@@ -46,6 +62,22 @@
  * @desc テキストメッセージを拡張します (0:OFF 1:ON)
  * @default 0
  *
+ * @param meta_ja
+ * @desc ノート欄で日本語テキストを指定するタグ名
+ * @default ja
+ *
+ * @param meta_en
+ * @desc ノート欄で英語テキストを指定するタグ名
+ * @default en
+ *
+ * @param separator
+ * @desc Name,Nickname,Profileを指定するときの区切り文字
+ * @default ||
+ *
+ * @param 2nd_language
+ * @desc 本プラグインで追加表示する言語の名称
+ * @default Japanese
+ *
  * @help
  * このプラグインの前に RTK1_Core プラグインを読み込んでください。
  *
@@ -58,42 +90,74 @@
 
 //-----------------------------------------------------------------------------
 
-//Game_Actor.prototype.name = function() {
-//    return $dataActors[this._actorId].name;
-//};
-
 (function(_global) {
 	if (!_global["RTK"]) {
 		throw new Error('This plugin requires RTK1_Core.js plugin previously.');
 	}
 
 	var N = "RTK1_Option_EnJa";
+	var NK = "RTK_EJ";
 	var M = RTK._modules[N] = {};
 
 	var param = PluginManager.parameters(N);
 	M._switch = Number(param['switch'] || 0);
 	M._hide = Number(param['hide'] || 0);
+	M._message = Number(param['message'] || 0);
+	M._meta_ja = param['meta_ja'] || "ja";
+	M._meta_en = param['meta_en'] || "en";
+	M._separator = param['separator'] || "||";
+	M._2nd_language = param['2nd_language'] || "Japanese";
 
 	// ----- Init resource -----
 
-	var terms_E, actors_E, classes_E;
-	var terms_J, actors_J, classes_J;
+	var terms_E, actors_E, classes_E, items_E, weapons_E, armors_E, enemies_E, troops_E, skills_E, states_E;
+	var terms_J, actors_J, classes_J, items_J, weapons_J, armors_J, enemies_J, troops_J, skills_J, states_J;
 
 	RTK.onReady(function(){
 		if (RTK._lang == 1) {
 			terms_J = $dataSystem.terms;
 			actors_J = $dataActors;
 			classes_J = $dataClasses;
+			items_J = $dataItems;
+			weapons_J = $dataWeapons;
+			armors_J = $dataArmors;
+			enemies_J = $dataEnemies;
+			troops_J = $dataTroops;
+			skills_J = $dataSkills;
+			states_J = $dataStates;
+
 			terms_E = M._terms_E;
-			actors_E = updateGameData($dataActors, M._actors);
-			classes_E = updateGameData($dataClasses, M._classes);
+			actors_E = updateGameData($dataActors, M._actors, M._meta_en);
+			classes_E = updateGameData($dataClasses, M._classes, M._meta_en);
+			items_E = updateGameData($dataItems, M._items, M._meta_en);
+			weapons_E = updateGameData($dataWeapons, M._weapons, M._meta_en);
+			armors_E = updateGameData($dataArmors, M._armors, M._meta_en);
+			enemies_E = updateGameData($dataEnemies, M._enemies, M._meta_en);
+			troops_E = updateGameData($dataTroops, M._troops, M._meta_en);
+			skills_E = updateGameData($dataSkills, M._skills, M._meta_en);
+			states_E = updateGameData($dataStates, M._states, M._meta_en);
 		} else {
 			terms_E = $dataSystem.terms;
 			actors_E = $dataActors;
 			classes_E = $dataClasses;
+			items_E = $dataItems;
+			weapons_E = $dataWeapons;
+			armors_E = $dataArmors;
+			enemies_E = $dataEnemies;
+			troops_E = $dataTroops;
+			skills_E = $dataSkills;
+			states_E = $dataStates;
+
 			terms_J = M._terms_J;
-			actors_J = updateGameData($dataActors, M._actors);
-			classes_J = updateGameData($dataClasses, M._classes);
+			actors_J = updateGameData($dataActors, M._actors, M._meta_ja);
+			classes_J = updateGameData($dataClasses, M._classes, M._meta_ja);
+			items_J = updateGameData($dataItems, M._items, M._meta_ja);
+			weapons_J = updateGameData($dataWeapons, M._weapons, M._meta_ja);
+			armors_J = updateGameData($dataArmors, M._armors, M._meta_ja);
+			enemies_J = updateGameData($dataEnemies, M._enemies, M._meta_ja);
+			troops_J = updateGameData($dataTroops, M._troops, M._meta_ja);
+			skills_J = updateGameData($dataSkills, M._skills, M._meta_ja);
+			states_J = updateGameData($dataStates, M._states, M._meta_ja);
 		}
 		RTK.onCall(N, function(args){
 			if (args.length == 1 && args[0].match(/^en(?:glish)?$/i)) {
@@ -104,30 +168,83 @@
 				ConfigManager.save();
 			}
 		});
-		RTK.log(N + " ready (_switch:" + M._switch + ")");
+		RTK.log(N + " ready (_switch:" + M._switch + ", _hide:" + M._hide + ", _message:" + M._message + ")");
 	});
 
-	function updateGameData(_list, _data) {
+	function cloneObject(_s) {
+		if (!_s) { return null; }
+		if (_s.cloneFrom) { return _s; }
+		var o = RTK.cloneObject(_s);
+		o._cloneFrom = _s;
+		return o;
+	};
+	function updateObject(_o, _v) {
+		if (!_o) {return; }
+		if ("string" == typeof _v ) {
+			var a = _v.split(",");
+			if (a[0] != "") {
+				_o.name = a[0];
+			}
+			if (a.length > 1 && a[1] != "") {
+				if (_o.nickname !== undefined) {
+					_o.nickname = a[1];
+				} else if (_o.description !== undefined) {
+					_o.description = a[1];
+				} else {
+					if (_o.note !== undefined) {
+						_o.note = a[1];
+					}
+					return;
+				}
+			}
+			if (a.length > 2 && a[2] != "") {
+				if (_o.profile !== undefined) {
+					_o.profile = a[2];
+				} else {
+					if (_o.note !== undefined) {
+						_o.note = a[2];
+					}
+					return;
+				}
+			}
+			if (a.length > 3 && a[3] != "") {
+				if (_o.note !== undefined) {
+					_o.note = a[3];
+				}
+			}
+		} else {
+		}
+	};
+	function updateGameData(_list, _data, _meta) {
 		_list = _list.clone();
+
+		// ----- Apply meta values -----
+		for (var l=0; l<_list.length; l++) {
+			if (_list[l] && _list[l].meta) {
+				var s = _list[l].meta[_meta];
+				if ("string" == typeof s && s != "") {
+					_list[l] = cloneObject(_list[l]);
+					updateObject(_list[l], s);
+				}
+			}
+		}
+
+		// ----- Apply translated values -----
 		var id = 1;
 		for (var l=0; l<_data.length; l++) {
 			var d = _data[l];
-			if (d == null || d == "") {
-				id++;
-			} else if ("string" == typeof d) {
-				_list[id] = RTK.cloneObject(_list[id]);
-				_list[id].name = d;
-				id++;
-			} else if (d instanceof Array && d.length > 0) {
-				if (d[0] != "") {
-					_list[id] = RTK.cloneObject(_list[id]);
-					_list[id].name = d[0];
-				}
+			if ("string" == typeof d && d != "") {
+				_list[id] = cloneObject(_list[id]);
+				updateObject(_list[id], d);
 			} else if ("object" == typeof d) {
+				if (d.id) {
+					id = d.id;
+				}
 			}
+			id++;
 		}
 		return _list;
-	}
+	};
 
 	// ----- Enhance option menu -----
 
@@ -156,14 +273,16 @@
 	var _Window_Options_makeCommandList = Window_Options.prototype.makeCommandList;
 	Window_Options.prototype.makeCommandList = function() {
 		_Window_Options_makeCommandList.call(this);
-		this.addCommand(ConfigManager.langSelect == 1 ? "言語" : "Language", "langSelect");
+		if (M._hide == 0) {
+			this.addCommand(ConfigManager.langSelect ? "言語" : "Language", "langSelect");
+		}
 	};
 	var _Window_Options_statusText = Window_Options.prototype.statusText;
 	Window_Options.prototype.statusText = function(index) {
 		var symbol = this.commandSymbol(index);
 		if (symbol == "langSelect") {
 			if (this.getConfigValue(symbol) == "1") {
-				return "Japanese";
+				return M._2nd_language;
 			} else {
 				return "English";
 			}
@@ -185,12 +304,26 @@
 					$dataSystem.terms = terms_J;
 					$dataActors = actors_J;
 					$dataClasses = classes_J;
+					$dataItems = items_J;
+					$dataWeapons = weapons_J;
+					$dataArmors = armors_J;
+					$dataEnemies = enemies_J;
+					$dataTroops = troops_J;
+					$dataSkills = skills_J;
+					$dataStates = states_J;
 				}
 			} else {
 				if ($dataSystem.terms != terms_E) {
 					$dataSystem.terms = terms_E;
 					$dataActors = actors_E;
 					$dataClasses = classes_E;
+					$dataItems = items_E;
+					$dataWeapons = weapons_E;
+					$dataArmors = armors_E;
+					$dataEnemies = enemies_E;
+					$dataTroops = troops_E;
+					$dataSkills = skills_E;
+					$dataStates = states_E;
 				}
 			}
 			if (M._switch > 0) {
@@ -218,6 +351,73 @@
 		}
 	};
 
+	// ----- Game_Actor support -----
+	var _Game_Actor_initMembers = Game_Actor.prototype.initMembers;
+	Game_Actor.prototype.initMembers = function() {
+		_Game_Actor_initMembers.call(this);
+		this[NK + "n"] = "";
+		this[NK + "nn"] = "";
+		this[NK + "p"] = "";
+	};
+	var _Game_Actor_setup = Game_Actor.prototype.setup;
+	Game_Actor.prototype.setup = function(actorId) {
+		_Game_Actor_setup.call(this, actorId);
+		this._name = actors_E[this._actorId].name;
+		this._nickname = actors_E[this._actorId].nickname;
+		this._profile = actors_E[this._actorId].profile;
+		this[NK + "n"] = actors_J[this._actorId].name;
+		this[NK + "nn"] = actors_J[this._actorId].nickname;
+		this[NK + "p"] = actors_J[this._actorId].profile;
+	};
+	var _Game_Actor_name = Game_Actor.prototype.name;
+	Game_Actor.prototype.name = function() {
+		_Game_Actor_name.call(this);
+		return ConfigManager.langSelect ? this[NK + "n"] : this._name;
+	};
+	var _Game_Actor_setName = Game_Actor.prototype.setName;
+	Game_Actor.prototype.setName = function(name) {
+		var a = name.split(M._separator);
+		if (a.length == 2) {
+			_Game_Actor_setName.call(this, a[0]);
+			this[NK + "n"] = a[1];
+		} else {
+			_Game_Actor_setName.call(this, name);
+			this[NK + "n"] = name;
+		}
+	};
+	var _Game_Actor_nickname = Game_Actor.prototype.nickname;
+	Game_Actor.prototype.nickname = function() {
+		_Game_Actor_nickname.call(this);
+		return ConfigManager.langSelect ? this[NK + "nn"] : this._nickname;
+	};
+	var _Game_Actor_setNickname = Game_Actor.prototype.setNickname;
+	Game_Actor.prototype.setNickname = function(nickname) {
+		var a = nickname.split(M._separator);
+		if (a.length == 2) {
+			_Game_Actor_setNickname.call(this, a[0]);
+			this[NK + "nn"] = a[1];
+		} else {
+			_Game_Actor_setNickname.call(this, nickname);
+			this[NK + "nn"] = nickname;
+		}
+	};
+	var _Game_Actor_profile = Game_Actor.prototype.profile;
+	Game_Actor.prototype.profile = function() {
+		_Game_Actor_profile.call(this);
+		return ConfigManager.langSelect ? this[NK + "p"] : this._profile;
+	};
+	var _Game_Actor_setProfile = Game_Actor.prototype.setProfile;
+	Game_Actor.prototype.setProfile = function(profile) {
+		var a = profile.split(M._separator);
+		if (a.length == 2) {
+			_Game_Actor_setProfile.call(this, a[0]);
+			this[NK + "p"] = a[1];
+		} else {
+			_Game_Actor_setProfile.call(this, profile);
+			this[NK + "p"] = profile;
+		}
+	};
+
 	// ----- Terms' default values -----
 
 	/* 
@@ -241,7 +441,7 @@
 		"messages":{"actionFailure":"%1には効かなかった！","actorDamage":"%1は %2 のダメージを受けた！","actorDrain":"%1は%2を %3 奪われた！","actorGain":"%1の%2が %3 増えた！","actorLoss":"%1の%2が %3 減った！","actorNoDamage":"%1はダメージを受けていない！","actorNoHit":"ミス！　%1はダメージを受けていない！","actorRecovery":"%1の%2が %3 回復した！","alwaysDash":"常時ダッシュ","bgmVolume":"BGM 音量","bgsVolume":"BGS 音量","buffAdd":"%1の%2が上がった！","buffRemove":"%1の%2が元に戻った！","commandRemember":"コマンド記憶","counterAttack":"%1の反撃！","criticalToActor":"痛恨の一撃！！","criticalToEnemy":"会心の一撃！！","debuffAdd":"%1の%2が下がった！","defeat":"%1は戦いに敗れた。","emerge":"%1が出現！","enemyDamage":"%1に %2 のダメージを与えた！","enemyDrain":"%1の%2を %3 奪った！","enemyGain":"%1の%2が %3 増えた！","enemyLoss":"%1の%2が %3 減った！","enemyNoDamage":"%1にダメージを与えられない！","enemyNoHit":"ミス！　%1にダメージを与えられない！","enemyRecovery":"%1の%2が %3 回復した！","escapeFailure":"しかし逃げることはできなかった！","escapeStart":"%1は逃げ出した！","evasion":"%1は攻撃をかわした！","expNext":"次の%1まで","expTotal":"現在の%1","file":"ファイル","levelUp":"%1は%2 %3 に上がった！","loadMessage":"どのファイルをロードしますか？","magicEvasion":"%1は魔法を打ち消した！","magicReflection":"%1は魔法を跳ね返した！","meVolume":"ME 音量","obtainExp":"%1 の%2を獲得！","obtainGold":"お金を %1\\G 手に入れた！","obtainItem":"%1を手に入れた！","obtainSkill":"%1を覚えた！","partyName":"%1たち","possession":"持っている数","preemptive":"%1は先手を取った！","saveMessage":"どのファイルにセーブしますか？","seVolume":"SE 音量","substitute":"%1が%2をかばった！","surprise":"%1は不意をつかれた！","useItem":"%1は%2を使った！","victory":"%1の勝利！"}
 	};
 
-	// ----- Optional translated values -----
+	// ----- Translated values -----
 
 	/* If you need to translate not only Terms but also other obejct names, please use this section.
 	 *
@@ -254,7 +454,7 @@
 	 *
 	 * Hint: The object's "id" attribute will affect the fetch function.
 	 * 	It means you can skip elements with id attribute, as follows;
-	 * 	var list_actors = ["name of 1st actor", {"name":"name of 100th actor","id":100}, ["name of 101th actor","nickname of 101th actor"]];
+	 * 	var list_actors = ["name of 1st actor", {"name":"name of 100th actor","id":100}, ["name of 101th actor,nickname of 101th actor"]];
 	*/
 
 	M._actors = [
@@ -271,5 +471,12 @@
 	//	"僧侶"
 	];
 
+	M._items = [];
+	M._weapons = [];
+	M._armors = [];
+	M._enemies = [];
+	M._troops = [];
+	M._skills = [];
+	M._states = [];
 })(this);
 
