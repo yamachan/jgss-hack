@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.01 2016/06/20
+// RTK1_Core.js  ver1.02 2016/06/23
 //=============================================================================
 
 /*:
@@ -173,7 +173,7 @@ RTK.cloneObject = function(_o) {
 				RTK._starts[l]();
 			}
 		}
-		RTK.log(N + " start (_lang:" + RTK._lang + ", _debug:" + RTK._debug + ", _json:" + RTK._json + ")");
+		RTK.log(N + " start (_lang:" + RTK._lang + ", _debug:" + RTK._debug + ", _ready:" + RTK._ready + ")");
 	};
 
 	if (RTK._json) {
@@ -198,6 +198,28 @@ RTK.cloneObject = function(_o) {
 		if (RTK._calls[command]) {
 			RTK._calls[command].call(this, args, command);
 		}
+	};
+
+	// ----- Experimental (not official) -----
+
+	RTK.getFileText = function(src){
+		var req = new XMLHttpRequest();
+		req.open("GET", src, false);
+		req.send(null);
+		return req.responseText;
+	};
+
+	RTK.pluginAuthors = function(plugins) {
+		plugins = plugins ? plugins : $plugins;
+		plugins.forEach(function(plugin) {
+			if (!plugin.author) {
+				var txt = RTK.getFileText(PluginManager._path + plugin.name + '.js');
+				var ret = txt.match(/@author ([^\f\n\r]+)/);
+				if (ret && ret[1] != "") {
+					plugin.author = ret[1];
+				}
+			}
+		});
 	};
 
 })(this);

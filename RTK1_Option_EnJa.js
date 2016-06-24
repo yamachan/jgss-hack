@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Option_EnJa.js  ver1.01 2016/06/21
+// RTK1_Option_EnJa.js  ver1.02 2016/06/24
 //=============================================================================
 
 /*:
@@ -112,6 +112,8 @@
 
 	var terms_E, actors_E, classes_E, items_E, weapons_E, armors_E, enemies_E, troops_E, skills_E, states_E;
 	var terms_J, actors_J, classes_J, items_J, weapons_J, armors_J, enemies_J, troops_J, skills_J, states_J;
+	var t_weapons_E, t_armors_E, t_equips_E, t_skills_E, t_elements_E;
+	var t_weapons_J, t_armors_J, t_equips_J, t_skills_J, t_elements_J;
 
 	RTK.onReady(function(){
 		if (RTK._lang == 1) {
@@ -125,17 +127,27 @@
 			troops_J = $dataTroops;
 			skills_J = $dataSkills;
 			states_J = $dataStates;
+			t_weapons_J = $dataSystem.weaponTypes;
+			t_armors_J = $dataSystem.armorTypes;
+			t_equips_J = $dataSystem.equipTypes;
+			t_skills_J = $dataSystem.skillTypes;
+			t_elements_J = $dataSystem.elements;
 
 			terms_E = M._terms_E;
-			actors_E = updateGameData($dataActors, M._actors, M._meta_en);
-			classes_E = updateGameData($dataClasses, M._classes, M._meta_en);
-			items_E = updateGameData($dataItems, M._items, M._meta_en);
-			weapons_E = updateGameData($dataWeapons, M._weapons, M._meta_en);
-			armors_E = updateGameData($dataArmors, M._armors, M._meta_en);
-			enemies_E = updateGameData($dataEnemies, M._enemies, M._meta_en);
-			troops_E = updateGameData($dataTroops, M._troops, M._meta_en);
-			skills_E = updateGameData($dataSkills, M._skills, M._meta_en);
-			states_E = updateGameData($dataStates, M._states, M._meta_en);
+			actors_E = updateGameData(actors_J, M._actors, M._meta_en);
+			classes_E = updateGameData(classes_J, M._classes, M._meta_en);
+			items_E = updateGameData(items_J, M._items, M._meta_en);
+			weapons_E = updateGameData(weapons_J, M._weapons, M._meta_en);
+			armors_E = updateGameData(armors_J, M._armors, M._meta_en);
+			enemies_E = updateGameData(enemies_J, M._enemies, M._meta_en);
+			troops_E = updateGameData(troops_J, M._troops, M._meta_en);
+			skills_E = updateGameData(skills_J, M._skills, M._meta_en);
+			states_E = updateGameData(states_J, M._states, M._meta_en);
+			t_weapons_E = updateTypeData(t_weapons_J, M._t_weapons);
+			t_armors_E = updateTypeData(t_armors_J, M._t_armors);
+			t_equips_E = updateTypeData(t_equips_J, M._t_equips);
+			t_skills_E = updateTypeData(t_skills_J, M._t_skills);
+			t_elements_E = updateTypeData(t_elements_J, M._t_elements);
 		} else {
 			terms_E = $dataSystem.terms;
 			actors_E = $dataActors;
@@ -147,17 +159,27 @@
 			troops_E = $dataTroops;
 			skills_E = $dataSkills;
 			states_E = $dataStates;
+			t_weapons_E = $dataSystem.weaponTypes;
+			t_armors_E = $dataSystem.armorTypes;
+			t_equips_E = $dataSystem.equipTypes;
+			t_skills_E = $dataSystem.skillTypes;
+			t_elements_E = $dataSystem.elements;
 
 			terms_J = M._terms_J;
-			actors_J = updateGameData($dataActors, M._actors, M._meta_ja);
-			classes_J = updateGameData($dataClasses, M._classes, M._meta_ja);
-			items_J = updateGameData($dataItems, M._items, M._meta_ja);
-			weapons_J = updateGameData($dataWeapons, M._weapons, M._meta_ja);
-			armors_J = updateGameData($dataArmors, M._armors, M._meta_ja);
-			enemies_J = updateGameData($dataEnemies, M._enemies, M._meta_ja);
-			troops_J = updateGameData($dataTroops, M._troops, M._meta_ja);
-			skills_J = updateGameData($dataSkills, M._skills, M._meta_ja);
-			states_J = updateGameData($dataStates, M._states, M._meta_ja);
+			actors_J = updateGameData(actors_E, M._actors, M._meta_ja);
+			classes_J = updateGameData(classes_E, M._classes, M._meta_ja);
+			items_J = updateGameData(items_E, M._items, M._meta_ja);
+			weapons_J = updateGameData(weapons_E, M._weapons, M._meta_ja);
+			armors_J = updateGameData(armors_E, M._armors, M._meta_ja);
+			enemies_J = updateGameData(enemies_E, M._enemies, M._meta_ja);
+			troops_J = updateGameData(troops_E, M._troops, M._meta_ja);
+			skills_J = updateGameData(skills_E, M._skills, M._meta_ja);
+			states_J = updateGameData(states_E, M._states, M._meta_ja);
+			t_weapons_J = updateTypeData(t_weapons_E, M._t_weapons);
+			t_armors_J = updateTypeData(t_armors_E, M._t_armors);
+			t_equips_J = updateTypeData(t_equips_E, M._t_equips);
+			t_skills_J = updateTypeData(t_skills_E, M._t_skills);
+			t_elements_J = updateTypeData(t_elements_E, M._t_elements);
 		}
 		RTK.onCall(N, function(args){
 			if (args.length == 1 && args[0].match(/^en(?:glish)?$/i)) {
@@ -245,6 +267,23 @@
 		}
 		return _list;
 	};
+	function updateTypeData(_list, _data) {
+		var ret = _list.clone();
+		for (var l=0; l<_list.length; l++) {
+			var a = _list[l].split(M._separator);
+			if (a.length == 2) {
+				_list[l] = a[0];
+				ret[l] = a[1];
+			}
+		}
+		for (var l=0; l<_data.length; l++) {
+			var d = _data[l];
+			if ("string" == typeof d && d != "") {
+				ret[l] = d;
+			}
+		}
+		return ret;
+	};
 
 	// ----- Enhance option menu -----
 
@@ -311,6 +350,11 @@
 					$dataTroops = troops_J;
 					$dataSkills = skills_J;
 					$dataStates = states_J;
+					$dataSystem.weaponTypes = t_weapons_J;
+					$dataSystem.armorTypes = t_armors_J;
+					$dataSystem.equipTypes = t_equips_J;
+					$dataSystem.skillTypes = t_skills_J;
+					$dataSystem.elements = t_elements_J;
 				}
 			} else {
 				if ($dataSystem.terms != terms_E) {
@@ -324,6 +368,11 @@
 					$dataTroops = troops_E;
 					$dataSkills = skills_E;
 					$dataStates = states_E;
+					$dataSystem.weaponTypes = t_weapons_E;
+					$dataSystem.armorTypes = t_armors_E;
+					$dataSystem.equipTypes = t_equips_E;
+					$dataSystem.skillTypes = t_skills_E;
+					$dataSystem.elements = t_elements_E;
 				}
 			}
 			if (M._switch > 0) {
@@ -484,5 +533,11 @@
 	M._troops = [];
 	M._skills = [];
 	M._states = [];
+
+	M._t_weapons = [];
+	M._t_armors = [];
+	M._t_equips = [];
+	M._t_skills = [];
+	M._t_elements = [];
 })(this);
 
