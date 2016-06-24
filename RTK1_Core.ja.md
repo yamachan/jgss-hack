@@ -12,11 +12,11 @@ RPGツクール MV 用に作成された RTK1系プラグイン(RTK1_*.js)で利
 
 RTK1系プラグインを利用する場合には、それらより前に本プラグインを読み込んでください。
 
-![Screen shot - Pligin Manager](i/RTK1_Core-01.png)
+![Screen shot - Pligin Manager](i/RTK1_Core-01.ja.png)
 
 パラメータは全て 0 のまま特に変更する必要はありません。
 
-![Screen shot - Plugin](i/RTK1_Core-02.png)
+![Screen shot - Plugin](i/RTK1_Core-02.ja.png)
 
 以下、必要があれば読んでください。
 

@@ -12,11 +12,11 @@ RPGツクール MV 用に作成した、英語/日本語環境の切り替えを
 
 [RTK1_Core プラグイン](RTK1_Core.jp.md) を前提としていますので、先に読み込んでください。
 
-![Screen shot - Pligin Manager](i/RTK1_Option_EnJa-01.png)
+![Screen shot - Pligin Manager](i/RTK1_Option_EnJa-01.ja.png)
 
 パラメータは全て初期値のままで、特に変更する必要はありません。
 
-![Screen shot - Plugin](i/RTK1_Option_EnJa-02.png)
+![Screen shot - Plugin](i/RTK1_Option_EnJa-02.ja.png)
 
 これで完了です！
 
@@ -40,17 +40,17 @@ RPGツクール MV 用に作成した、英語/日本語環境の切り替えを
 
 プラグイン設定で switch パラメーターに 0 以外の値を設定してください。 以下の例では 8 を指定しています。
 
-![Screen shot - Parameter](i/RTK1_Option_EnJa-06.png)
+![Screen shot - Parameter](i/RTK1_Option_EnJa-06.ja.png)
 
 この設定した値に対応するスイッチが、言語状態に連動して変化します。 日本語環境なら ON になり、英語環境なら OFF になります。
 
 そして、指定した8番目のスイッチにわかりやすい名前 (例: Japanese_Mode) を付けておきましょう。
 
-![Screen shot - Switch Selector](i/RTK1_Option_EnJa-07.png)
+![Screen shot - Switch Selector](i/RTK1_Option_EnJa-07.ja.png)
 
 そしてイベントの条件分岐で8番目のスイッチ(Japanese_Mode)を利用してメッセージの内容を変化させます。
 
-![Screen shot - Event](i/RTK1_Option_EnJa-08.png)
+![Screen shot - Event](i/RTK1_Option_EnJa-08.ja.png)
 
 日本語モードでの動作例がこちら。
 
