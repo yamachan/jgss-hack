@@ -86,6 +86,71 @@ RTK.onCall(command, function(args, command){
 });
 ```
 
+## Persistent service
+
+This service extends save data, to keep plugin original data in it. The function is simple as follows; (key is String, value is your original data)
+
+```js
+RTK.save(key, value);
+var value = RTK.load(key);
+```
+
+For example, if you want to keep "myData" variable in save data, you should initiate it in your plugin;
+
+```js
+var myData = RTK.load("myData") || "default value";
+```
+
+At the game start, there is no save data, so you should set the default value with "||" operator. Then you can save the value as follows;
+
+```js
+myData = "saved value";
+RTK.save("myData", myData);
+```
+
+Let's see the json data with using this plugin's json parameter. You will find your value in the end of the file;
+
+```js
+{
+  "system":{
+  //... (中略) ...
+  },
+  "RTK1_Core":{
+    "myData":"saved value"
+  }
+}
+```
+If you don't need the value anymode, just delete it.
+
+```js
+RTK.del(key);
+```
+
+In addtion, please use pack/unpack function which convert game variables into an Array value. (dataArray is Array、startVariable and endVariable are numbers which shows game variable's number)
+
+```js
+var dataArray = RTK.pack(startVariable, endVariable);
+RTK.unpack(startVariable, dataArray);
+```
+
+For example. with using these functions, you can save variables 100-119 easily as follows;
+
+```js
+RTK.save("backup100-119", RTK.pack(100,119));
+```
+
+To recover variables 100-119, your code should be;
+
+```js
+RTK.unpack(100, RTK.load("backup100-119"));
+```
+
+By the way, RTK.unpack is also useful when you want to set lots of default values in event script. For example, the following script sets value 8 to valiables 1-5.
+
+```js
+RTK.unpack(1, [8,8,8,8,8]);
+```
+
 ## License
 
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php)

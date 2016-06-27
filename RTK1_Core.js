@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.02 2016/06/23
+// RTK1_Core.js  ver1.04 2016/06/27
 //=============================================================================
 
 /*:
@@ -176,17 +176,23 @@ RTK.cloneObject = function(_o) {
 		RTK.log(N + " start (_lang:" + RTK._lang + ", _debug:" + RTK._debug + ", _ready:" + RTK._ready + ")");
 	};
 
+	// ----- json option -----
+
+	RTK.writeFileSync = function(_f, _d, _fo){
+		var fs = require('fs');
+		var dirPath = StorageManager.localFileDirectoryPath();
+		if (!fs.existsSync(dirPath)) {
+			fs.mkdirSync(dirPath);
+		}
+		fs.writeFileSync((_fo ? dirPath : "") + _f, _d);
+		RTK.log(N + ".writeFileSync: " + (_fo ? dirPath : "") + _f);
+	};
 	if (RTK._json) {
 		var _StorageManager_saveToLocalFile = StorageManager.saveToLocalFile;
 		StorageManager.saveToLocalFile = function(savefileId, json) {
 			_StorageManager_saveToLocalFile.call(this, savefileId, json);
-			var fs = require('fs');
-			var dirPath = this.localFileDirectoryPath();
 			var filePath = this.localFilePath(savefileId);
-			if (!fs.existsSync(dirPath)) {
-				fs.mkdirSync(dirPath);
-			}
-			fs.writeFileSync(filePath + ".json", json);
+			RTK.writeFileSync(filePath + ".json", json)
 		};
 	}
 
@@ -198,6 +204,57 @@ RTK.cloneObject = function(_o) {
 		if (RTK._calls[command]) {
 			RTK._calls[command].call(this, args, command);
 		}
+	};
+
+	// ----- Persistent data -----
+
+	RTK._data = RTK._data || {};
+	RTK.save = function(_k, _v) {
+		if ("string" == typeof _k && _k != "" && _v !== undefined) {
+			RTK._data[_k] = _v;
+		}
+	};
+	RTK.load = function(_k) {
+		return RTK._data[_k];
+	};
+	RTK.del = function(_k) {
+		if (RTK._data[_k] !== undefined) {
+			delete RTK._data[_k];
+		}
+	};
+	RTK.pack = function(_s, _e) {
+		if (_s < _e && _s > 0 && _e > 0 && _s <= $gameVariables._data.length && _e <= $gameVariables._data.length) {
+			var ret = [];
+			for (var l=_s; l<=_e; l++) {
+				ret.push($gameVariables._data[l]);
+			}
+			return ret;
+		}
+		return undefined;
+	};
+	RTK.unpack = function(_s, _a) {
+		if (_s > 0 && _a instanceof Array&& _s + _a.length <= $gameVariables._data.length) {
+			for (var l=0; l<_a.length; l++) {
+				$gameVariables._data[_s + l] = _a[l];
+			}
+		}
+	}
+
+	var _DataManager_makeSaveContents = DataManager.makeSaveContents;
+	DataManager.makeSaveContents = function() {
+		var contents = _DataManager_makeSaveContents.call(this);
+		contents.RTK1_Core = RTK._data;
+		RTK.log(N + " makeSaveContents: RTK._data", RTK._data);
+		return contents;
+	};
+
+	var _DataManager_extractSaveContents = DataManager.extractSaveContents;
+	DataManager.extractSaveContents = function(contents) {
+		_DataManager_extractSaveContents.call(this, contents);
+		if (contents && contents.RTK1_Core) {
+			RTK._data = contents.RTK1_Core;
+		}
+		RTK.log(N + "extractSaveContents: RTK._data", RTK._data);
 	};
 
 	// ----- Experimental (not official) -----

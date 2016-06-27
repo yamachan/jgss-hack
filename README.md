@@ -15,3 +15,10 @@ My study memo and output for JavaScript based Game Scripting System (JGSS) on RP
 |:-----------|:-----------:|:-------------|
 | [RTK_TroopEncounter](RTK_TroopEncounter.js) | N/A | Control to encount Troops in Map |
 | [RTK_VariablePacker](RTK_VariablePacker.js) | N/A | Plugin command to pack/unpack variables |
+
+
+## License
+
+[The MIT License (MIT)](https://opensource.org/licenses/mit-license.php)
+
+You don't need to display my copyright, if you keep my comments in .js files. Of course, I'll be happy, when you will display it. :-)

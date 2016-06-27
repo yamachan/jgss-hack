@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Option_EnJa.js  ver1.02 2016/06/24
+// RTK1_Option_EnJa.js  ver1.04 2016/06/27
 //=============================================================================
 
 /*:
@@ -30,6 +30,10 @@
  * @param separator
  * @desc Separator string for setName,Nickname,Profile
  * @default ||
+ *
+ * @param separator_note
+ * @desc Separator string in Note tag
+ * @default ,
  *
  * @param 2nd_language
  * @desc The name of 2nd language
@@ -74,6 +78,10 @@
  * @desc Name,Nickname,Profileを指定するときの区切り文字
  * @default ||
  *
+ * @param separator_note
+ * @desc ノート欄のタグ内のテキストデータで使用する区切り文字
+ * @default ,
+ *
  * @param 2nd_language
  * @desc 本プラグインで追加表示する言語の名称
  * @default Japanese
@@ -97,7 +105,7 @@
 
 	var N = "RTK1_Option_EnJa";
 	var NK = "RTK_EJ";
-	var M = RTK._modules[N] = {};
+	var M = RTK["EJ"] = RTK._modules[N] = {};
 
 	var param = PluginManager.parameters(N);
 	M._switch = Number(param['switch'] || 0);
@@ -106,6 +114,7 @@
 	M._meta_ja = param['meta_ja'] || "ja";
 	M._meta_en = param['meta_en'] || "en";
 	M._separator = param['separator'] || "||";
+	M._separator_note = param['separator_note'] || ",";
 	M._2nd_language = param['2nd_language'] || "Japanese";
 
 	// ----- Init resource -----
@@ -203,7 +212,7 @@
 	function updateObject(_o, _v) {
 		if (!_o) {return; }
 		if ("string" == typeof _v ) {
-			var a = _v.split(",");
+			var a = _v.split(M._separator_note);
 			if (a[0] != "") {
 				_o.name = a[0];
 			}

@@ -73,9 +73,11 @@ RTK.onReady(function(){
 
 プラグインコマンドを実装するためには Game_Interpreter.prototype.pluginCommand(command, args) を置き換える必要がありましたが、RTK.onCall() 関数を使えば以下のように簡単に実装できます。
 
-    RTK.onCall(command, function(args){
-      // your plugin command code here
-    });
+```js
+RTK.onCall(command, function(args){
+  // your plugin command code here
+});
+```
 
 この仕組みを利用すれば、登録した command に一致する場合にだけ登録した関数がコールされるので、command の判断文が不要でコードが簡潔になり、また処理速度も向上します。
 
@@ -85,6 +87,72 @@ RTK.onReady(function(){
 RTK.onCall(command, function(args, command){
   // your plugin command code here
 });
+```
+
+## Persistent サービス
+
+セーブデータを拡張して、プラグイン独自のデータをセーブするサービスです。 使い方は簡単で key は文字列、value は保存したいデータです。
+
+```js
+RTK.save(key, value);
+var value = RTK.load(key);
+```
+
+例えば myData という変数の値をセーブデータに含めたいとします。 自分のプラグインのなかで値を参照するときは
+
+```js
+var myData = RTK.load("myData") || "default value";
+```
+
+のように読み込みます。 ゲーム開始時などは保存された値が存在しないので、|| で繋いで初期値("default value")を指定してください。 そして値の保存は以下のようにします。
+
+```js
+myData = "saved value";
+RTK.save("myData", myData);
+```
+
+先ほど説明した　json パラメータを使って、セーブファイルの中身を確認してみてください。 最後のほうに以下のように値が追加されているのがわかります。
+
+```js
+{
+  "system":{
+  //... (中略) ...
+  },
+  "RTK1_Core":{
+    "myData":"saved value"
+  }
+}
+```
+
+値が不要になったら削除してください。
+
+```js
+RTK.del(key);
+```
+
+またあわせて、以下のゲーム変数を配列にまとめる関数も利用してください。 dataArray は配列、startVariable と endVariable は変数の番号を示す数値です。
+
+```js
+var dataArray = RTK.pack(startVariable, endVariable);
+RTK.unpack(startVariable, dataArray);
+```
+
+これらを組み合わせ、例えば変数 100～119 をいったん保存しておくのには以下のように記述します。
+
+```js
+RTK.save("backup100-119", RTK.pack(100,119));
+```
+
+保存した値を数 100～119 に戻す場合には以下のように記述します。
+
+```js
+RTK.unpack(100, RTK.load("backup100-119"));
+```
+
+RTK.unpack はイベントのスクリプト入力で複数の変数を一括で初期化するのにも使えます。 例えば以下は変数1～5全てに8の値を設定しています。
+
+```js
+RTK.unpack(1, [8,8,8,8,8]);
 ```
 
 ## ライセンス
