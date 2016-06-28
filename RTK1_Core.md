@@ -151,6 +151,20 @@ By the way, RTK.unpack is also useful when you want to set lots of default value
 RTK.unpack(1, [8,8,8,8,8]);
 ```
 
+## onStart service
+
+This onStart service looks similar with onReady service above. But this service will be called later than onReady service. This service will be called just before Scene_Map start.
+
+```js
+RTK.onStart(function(isNewGame){
+  // your start code here
+});
+```
+
+The registered function will be called with one argument (isNewGame) which will be true in new game, will be false in loaded game.
+
+The important difference from onReady service is - this onStart timing is after loading save data. So if you want to use Persistent service (RTK.load function) to initiate your plugin setting, you　should use this onStart service. onReady is too early to refer the saved information.
+
 ## Simple text control service
 
 We can set both English and Japanese comments in plugin file, but we feel a little bit difficulty about text resources which depend on the language in the code.

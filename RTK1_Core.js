@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.05 2016/06/28
+// RTK1_Core.js  ver1.06 2016/06/28
 //=============================================================================
 
 /*:
@@ -165,15 +165,26 @@ RTK.cloneObject = function(_o) {
 		_Scene_Boot_checkPlayerLocation.call(this);
 		RTK_init();
 	};
-	var _DataManager_createGameObjects = DataManager.createGameObjects;
-	DataManager.createGameObjects = function() {
-		_DataManager_createGameObjects.call(this);
+
+	var _Scene_Title_commandNewGame = Scene_Title.prototype.commandNewGame;
+	Scene_Title.prototype.commandNewGame = function() {
+		_Scene_Title_commandNewGame.call(this);
 		for (var l=0; l<RTK._starts.length; l++) {
 			if ("function" == typeof RTK._starts[l]) {
-				RTK._starts[l]();
+				RTK._starts[l](true);
 			}
 		}
-		RTK.log(N + " start (_lang:" + RTK._lang + ", _debug:" + RTK._debug + ", _ready:" + RTK._ready + ")");
+		RTK.log(N + " start [new game] (_lang:" + RTK._lang + ", _ready:" + RTK._ready + ")");
+	};
+	var _Scene_Load_onLoadSuccess = Scene_Load.prototype.onLoadSuccess;
+	Scene_Load.prototype.onLoadSuccess = function() {
+		_Scene_Load_onLoadSuccess.call(this);
+		for (var l=0; l<RTK._starts.length; l++) {
+			if ("function" == typeof RTK._starts[l]) {
+				RTK._starts[l](false);
+			}
+		}
+		RTK.log(N + " start [load game] (_lang:" + RTK._lang + ", _ready:" + RTK._ready + ")");
 	};
 
 	// ----- json option -----
