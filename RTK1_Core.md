@@ -120,36 +120,57 @@ Let's see the json data with using this plugin's json parameter. You will find y
   }
 }
 ```
-If you don't need the value anymode, just delete it.
+If you don't need the value anymore, just delete it.
 
 ```js
 RTK.del(key);
 ```
 
-In addtion, please use pack/unpack function which convert game variables into an Array value. (dataArray is Array、startVariable and endVariable are numbers which shows game variable's number)
+In addtion, please use pack/unpack function which convert game variables into an Array value. (dataArray is Array、startVariable and endVariable are numbers which shows game variables)
 
 ```js
 var dataArray = RTK.pack(startVariable, endVariable);
 RTK.unpack(startVariable, dataArray);
 ```
 
-For example. with using these functions, you can save variables 100-119 easily as follows;
+For example. with using these functions, you can save game variables 100-119 easily as follows;
 
 ```js
 RTK.save("backup100-119", RTK.pack(100,119));
 ```
 
-To recover variables 100-119, your code should be;
+To recover game variables 100-119, your code should be;
 
 ```js
 RTK.unpack(100, RTK.load("backup100-119"));
 ```
 
-By the way, RTK.unpack is also useful when you want to set lots of default values in event script. For example, the following script sets value 8 to valiables 1-5.
+By the way, RTK.unpack is also useful when you want to set lots of default values in event script. For example, the following script sets value 8 to game valiables 1-5.
 
 ```js
 RTK.unpack(1, [8,8,8,8,8]);
 ```
+
+## Simple text control service
+
+We can set both English and Japanese comments in plugin file, but we feel a little bit difficulty about text resources which depend on the language in the code.
+
+RTK.text provides a simple mechanism to control text resources which depend on the language in the code. For example, you can relate English text to Japanese text as follows;
+
+```js
+RTK.text("Yes", "はい");
+RTK.text("No", "いいえ");
+```
+
+After this code, you can use RTK.text("Yes") in spite of "Yes". The rule of text selection in RTK.text function is as follows;
+
+1. If the English argument doesn't have a related Japanese text, just return the English argument.
+2. If RTK1_Option_EnJa plugin is found, the text selection depends on its language setting.
+3. The text selection depends on the environment's language setting (RTK.\_lang).
+
+After you register the necessary relationship among English text and Japanese text, you don't need to care about the language with using RTK.text function.
+
+By the way, the text selection in RTK.text is not case sensitive. So RTK.text("Yes") and RTK.text("yes") have a same reault.
 
 ## License
 

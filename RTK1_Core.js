@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.04 2016/06/27
+// RTK1_Core.js  ver1.05 2016/06/28
 //=============================================================================
 
 /*:
@@ -255,6 +255,21 @@ RTK.cloneObject = function(_o) {
 			RTK._data = contents.RTK1_Core;
 		}
 		RTK.log(N + "extractSaveContents: RTK._data", RTK._data);
+	};
+
+	// ----- Simple text control -----
+
+	RTK._text = RTK._text || {};
+	RTK.text = function(_e, _j){
+		if ("string" == typeof _e && _e != "") {
+			var key = _e.toLowerCase();
+			var mode = RTK.EJ ? RTK.EJ._langSelect : RTK._lang == 1;
+			if (_j !== undefined) {
+				RTK._text[key] = _j;
+			}
+			return mode ? (RTK._text[key]||_e) : _e;
+		}
+		return undefined;
 	};
 
 	// ----- Experimental (not official) -----
