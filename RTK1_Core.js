@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.06 2016/06/28
+// RTK1_Core.js  ver1.07 2016/06/29
 //=============================================================================
 
 /*:
@@ -65,7 +65,7 @@ function RTK() {
  * @type Number
  * @final
  */
-RTK.VERSION_NO = 1.01;
+RTK.VERSION_NO = 1.07;
 
 // ----- for Services -----
 
@@ -87,11 +87,11 @@ RTK.onCall = function(_command, _func){
 };
 
 RTK._starts = [];
-RTK.onStart = function(_func){
-	if ("function" == typeof _func) {
-		RTK._starts.push(_func);
-	}
-};
+RTK.onStart = function(_func){ if ("function" == typeof _func) RTK._starts.push(_func); };
+RTK._save = [];
+RTK.onSave = function(_func){ if ("function" == typeof _func) RTK._save.push(_func); };
+RTK._load = [];
+RTK.onLoad = function(_func){ if ("function" == typeof _func) RTK._load.push(_func); };
 
 // ----- for Debug -----
 
@@ -255,6 +255,11 @@ RTK.cloneObject = function(_o) {
 	DataManager.makeSaveContents = function() {
 		var contents = _DataManager_makeSaveContents.call(this);
 		contents.RTK1_Core = RTK._data;
+		for (var l=0; l<RTK._save.length; l++) {
+			if ("function" == typeof RTK._save[l]) {
+				RTK._save[l](contents);
+			}
+		}
 		RTK.log(N + " makeSaveContents: RTK._data", RTK._data);
 		return contents;
 	};
@@ -264,6 +269,11 @@ RTK.cloneObject = function(_o) {
 		_DataManager_extractSaveContents.call(this, contents);
 		if (contents && contents.RTK1_Core) {
 			RTK._data = contents.RTK1_Core;
+		}
+		for (var l=0; l<RTK._load.length; l++) {
+			if ("function" == typeof RTK._load[l]) {
+				RTK._load[l](contents);
+			}
 		}
 		RTK.log(N + "extractSaveContents: RTK._data", RTK._data);
 	};

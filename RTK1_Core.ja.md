@@ -155,6 +155,20 @@ RTK.unpack はイベントのスクリプト入力で複数の変数を一括で
 RTK.unpack(1, [8,8,8,8,8]);
 ```
 
+また Persistent サービスには、セーブファイルの保存時と読み込み時の終盤に登録した関数を呼び出してくれるサービスがあり、保存されるデータ形式の変換に利用できます。
+
+```js
+RTK.onSave(function(){
+  // Update your original save data with RTK.save function
+)
+RTK.onLoad(function(){
+  // Convert your original save data with RTK.load function
+)
+});
+```
+
+例えばプラグインでアイテムのリストを管理している場合、オブジェクトの配列はそのまま保存すると情報が失われますので、アイテムIDのリストに変換して保存する必要があります。 そういった場合に本サービスは便利です。
+
 ## onStart サービス
 
 onStart サービスは onReady サービスと同様のサービスですが、登録した関数が呼ばれるタイミングがより遅く、ゲームの開始直前 (Scene_Map が開始する直前) になります。

@@ -151,6 +151,21 @@ By the way, RTK.unpack is also useful when you want to set lots of default value
 RTK.unpack(1, [8,8,8,8,8]);
 ```
 
+In addition, Persistent service includes onSave/onLoad service which will call registered functions during the end of save/load timing. It's good to convert the data transformation for save data.
+
+
+```js
+RTK.onSave(function(){
+  // Update your original save data with RTK.save function
+)
+RTK.onLoad(function(){
+  // Convert your original save data with RTK.load function
+)
+});
+```
+
+For example, your plugin has a list which contains item objects, it's not good for save. You should convert item object list to item id list. In this case, these onSave/onLoad service is useful.
+
 ## onStart service
 
 This onStart service looks similar with onReady service above. But this service will be called later than onReady service. This service will be called just before Scene_Map start.
