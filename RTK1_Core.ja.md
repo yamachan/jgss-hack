@@ -160,10 +160,9 @@ RTK.unpack(1, [8,8,8,8,8]);
 ```js
 RTK.onSave(function(){
   // Update your original save data with RTK.save function
-)
+});
 RTK.onLoad(function(){
   // Convert your original save data with RTK.load function
-)
 });
 ```
 

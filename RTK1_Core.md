@@ -157,10 +157,9 @@ In addition, Persistent service includes onSave/onLoad service which will call r
 ```js
 RTK.onSave(function(){
   // Update your original save data with RTK.save function
-)
+});
 RTK.onLoad(function(){
   // Convert your original save data with RTK.load function
-)
 });
 ```
 
