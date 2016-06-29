@@ -125,6 +125,10 @@ If you don't need the value anymore, just delete it.
 ```js
 RTK.del(key);
 ```
+The following is a sample event to test these functions. After you choose 1-3 value, the value will be kept after save and restart the game.
+
+![Screen shot - Event](i/RTK1_Core-07.png)
+
 
 In addtion, please use pack/unpack function which convert game variables into an Array value. (dataArray is Array、startVariable and endVariable are numbers which shows game variables)
 

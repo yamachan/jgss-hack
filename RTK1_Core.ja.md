@@ -130,6 +130,10 @@ RTK.save("myData", myData);
 RTK.del(key);
 ```
 
+以下は機能テストのために作成したイベントです。 1～3 の値を選択すると、ゲームをセーブして再開してもその値を覚えています。
+
+![Screen shot - Event](i/RTK1_Core-07.png)
+
 またあわせて、以下のゲーム変数を配列にまとめる関数も利用してください。 dataArray は配列、startVariable と endVariable は変数の番号を示す数値です。
 
 ```js
@@ -218,9 +222,9 @@ RTK.text("No", "いいえ");
 | 関数名 | 引数 | 説明 |
 | :---- | :---- | :---- |
 | RTK.object2id | o : Object | Item/Weapon/Armor/Skill オブジェクトを接頭語付きのID文字列に変換します<br>例) $dataItems[1] => "i1"<br>例) $dataWeapons[10] => "w10"|
-| RTK.id2object | id : String | 上記の関数の逆の返還を実施します |
+| RTK.id2object | id : String | 上記の関数の逆の変換を実施します |
 | RTK.objects2ids | list : Object Array | 配列に対して RTK.object2id と同様の変換を実施します<br>その際にエラーを意味する空文字列 "" は取り除きます<br>例) [$dataArmors[2],$dataSkills[3]] => ["a2","s3"] |
-| RTK.ids2objects | list : String Array | 上記の関数の逆の返還を実施します |
+| RTK.ids2objects | list : String Array | 上記の関数の逆の変換を実施します |
 
 ## ライセンス
 
