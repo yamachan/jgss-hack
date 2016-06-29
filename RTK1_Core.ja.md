@@ -168,6 +168,8 @@ RTK.onLoad(function(){
 
 例えばプラグインでアイテムのリストを管理している場合、オブジェクトの配列はそのまま保存すると情報が失われますので、アイテムIDのリストに変換して保存する必要があります。 そういった場合に本サービスは便利です。
 
+onSave 時には共通のゲーム用関数 RTK.objects2ids が、onLoad 時には共通のゲーム用関数 RTK.ids2objects が便利ですので、よかったら併せて使ってみてください。
+
 ## onStart サービス
 
 onStart サービスは onReady サービスと同様のサービスですが、登録した関数が呼ばれるタイミングがより遅く、ゲームの開始直前 (Scene_Map が開始する直前) になります。
@@ -203,6 +205,22 @@ RTK.text("No", "いいえ");
 プラグインで使用する英語/日本語テキストを事前に登録しておき、利用時には RTK.text() を介することで、以後、言語モードの違いによるテキスト表記は気にしなくてもよくなります。
 
 なお処理の際に英語の大文字/小文字は区別しませんので、RTK.text("Yes") と RTK.text("yes") は同じ結果を返します。
+
+## 共通の JS 関数
+
+| 関数名 | 引数 | 説明 |
+| :---- | :---- | :---- |
+| RTK.cloneObject | o : Object | オブジェクトをコピーする (参照先はコピーしない浅いコピーです) |
+| RTK.isTrue | v : Object or value | v が真であれば真を返します<br>Array.filter 関数と併せて使うと便利です |
+
+## 共通のゲーム用関数
+
+| 関数名 | 引数 | 説明 |
+| :---- | :---- | :---- |
+| RTK.object2id | o : Object | Item/Weapon/Armor/Skill オブジェクトを接頭語付きのID文字列に変換します<br>例) $dataItems[1] => "i1"<br>例) $dataWeapons[10] => "w10"|
+| RTK.id2object | id : String | 上記の関数の逆の返還を実施します |
+| RTK.objects2ids | list : Object Array | 配列に対して RTK.object2id と同様の変換を実施します<br>その際にエラーを意味する空文字列 "" は取り除きます<br>例) [$dataArmors[2],$dataSkills[3]] => ["a2","s3"] |
+| RTK.ids2objects | list : String Array | 上記の関数の逆の返還を実施します |
 
 ## ライセンス
 

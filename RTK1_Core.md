@@ -165,6 +165,8 @@ RTK.onLoad(function(){
 
 For example, your plugin has a list which contains item objects, it's not good for save. You should convert item object list to item id list. In this case, these onSave/onLoad service is useful.
 
+In this library's common game functions, RTK.objects2ids function is useful for function called by onSave, and RTK.ids2objects function is useful for function called by onLoad. Please feel free to use them.
+
 ## onStart service
 
 This onStart service looks similar with onReady service above. But this service will be called later than onReady service. This service will be called just before Scene_Map start.
@@ -199,6 +201,22 @@ After this code, you can use RTK.text("Yes") in spite of "Yes". The rule of text
 After you register the necessary relationship among English text and Japanese text, you don't need to care about the language with using RTK.text function.
 
 By the way, the text selection in RTK.text is not case sensitive. So RTK.text("Yes") and RTK.text("yes") have a same reault.
+
+## Common JS functions
+
+| function | argument | description |
+| :---- | :---- | :---- |
+| RTK.cloneObject | o : Object | Copy a object (shallow copy, not deep). |
+| RTK.isTrue | v : Object or value | Return true, if v is true.<br>Useful with Array.filter function. |
+
+## Common Game functions
+
+| function | argument | description |
+| :---- | :---- | :---- |
+| RTK.object2id | o : Object | Convert Item/Weapon/Armor/Skill object to prefix and id String.<br>e.g. $dataItems[1] => "i1"<br>e.g. $dataWeapons[10] => "w10"|
+| RTK.id2object | id : String | Backward convert of the above function. |
+| RTK.objects2ids | list : Object Array | List version of RTK.object2id function.<br>It removes error "" Strings automatically.<br>e.g. [$dataArmors[2],$dataSkills[3]] => ["a2","s3"] |
+| RTK.ids2objects | list : String Array | Backward convert of the above function. |
 
 ## License
 

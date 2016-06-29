@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.07 2016/06/29
+// RTK1_Core.js  ver1.08 2016/06/30
 //=============================================================================
 
 /*:
@@ -65,7 +65,7 @@ function RTK() {
  * @type Number
  * @final
  */
-RTK.VERSION_NO = 1.07;
+RTK.VERSION_NO = 1.08;
 
 // ----- for Services -----
 
@@ -117,7 +117,7 @@ RTK.trace = function(_v) {
 	}
 };
 
-// ----- Basic Functions -----
+// ----- Basic JS Functions -----
 
 RTK.cloneObject = function(_o) {
 	if (null == _o || typeof _o != "object") {
@@ -128,6 +128,36 @@ RTK.cloneObject = function(_o) {
 		if (_o.hasOwnProperty(k)) o[k] = _o[k];
 	}
 	return o;
+};
+RTK.isTrue = function(_v) { return !!_v; };
+RTK.isFalse = function(_v) { return !_v; };
+
+// ----- Basic Game Functions -----
+
+RTK.objectType = function(_o) {
+	return DataManager.isItem(_o) ? "i" : DataManager.isWeapon(_o) ? "w" : DataManager.isArmor(_o) ? "a" : DataManager.isSkill(_o) ? "s" : "";
+}
+RTK.object2id = function(_o) {
+	var t = RTK.objectType(_o);
+	return t ? t + _o.id : "";
+};
+RTK.id2object = function(_id) {
+	if ("string" == typeof _id) {
+		var a = _id.match(/^([aisw])(\d+)$/i);
+		if (a) {
+			return RTK._dataSelect[a[1]][a[2]];
+		}
+	}
+	return undefined;
+};
+RTK.objects2ids = function(_a) {
+	return _a instanceof Array ? _a.map(RTK.object2id).filter(RTK.isTrue) : null;
+};
+RTK.ids2objects = function(_a) {
+	if (_a instanceof Array) {
+		return _a.map(RTK.id2object).filter(RTK.isTrue);
+	}
+	return null;
 };
 
 // ----- Init -----
@@ -141,7 +171,7 @@ RTK.cloneObject = function(_o) {
 	RTK._json = Number(param['json'] || 0);
 
 	function RTK_init(){
-		if ($dataSystem && $dataSystem.terms && $dataSystem.terms.basic && $dataSystem.terms.commands && $dataSystem.terms.messages) {
+		if ($dataItems && $dataSystem && $dataSystem.terms && $dataSystem.terms.basic && $dataSystem.terms.commands && $dataSystem.terms.messages && $dataMapInfos) {
 			if (RTK._lang == 0) {
 				if (!$dataSystem.terms.basic[0].match(/^[\s!-~]+$/) || !$dataSystem.terms.commands[0].match(/^[\s!-~]+$/)) {
 					RTK._lang = 1;
@@ -149,6 +179,7 @@ RTK.cloneObject = function(_o) {
 			} else {
 				RTK._lang--;
 			}
+			RTK._dataSelect = {"i":$dataItems, "w":$dataWeapons, "a":$dataArmors, "s":$dataSkills};
 			for (var l=0; l<RTK._inits.length; l++) {
 				if ("function" == typeof RTK._inits[l]) {
 					RTK._inits[l]();
