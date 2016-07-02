@@ -37,7 +37,7 @@ Please don't touch the 1st value '1', and the last 2 values '0,0'. I will explai
 
 In this section, the 2nd and 3rd values 'i1,2' is important. These values show the necessary matelials of this composition.
 
-In the values 'i1,2', the first "i2" value is a shorten version of "item which id is 2". It shows the ID 1 item in the databese, "Potion". The following value "2" means it requires 2 portions for this composition.
+In the values 'i1,2', the first "i1" value is a shorten version of "item which id is 1". It shows the ID 1 item in the databese, "Potion". The following value "2" means it requires 2 portions for this composition.
 
 In the result, 'i1,2' means "2 Portions".
 
@@ -143,7 +143,7 @@ That's all to use basic functions of this plugin. I hope you will enjoy to devel
 
 ## Shop function
 
-OK, let's start an advance level.
+OK, let's start an advanced level.
 
 You can use "Composite shop" with using the following plugin command;
 
@@ -157,13 +157,13 @@ Player will see the followng shop menu;
 
 The shop function automatically create the list of composite recipe. It means all composite recipe will be shown in the shop. You must check the recipes will not break your rule or scenario.
 
-In additio, additional item/weapon/armor argument will show the specialty shop for item, weapon or armor;
+In addition, an additional item/weapon/armor argument will show the specialty shop for them;
 
 ```
 RTK1_Composite shop item
 ```
 
-![Screen shot - Composite shop](i/RTK1_Composite-12.ja.png)
+![Screen shot - Composite shop](i/RTK1_Composite-12.png)
 
 ### Change shop name
 
