@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.08 2016/06/30
+// RTK1_Core.js  ver1.09 2016/07/01
 //=============================================================================
 
 /*:
@@ -65,7 +65,7 @@ function RTK() {
  * @type Number
  * @final
  */
-RTK.VERSION_NO = 1.08;
+RTK.VERSION_NO = 1.09;
 
 // ----- for Services -----
 
@@ -129,6 +129,12 @@ RTK.cloneObject = function(_o) {
 	}
 	return o;
 };
+RTK.ucfirst = function(_s, _footer) {
+	if ("string" == typeof _s) {
+		return _s.charAt(0).toUpperCase() + _s.slice(1) + (_footer && _s != "" ? _footer : "");
+	}
+	return "";
+}
 RTK.isTrue = function(_v) { return !!_v; };
 RTK.isFalse = function(_v) { return !_v; };
 
@@ -143,9 +149,9 @@ RTK.object2id = function(_o) {
 };
 RTK.id2object = function(_id) {
 	if ("string" == typeof _id) {
-		var a = _id.match(/^([aisw])(\d+)$/i);
+		var a = _id.match(/^\s*([aisw])(\d+)\s*$/i);
 		if (a) {
-			return RTK._dataSelect[a[1]][a[2]];
+			return (a[1] == "i" ? $dataItems : a[1] == "w" ? $dataWeapons : a[1] == "a" ? $dataArmors : $dataSkills)[a[2]];
 		}
 	}
 	return undefined;
@@ -158,6 +164,18 @@ RTK.ids2objects = function(_a) {
 		return _a.map(RTK.id2object).filter(RTK.isTrue);
 	}
 	return null;
+};
+RTK.hasId = function(_id, _n) {
+	_n = _n||1;
+	if ("string" == typeof _id) {
+		var a = _id.match(/^\s*([aiw])(\d+)\s*$/i);
+		if (a) {
+			var list = a[1] == "i" ? $gameParty._items : a[1] == "w" ? $gameParty._weapons : $gameParty._armors;
+			var n = list[Number(a[2])];
+			return n >= _n ? n : 0;
+		}
+	}
+	return 0;
 };
 
 // ----- Init -----
@@ -179,7 +197,6 @@ RTK.ids2objects = function(_a) {
 			} else {
 				RTK._lang--;
 			}
-			RTK._dataSelect = {"i":$dataItems, "w":$dataWeapons, "a":$dataArmors, "s":$dataSkills};
 			for (var l=0; l<RTK._inits.length; l++) {
 				if ("function" == typeof RTK._inits[l]) {
 					RTK._inits[l]();
@@ -312,14 +329,16 @@ RTK.ids2objects = function(_a) {
 	// ----- Simple text control -----
 
 	RTK._text = RTK._text || {};
+	RTK.jp = function(){
+		return RTK.EJ ? RTK.EJ._langSelect : RTK._lang == 1;
+	};
 	RTK.text = function(_e, _j){
 		if ("string" == typeof _e && _e != "") {
 			var key = _e.toLowerCase();
-			var mode = RTK.EJ ? RTK.EJ._langSelect : RTK._lang == 1;
 			if (_j !== undefined) {
 				RTK._text[key] = _j;
 			}
-			return mode ? (RTK._text[key]||_e) : _e;
+			return RTK.jp() ? (RTK._text[key]||_e) : _e;
 		}
 		return undefined;
 	};
@@ -344,6 +363,14 @@ RTK.ids2objects = function(_a) {
 				}
 			}
 		});
+	};
+
+	RTK.command = function(_v) {
+		if ("string" == typeof _v && _v != "" && $gameMap && $gameMap._interpreter) {
+			var args = _v.split(" ");
+			var command = args.shift();
+			$gameMap._interpreter.pluginCommand(command, args);
+		}
 	};
 
 })(this);
