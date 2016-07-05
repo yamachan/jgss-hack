@@ -112,6 +112,14 @@
  * @desc 作業場での合成における費用を調整する(0～1)
  * @default 0
  *
+ * @param success adjust shop
+ * @desc ショップでの合成における成功率を調整する(0～1)
+ * @default 1
+ *
+ * @param charge adjust shop
+ * @desc ショップでの合成における費用を調整する(0～1)
+ * @default 1
+ *
  * @help
  * RPGツクール MV 用に作成した、合成機能を実現するプラグインです。
  * このプラグインの前に RTK1_Core プラグイン(1.08以降)を読み込んでください。
