@@ -270,7 +270,7 @@ RTK1_Composite adjust workroom charge 0.5
 | version | date | update |
 | --- | --- | --- |
 | ver1.10 | 2016/07/05 | 日本語ヘルプを追加<br>作業場を追加<br>成功率と費用の調整機能を追加 |
-| [ver1.09](archive/RTK1_Composite_v1.0.9.js) | 2016/07/02 | 公開 |
+| [ver1.09](archive/RTK1_Composite_v1.09.js) | 2016/07/02 | 公開 |
 
 
 ## ライセンス
