@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// RTK1_Composite.js  ver1.10 2016/07/05
+// RTK1_Composite.js  ver1.09 2016/07/02
 //=============================================================================
 
 /*:
@@ -18,136 +18,35 @@
  * @desc Add Composite in menu (0:OFF 1:ON)
  * @default 0
  *
- * @param success adjust menu
- * @desc Adjust success rate from menu (0-1)
- * @default 1
- *
- * @param charge adjust menu
- * @desc Adjust success charge from menu (0-1)
- * @default 1
- *
- * @param success adjust workroom
- * @desc Adjust success rate in workroom (0-1)
- * @default 1
- *
- * @param charge adjust workroom
- * @desc Adjust success charge in workroom (0-1)
- * @default 0
- *
- * @param success adjust shop
- * @desc Adjust success rate in shop (0-1)
- * @default 1
- *
- * @param charge adjust shop
- * @desc Adjust success charge in shop (0-1)
- * @default 1
- *
  * @help
- * Plugin to add the composite function for RPG Maker MV.
- * This plugin requires RTK1_Core plugin (1.08 or later) previously.
+ * This plugin requires RTK1_Core plugin previously.
  *
  * NoteTags:
- *   <composite:0.95,i1,3,w2,1,a3,1,i4,500>
+ *   <composite:0.95, i1, 3, w2, 1, a3, 1, i4>
  *	0.95 means the success rate is 95%
  *	i1,3 means it require three item #1 (key material)
- *	w2,1 means it require one weapon #2 (material 2)
- *	a3,1 means it require one armor #3 (material 3)
- *	... (you can set more 2 materials)
+ *	w2,1 means it require one weapon #2
+ *	a3,1 means it require one armor #3
+ *	... (you can use more)
  *	i4   means If you fail, you will get item #4
- *	500  means cost of this composition
  *
  * Plugin Command:
- *   RTK1_Composite learn item/weapon/armor #no[,#no]
+ *   RTK1_Composite menu [on off]
+ *   RTK1_Composite learn item/weapon/armor #no [,#no]
  *   RTK1_Composite learn #uid[,#uid]
- *   RTK1_Composite forget item/weapon/armor #no[,#no]
+ *   RTK1_Composite forget item/weapon/armor #no [,#no]
  *   RTK1_Composite forget #uid [,#uid]
  *   RTK1_Composite open
  *
- *   RTK1_Composite add item/weapon/armor #no[,#no]
- *   RTK1_Composite add #uid[,#uid]
- *   RTK1_Composite remove item/weapon/armor #no[,#no]
- *   RTK1_Composite remove #uid[,#uid]
+ *   RTK1_Composite add item/weapon/armor #no [,#no]
+ *   RTK1_Composite add #uid [,#uid]
+ *   RTK1_Composite remove item/weapon/armor #no [,#no]
+ *   RTK1_Composite remove #uid [,#uid]
  *   RTK1_Composite fill [all/item/weapon/armor]
  *   RTK1_Composite complete [all/item/weapon/armor]
  *   RTK1_Composite clear [all/item/weapon/armor]
  *   RTK1_Composite shop [all/item/weapon/armor] [,en name] [,ja name]
- *   RTK1_Composite workroom [all/item/weapon/armor] [,en name] [,ja name]
  *
- *   RTK1_Composite menu on/off/toggle
- *   RTK1_Composite adjust menu/workroom/shop success/charge #value
- *
- * Manual:
- *   https://github.com/yamachan/jgss-hack/blob/master/RTK1_Composite.md
- */
-
-/*:ja
- * @plugindesc アイテム・武器・防具の合成
- * @author Toshio Yamashita (yamachan)
- *
- * @param meta tag
- * @desc ノート欄で合成レシピを指定するタグ名
- * @default composite
- *
- * @param plugin command
- * @desc プラグインコマンドの名称
- * @default RTK1_Composite
- *
- * @param in menu
- * @desc ゲームメニューに「合成」を表示する (0:OFF 1:ON)
- * @default 0
- *
- * @param success adjust menu
- * @desc メニューからの合成における成功率を調整する(0～1)
- * @default 1
- *
- * @param charge adjust menu
- * @desc メニューからの合成における費用を調整する(0～1)
- * @default 1
- *
- * @param success adjust workroom
- * @desc 作業場での合成における成功率を調整する(0～1)
- * @default 1
- *
- * @param charge adjust workroom
- * @desc 作業場での合成における費用を調整する(0～1)
- * @default 0
- *
- * @help
- * RPGツクール MV 用に作成した、合成機能を実現するプラグインです。
- * このプラグインの前に RTK1_Core プラグイン(1.08以降)を読み込んでください。
- *
- * メモ欄:
- *   <composite:0.95,i1,3,w2,1,a3,1,i4,500>
- *	0.95 means the success rate is 95%
- *	i1,3 means it require three item #1 (key material)
- *	w2,1 means it require one weapon #2 (material 2)
- *	a3,1 means it require one armor #3 (material 3)
- *	... (you can set more 2 materials)
- *	i4   means If you fail, you will get item #4
- *	500  means cost of this composition
- *
- * プラグインコマンド:
- *   RTK1_Composite learn item/weapon/armor #no[,#no]
- *   RTK1_Composite learn #uid[,#uid]
- *   RTK1_Composite forget item/weapon/armor #no[,#no]
- *   RTK1_Composite forget #uid [,#uid]
- *   RTK1_Composite open
- *
- *   RTK1_Composite add item/weapon/armor #no[,#no]
- *   RTK1_Composite add #uid[,#uid]
- *   RTK1_Composite remove item/weapon/armor #no[,#no]
- *   RTK1_Composite remove #uid[,#uid]
- *   RTK1_Composite fill [all/item/weapon/armor]
- *   RTK1_Composite complete [all/item/weapon/armor]
- *   RTK1_Composite clear [all/item/weapon/armor]
- *   RTK1_Composite shop [all/item/weapon/armor] [,en name] [,ja name]
- *   RTK1_Composite workroom [all/item/weapon/armor] [,en name] [,ja name]
- *
- *   RTK1_Composite menu on/off/toggle
- *   RTK1_Composite adjust menu/workroom/shop success/charge #value
- *
- * マニュアル:
- *   https://github.com/yamachan/jgss-hack/blob/master/RTK1_Composite.ja.md
  */
 
 function Scene_CompositeMenu() { this.initialize.apply(this, arguments); }
@@ -156,7 +55,6 @@ function Window_CompositeStatus() { this.initialize.apply(this, arguments); }
 function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 
 (function(_global) {
-	"use strict";
 	if (!_global["RTK"]) {
 		throw new Error('This plugin requires RTK1_Core plugin previously.');
 	}
@@ -171,17 +69,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 	var param = PluginManager.parameters(N);
 	M._tag = String(param['meta tag'] || "composite");
 	M._command = String(param['plugin command'] || "RTK1_Composite");
-
-	M._config = M._config || {
-		"menu": !!Number(param['in menu'] || "0"),
-		"suM" : Number(param['success adjust menu'] || "1"),
-		"chM" : Number(param['charge adjust menu'] || "1"),
-		"suW" : Number(param['success adjust workroom'] || "1"),
-		"chW" : Number(param['charge adjust workroom'] || "0"),
-		"suS" : Number(param['success adjust shop'] || "1"),
-		"chS" : Number(param['charge adjust shop'] || "1"),
-		"set" : {}
-	};
+	M._menu = Number(param['in menu'] || "0");
 
 	M._list = M._list || [];
 	M._learn = M._learn || [];
@@ -198,20 +86,13 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		RTK.text("Armor Composite Shop", "防具合成の店");
 		RTK.text("Custom Composite Shop", "特別な合成の店");
 		RTK.text("Get", "入手");
-		RTK.text("Composite Workshop", "合成の作業場");
-		RTK.text("Item Composite Workshop", "アイテム合成の作業場");
-		RTK.text("Weapon Composite Workshop", "武器合成の作業場");
-		RTK.text("Armor Composite Workshop", "防具合成の作業場");
-		RTK.text("Custom Composite Workshop", "特別な合成の作業場");
-		RTK.log(N + " ready", M._config);
+		RTK.log(N + " ready (__menu:" + M._menu + ")");
 	});
 	RTK.onLoad(function(){
-		M._config = RTK.load(NK + "_config") || M._config;
-		M._learn = RTK.load(NK + "_learn") || M._learn;
-		RTK.log(N + " load (_config)", M._config);
+		M._learn = RTK.load(NK + "_learn") || [];
+		RTK.log(N + " load (_learn)", M._learn);
 	});
 	RTK.onSave(function(){
-		RTK.save(NK + "_config", M._config);
 		RTK.save(NK + "_learn", M._learn);
 		RTK.log(N + " save (_learn)", M._learn);
 	});
@@ -287,61 +168,23 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 			}
 			if (args[2]) {
 				M._Title = args[3] ? (RTK.jp() ? args[3] : args[2]) : args[2];
-				M._Title = M._Title.replace("%20", " ");
 			} else {
 				M._Title = RTK.text((args[1] == "all" || !args[1] ? "" : RTK.ucfirst(args[1], " ")) + "Composite Shop");
 			}
-			M._mode = 0;
-			SceneManager.push(Scene_CompositeMenu);
-		} else if (args[0] == "workroom") {
-			if (args[1] != "custom") {
-				M.command(["complete", args[1]]);
-			}
-			if (args[2]) {
-				M._Title = args[3] ? (RTK.jp() ? args[3] : args[2]) : args[2];
-				M._Title = M._Title.replace("%20", " ");
-			} else {
-				M._Title = RTK.text((args[1] == "all" || !args[1] ? "" : RTK.ucfirst(args[1], " ")) + "Composite Workshop");
-			}
-			M._mode = 2;
 			SceneManager.push(Scene_CompositeMenu);
 		} else if (args[0] == "open") {
 			M.command(["clear"]);
 			M.command(["fill"]);
 			if (args[1]) {
 				M._Title = args[2] ? (RTK.jp() ? args[2] : args[1]) : args[1];
-				M._Title = M._Title.replace("%20", " ");
 			} else {
 				M._Title = RTK.text("Composite");
 			}
-			M._mode = 1;
 			SceneManager.push(Scene_CompositeMenu);
 		} else if (args[0] == "menu") {
-			M._config.menu = args[1] == "on" ? true : args[1] == "off" ? false : args[1] == "toggle" ? !M._config.menu : M._config.menu;
-		} else if (args[0] == "adjust" && args.length == 4) {
-			if (args[1] == "menu") {
-				if (args[2] == "success") {
-					M._config.suM = Number(args[3]);
-				} else if (args[2] == "charge") {
-					M._config.chM = Number(args[3]);
-				}
-			} else if (args[1] == "workroom") {
-				if (args[2] == "success") {
-					M._config.suW = Number(args[3]);
-				} else if (args[2] == "charge") {
-					M._config.chW = Number(args[3]);
-				}
-			} else if (args[1] == "shop") {
-				if (args[2] == "success") {
-					M._config.suS = Number(args[3]);
-				} else if (args[2] == "charge") {
-					M._config.chS = Number(args[3]);
-				}
-			}
-		} else {
-			throw new Error('Unknown plugin command: ' + args[0]);
+			M._menu = args[1] == "on" ? 1 : args[1] == "off" ? 0 : M._menu;
 		}
-		RTK.log(N + " command (" + args.join(" ") + ")");
+		RTK.log(N + " call (" + args.join(" ") + ")", M._learn);
 	};
 	RTK.onCall(M._command, M.command.bind(this));
 
@@ -350,7 +193,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 	var _Window_MenuCommand_addOriginalCommands = Window_MenuCommand.prototype.addOriginalCommands;
 	Window_MenuCommand.prototype.addOriginalCommands = function() {
 		_Window_MenuCommand_addOriginalCommands.call(this)
-		if(M._config.menu){
+		if(M._menu){
 			this.addCommand(RTK.text("Composite"), 'RTK_CompositeCommand', true);
 		};
 	};
@@ -365,34 +208,6 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 
 	// ----- Scene_CompositeMenu -----
 
-	function _chargeable() {
-		return M._mode == 1 ? M._config.chM > 0 : M._mode == 2 ? M._config.chW > 0 : M._mode == 0 ? M._config.chS > 0 : true;
-	}
-	function _convert(_i) {
-		if (filter_meta(_i)) {
-			var values = _i.meta[M._tag].split(",");
-			if (values.length > 4) {
-				var ret = {"f":true};
-				ret.rate = Number(values[0]);
-				ret.rate *= M._mode == 1 ? M._config.suM : M._mode == 2 ? M._config.suW : M._mode == 0 ? M._config.suS : 1;
-				ret.rate = Math.max(ret.rate, 0);
-				ret.rate = Math.min(ret.rate, 1);
-				for (var l=2; l<values.length - 2; l+=2) {
-					var n = Number(values[l]);
-					var k = "v" + String(l / 2);
-					ret[k] = [values[l - 1], n, RTK.hasId(values[l - 1])];
-					ret.f = ret.f && ret[k][2] >= ret[k][1];
-				}
-				ret.fail = values[values.length - 2]||"0";
-				ret.charge = Number(values[values.length - 1]||"0");
-				ret.charge *= M._mode == 1 ? M._config.chM : M._mode == 2 ? M._config.chW : M._mode == 0 ? M._config.chS : 1;
-				ret.charge = Math.max(ret.charge, 0);
-				ret.f = ret.f && $gameParty.gold() >= ret.charge;
-				return ret;
-			}
-		}
-		return {"f":false};
-	}
 	function _composite(_i) {
 		var nk = _i[NK];
 		$gameParty.gainGold(- nk.charge);
@@ -423,16 +238,12 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 	Scene_CompositeMenu.prototype.create = function() {
 		Scene_MenuBase.prototype.create.call(this);
 
-		var gw = 0;
-		if (_chargeable()) {
-			this._goldWindow = new Window_Gold();
-			this._goldWindow.move(Graphics.boxWidth - this._goldWindow.width, 0, this._goldWindow.width, this._goldWindow.height);
-			gw = this._goldWindow.width;
-			this.addWindow(this._goldWindow);
-		}
+		this._goldWindow = new Window_Gold();
+		this._goldWindow.move(Graphics.boxWidth - this._goldWindow.width, 0, this._goldWindow.width, this._goldWindow.height);
+		this.addWindow(this._goldWindow);
 
 		this._helpWindow = new Window_Help(1);
-		this._helpWindow.move(0, 0, Graphics.boxWidth - gw, this._helpWindow.height);
+		this._helpWindow.move(0, 0, Graphics.boxWidth - this._goldWindow.width, this._helpWindow.height);
 		this._helpWindow.setText(M._Title || RTK.text("Composite"));
 		this.addWindow(this._helpWindow);
 
@@ -547,8 +358,28 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		var rect = this.itemRect(index);
 		var width = rect.width - this.textPadding();
 
-		item[NK] = _convert(item);
-		if (item[NK].f) {
+		item[NK] = null;
+		var f = filter_meta(item);
+		if (f) {
+			var a = item.meta[M._tag].split(",");
+			if (a.length > 4) {
+				var b = item[NK] = {};
+				b["rate"] = Number(a[0]);
+				for (var l=2; l<a.length - 2; l+=2) {
+					var n = Number(a[l]);
+					var k = "v" + String(l / 2);
+					b[k] = [a[l - 1], n, RTK.hasId(a[l - 1], n)];
+					f = f && b[k][2] >= b[k][1];
+				}
+				b["fail"] = a[a.length - 2]||"0";
+				b["charge"] = Number(a[a.length - 1]||"0");
+				f = f && $gameParty.gold() >= b["charge"];
+				b["f"] = f;
+			} else {
+				f = false;
+			}
+		}
+		if (f) {
 			this.drawItemName(item, rect.x, rect.y, width);
 		} else {
 			this.changePaintOpacity(false);
@@ -599,23 +430,22 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 
 			if (item[NK].v1[2] < item[NK].v1[1]) {this.changePaintOpacity(false);}
 		        this.drawItemName(RTK.id2object(item[NK].v1[0]), x, y);
-			this.drawText(item[NK].v1[2] + "/" + item[NK].v1[1], x * 2, y, 60, 'right');
+			this.drawText((item[NK].v1[2] ? item[NK].v1[2] : RTK.hasId(item[NK].v1[0])) + "/" + item[NK].v1[1], x * 2, y, 60, 'right');
 			y += lineHeight;
 			this.changePaintOpacity(true);
 
-			if (_chargeable()) {
-				if ($gameParty.gold() < item[NK].charge) {this.changePaintOpacity(false);}
-				this.changeTextColor(this.systemColor());
-				this.drawText(RTK.text("Charge") + ":", this.textPadding(), y, 120);
-				this.resetTextColor();
-				this.drawText(item[NK].charge > 0 ? item[NK].charge : "-", this.textPadding() + 50, y, 120, 'right');
-				this.changePaintOpacity(true);
-			}
+			var price = item[NK].charge > 0 ? item[NK].charge : '-';
+			if (price != "-" && $gameParty.gold() < price) {this.changePaintOpacity(false);}
+			this.changeTextColor(this.systemColor());
+			this.drawText(RTK.text("Charge") + ":", this.textPadding(), y, 120);
+			this.resetTextColor();
+			this.drawText(price, this.textPadding() + 50, y, 120, 'right');
+			this.changePaintOpacity(true);
 
 			if (item[NK].v2) {
 				if (item[NK].v2[2] < item[NK].v2[1]) {this.changePaintOpacity(false);}
 			        this.drawItemName(RTK.id2object(item[NK].v2[0]), x, y);
-				this.drawText(item[NK].v2[2] + "/" + item[NK].v2[1], x * 2, y, 60, 'right');
+				this.drawText((item[NK].v2[2] ? item[NK].v2[2] : RTK.hasId(item[NK].v2[0])) + "/" + item[NK].v2[1], x * 2, y, 60, 'right');
 				this.changePaintOpacity(true);
 			}
 			y += lineHeight;
@@ -628,7 +458,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 			if (item[NK].v3) {
 				if (item[NK].v3[2] < item[NK].v3[1]) {this.changePaintOpacity(false);}
 			        this.drawItemName(RTK.id2object(item[NK].v3[0]), x, y);
-				this.drawText(item[NK].v3[2] + "/" + item[NK].v3[1], x * 2, y, 60, 'right');
+				this.drawText((item[NK].v3[2] ? item[NK].v3[2] : RTK.hasId(item[NK].v3[0])) + "/" + item[NK].v3[1], x * 2, y, 60, 'right');
 				this.changePaintOpacity(true);
 			}
 			y += lineHeight;
@@ -641,7 +471,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 			if (item[NK].v4) {
 				if (item[NK].v4[2] < item[NK].v4[1]) {this.changePaintOpacity(false);}
 			        this.drawItemName(RTK.id2object(item[NK].v4[0]), x, y);
-				this.drawText(item[NK].v4[2] + "/" + item[NK].v4[1], x * 2, y, 60, 'right');
+				this.drawText((item[NK].v4[2] ? item[NK].v4[2] : RTK.hasId(item[NK].v4[0])) + "/" + item[NK].v4[1], x * 2, y, 60, 'right');
 				this.changePaintOpacity(true);
 			}
 			y += lineHeight;
@@ -649,7 +479,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 			if (item[NK].v5) {
 				if (item[NK].v5[2] < item[NK].v5[1]) {this.changePaintOpacity(false);}
 			        this.drawItemName(RTK.id2object(item[NK].v5[0]), x, y);
-				this.drawText(item[NK].v5[2] + "/" + item[NK].v5[1], x * 2, y, 60, 'right');
+				this.drawText((item[NK].v5[2] ? item[NK].v5[2] : RTK.hasId(item[NK].v5[0])) + "/" + item[NK].v5[1], x * 2, y, 60, 'right');
 				this.changePaintOpacity(true);
 			}
 

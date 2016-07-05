@@ -145,7 +145,7 @@ RTK1_Composite forget i6
 
 以上で、合成に関する基本的な利用方法は完了です。 うまく組み込んで、楽しいゲームを作ってください。
 
-## ショップ機能
+## ショップ
 
 これからは中級者向けに、ショップ関連の機能を説明していきます。
 
@@ -172,13 +172,28 @@ RTK1_Composite shop item
 
 ### ショップ名の変更
 
-(書き途中)
+更に第3引数を追加すると、その値はショップ名として使用されます。 第2引数は省略できなくなりますので、全ての種類を表示したい場合には "all" と明示してください。
 
 ```
 RTK1_Composite shop item en_name
-RTK1_Composite shop item en_name ja_name
+RTK1_Composite shop all en_name
+```
+
+第4引数も指定すると、日本語のショップ名として利用されます。 以下のコマンドは英語名 en_name と、日本語名 ja_name が言語設定によって自動的に使い分けられます。
+
+```
 RTK1_Composite shop all en_name ja_name
 ```
+
+なおプラグインコマンドの引数には空白スペース(" ")が指定できませんので、かわりに "%20" を使ってください。 例えば以下のように指定します。
+
+```
+RTK1_Composite shop all English%20name 日本語の名称
+```
+
+![Screen shot - Composite shop](i/RTK1_Composite-14.png)
+
+![Screen shot - Composite shop](i/RTK1_Composite-14.ja.png)
 
 ### カスタム・ショップ
 
@@ -191,6 +206,72 @@ RTK1_Composite remove i6
 RTK1_Composite shop custom
 RTK1_Composite shop custom en_name ja_name
 ```
+
+## 作業場
+
+ショップとは別に、自宅などに「作業場」を設置することができます。
+
+作業場の使い方はショップと同じですが、"shop" コマンドのかわりに "workroom" コマンドを使用してください。
+
+```
+RTK1_Composite workroom
+```
+
+ショップと同様のメニューが開きますが、タイトル部分が「作業場」になっています。
+
+作業場の特徴として、合成の際に費用がかかりません(初期設定の場合)。 ですので作業場で合成をするときには、所持金や合成費用が表示されなくなります。
+
+![Screen shot - Composite workroom](i/RTK1_Composite-13.ja.png)
+
+作業場もショップと同じく扱う種別を設定することができます。 カスタム機能も利用可能です。
+
+```
+RTK1_Composite workroom all
+RTK1_Composite workroom item
+RTK1_Composite workroom weapon
+RTK1_Composite workroom armor
+RTK1_Composite workroom custom
+```
+
+作業場の英語名、日本語名も同様に指定することができます。
+
+```
+RTK1_Composite workroom all en_name
+RTK1_Composite workroom all en_name ja_name
+```
+
+### 作業場を差別化する
+
+作業場での合成作業の成功率と費用は調整が可能で、プラグインパラメーターで初期設定できます。
+
+![Screen shot - Composite workroom](i/RTK1_Composite-15.png)
+
+プラグインパラメーターの初期値では、成功率の調整値(success adjust workroom)は 1 になっています。 これは 1 を掛ける、つまり合成レシピと同じ成功率ということです。
+
+例えばこの値を 0.8 に変更すれば、作業場での合成の成功率は通常より下がります。　あまり推奨はしませんが、1より大きくすると逆に上がります。 ただし当然ながら、成功率の下限は0%で、上限は100%です。
+
+もしレシピの失敗欄に「名刀」など貴重なアイテムを設定している場合、この成功率の調整には注意してください。 めったに出ないはずの貴重な「名刀」が、自宅では簡単に量産できる、となるとゲームバランスが崩れてしまうかもしれません。
+
+またプラグインパラメーターの初期値では、費用の調整値(charge adjust workroom)は 0 になっています。 これは 0 を掛ける、つまり作業場での合成費用は常に無料ということです。
+
+費用の調整値が 0 の場合にはシステム的に特別な扱いとなり、所持金や合成費用が表示されなくなります。 作業場の場合は、これが標準の状態です。
+
+### 調整値をゲーム中に変更する
+
+(書き途中)
+
+```
+RTK1_Composite adjust workroom success 0.8
+RTK1_Composite adjust workroom charge 0.5
+```
+
+## 更新履歴
+
+| version | date | update |
+| --- | --- | --- |
+| ver1.10 | 2016/07/05 | 日本語ヘルプを追加<br>作業場を追加<br>成功率と費用の調整機能を追加 |
+| [ver1.09](archive/RTK1_Composite_v1.0.9.js) | 2016/07/02 | 公開 |
+
 
 ## ライセンス
 
