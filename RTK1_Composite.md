@@ -167,26 +167,127 @@ RTK1_Composite shop item
 
 ### Change shop name
 
-(TBD)
+If you set the 3rd argument, it will be a shop name. With a shop name, you can't pass over the 2nd value, so use "all" to list all recipes.
 
 ```
 RTK1_Composite shop item en_name
-RTK1_Composite shop item en_name ja_name
+RTK1_Composite shop all en_name
+```
+
+If you set the 4th argument, it will be a Japanese shop name. The following sample will switch en_name and ja_name with using language setting of the game.
+
+```
 RTK1_Composite shop all en_name ja_name
 ```
 
+We can't use white space " " in plugin argument, so please use "%20" in lieu of it, as follows;
+
+```
+RTK1_Composite shop all English%20name 日本語の名称
+```
+
+![Screen shot - Composite shop](i/RTK1_Composite-14.png)
+
+![Screen shot - Composite shop](i/RTK1_Composite-14.ja.png)
+
+
 ### Select Shop
 
-Control the shop's recipe (TBD)
+Shop function is easy to use - it create recipe list automatically. But sometimes, we want to control it by ourselves.
+
+In the custom shop, we need to care the recipe list, before open the shop. "clear" deletes all recipes in the list, then you should use "add" some recipes, then open the custom shop with "shop custom" command.
 
 ```
 RTK1_Composite clear
-RTK1_Composite add i6
-RTK1_Composite remove i6
+RTK1_Composite add i5,i6,w1
 RTK1_Composite shop custom
-RTK1_Composite shop custom en_name ja_name
 ```
 
+You also can use "complete" command which add item/weapon/armor recipes automatically like a normal shop. For example, the followng plugin command list will set an item shop but lists not only items but also one weapon (w1).
+
+```
+RTK1_Composite clear
+RTK1_Composite complete item
+RTK1_Composite add w1
+RTK1_Composite shop custom
+```
+
+The following plugin command list creates a custom shop which lists all weapons and armors.
+
+```
+RTK1_Composite clear
+RTK1_Composite complete weapon
+RTK1_Composite complete armor
+RTK1_Composite shop custom
+```
+
+"clear" can removes recipes with type, so the following plugin command list is same as above.
+
+```
+RTK1_Composite complete
+RTK1_Composite clear item
+RTK1_Composite shop custom
+```
+
+The defference is that the shop recipe will not be saved in the save files, so you must set shop lists always before using "shop custom" command.
+
+Maybe it will not be worth for you, "remove" can remove the recipes from the shop recipe list.
+
+```
+RTK1_Composite remove i6
+```
+
+Let's set up your custom composite shop for your game players.
+
+## Workroom function
+
+You also use workroom function which is free of charge composite shop. It's good for the workroom in players home.
+
+This function is very similar with "shop" function, just use "workroom" command in lieu of it.
+
+```
+RTK1_Composite workroom
+```
+
+The screen almost same with a shop, but the title is "Workroom", and the gold/charge area will not be shown (with the default setting).
+
+
+![Screen shot - Composite workroom](i/RTK1_Composite-13.png)
+
+Optional values are same with the shop function.
+
+```
+RTK1_Composite workroom all
+RTK1_Composite workroom item
+RTK1_Composite workroom weapon
+RTK1_Composite workroom armor
+RTK1_Composite workroom custom
+```
+
+Optional title settings are also same with the shop function.
+
+```
+RTK1_Composite workroom all en_name
+RTK1_Composite workroom all en_name ja_name
+```
+
+### Adjust rate and charge
+
+The success rate and charge is configurable in plugin parameters.
+
+
+![Screen shot - Composite workroom](i/RTK1_Composite-15.png)
+In the default setting of plugin parameters, "success adjust workroom" is 1. The value means effective rate, so 1 means the same with the original recipe.
+
+In the other hand, "charge adjust workroom" is 0. The rate value 0 means "free of charge". "free of charge" is the special mode in this plugin - it will hide the gold window and charge description in the composite screen.
+
+## Update history
+
+| version | date | require | update |
+| --- | --- | --- |
+| ver1.11 | 2016/07/06 | RTK1_Core<br>ver1.11 以降 | Support "i2-4" style id list<br>Fix forget command bug. |
+| [ver1.10](archive/RTK1_Composite_v1.10.js) | 2016/07/05 | RTK1_Core<br>ver1.08 以降 | Add Japanese JS comments.<br>Add workroom function.<br>Adjust function of success rate and charge. |
+| [ver1.09](archive/RTK1_Composite_v1.09.js) | 2016/07/02 | RTK1_Core<br>ver1.08 以降 | Open |
 
 ## License
 
