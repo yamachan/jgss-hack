@@ -193,7 +193,7 @@ RTK1_Composite shop all English%20name 日本語の名称
 
 ### Select Shop
 
-Shop function is easy to use - it create recipe list automatically. But sometimes, we want to control it by ourselves.
+The shop function is easy to use - it creates a recipe list automatically. But sometimes, we want to control it by ourselves.
 
 In the custom shop, we need to care the recipe list, before open the shop. "clear" deletes all recipes in the list, then you should use "add" some recipes, then open the custom shop with "shop custom" command.
 
@@ -203,7 +203,7 @@ RTK1_Composite add i5,i6,w1
 RTK1_Composite shop custom
 ```
 
-You also can use "complete" command which add item/weapon/armor recipes automatically like a normal shop. For example, the followng plugin command list will set an item shop but lists not only items but also one weapon (w1).
+You also can use "complete" command which adds item/weapon/armor recipes automatically like a normal shop. For example, the followng plugin command list will set an item shop but lists not only items but also one weapon (w1).
 
 ```
 RTK1_Composite clear
@@ -221,7 +221,7 @@ RTK1_Composite complete armor
 RTK1_Composite shop custom
 ```
 
-"clear" can removes recipes with type, so the following plugin command list is same as above.
+"clear" can removes recipes with type, so the following plugin command list will show the same list as above.
 
 ```
 RTK1_Composite complete
@@ -229,7 +229,7 @@ RTK1_Composite clear item
 RTK1_Composite shop custom
 ```
 
-The defference is that the shop recipe will not be saved in the save files, so you must set shop lists always before using "shop custom" command.
+The custom shop's recipe list will not be saved in the save files, so you must set your recipe lists always before using "shop custom" command.
 
 Maybe it will not be worth for you, "remove" can remove the recipes from the shop recipe list.
 
@@ -241,7 +241,7 @@ Let's set up your custom composite shop for your game players.
 
 ## Workroom function
 
-You also use workroom function which is free of charge composite shop. It's good for the workroom in players home.
+You also can use the workroom function which is free of charge composite shop. It's good for the workroom, workbench or craft table in players home.
 
 This function is very similar with "shop" function, just use "workroom" command in lieu of it.
 
@@ -277,6 +277,7 @@ The success rate and charge is configurable in plugin parameters.
 
 
 ![Screen shot - Composite workroom](i/RTK1_Composite-15.png)
+
 In the default setting of plugin parameters, "success adjust workroom" is 1. The value means effective rate, so 1 means the same with the original recipe.
 
 In the other hand, "charge adjust workroom" is 0. The rate value 0 means "free of charge". "free of charge" is the special mode in this plugin - it will hide the gold window and charge description in the composite screen.

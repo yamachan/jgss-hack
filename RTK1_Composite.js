@@ -207,11 +207,11 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		RTK.text("Armor Composite Shop", "防具合成の店");
 		RTK.text("Custom Composite Shop", "特別な合成の店");
 		RTK.text("Get", "入手");
-		RTK.text("Composite Workshop", "合成の作業場");
-		RTK.text("Item Composite Workshop", "アイテム合成の作業場");
-		RTK.text("Weapon Composite Workshop", "武器合成の作業場");
-		RTK.text("Armor Composite Workshop", "防具合成の作業場");
-		RTK.text("Custom Composite Workshop", "特別な合成の作業場");
+		RTK.text("Composite Workroom", "合成の作業場");
+		RTK.text("Item Composite Workroom", "アイテム合成の作業場");
+		RTK.text("Weapon Composite Workroom", "武器合成の作業場");
+		RTK.text("Armor Composite Workroom", "防具合成の作業場");
+		RTK.text("Custom Composite Workroom", "特別な合成の作業場");
 		RTK.log(N + " ready", M._config);
 	});
 	RTK.onLoad(function(){
@@ -291,7 +291,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 				M._Title = args[3] ? (RTK.jp() ? args[3] : args[2]) : args[2];
 				M._Title = M._Title.replace("%20", " ");
 			} else {
-				M._Title = RTK.text((args[1] == "all" || !args[1] ? "" : RTK.ucfirst(args[1], " ")) + "Composite Workshop");
+				M._Title = RTK.text((args[1] == "all" || !args[1] ? "" : RTK.ucfirst(args[1], " ")) + "Composite Workroom");
 			}
 			M._mode = 2;
 			SceneManager.push(Scene_CompositeMenu);
