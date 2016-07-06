@@ -45,7 +45,7 @@
  *
  * @help
  * Plugin to add the composite function for RPG Maker MV.
- * This plugin requires RTK1_Core plugin (1.08 or later) previously.
+ * This plugin requires RTK1_Core plugin (1.11 or later) previously.
  *
  * NoteTags:
  *   <composite:0.95,i1,3,w2,1,a3,1,i4,500>
@@ -123,7 +123,7 @@
  *
  * @help
  * RPGツクール MV 用に作成した、合成機能を実現するプラグインです。
- * このプラグインの前に RTK1_Core プラグイン(1.08以降)を読み込んでください。
+ * このプラグインの前に RTK1_Core プラグイン(1.11以降)を読み込んでください。
  *
  * メモ欄:
  *   <composite:0.95,i1,3,w2,1,a3,1,i4,500>
@@ -169,7 +169,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 	if (!_global["RTK"]) {
 		throw new Error('This plugin requires RTK1_Core plugin previously.');
 	}
-	if (RTK.VERSION_NO < 1.09) {
+	if (RTK.VERSION_NO < 1.11) {
 		throw new Error('This plugin requires version 1.08 or later of RTK1_Core plugin. the current version looks ' + RTK.VERSION_NO + ".");
 	}
 
