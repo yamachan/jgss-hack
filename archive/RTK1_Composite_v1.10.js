@@ -1,6 +1,5 @@
 ﻿//=============================================================================
-// RTK1_Composite.js  ver1.11 2016/07/06
-// The MIT License (MIT)
+// RTK1_Composite.js  ver1.10 2016/07/05
 //=============================================================================
 
 /*:
@@ -225,31 +224,50 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		RTK.log(N + " save (_learn)", M._learn);
 	});
 
-	function filter_meta(o) {
-		return o && o.meta && o.meta[M._tag];
-	};
-	M.id4list = function(_mode, _targetList, args, _isObject) {
-		var ret = 0;
+	function filter_meta(o) { return o && o.meta && o.meta[M._tag]; };
+	function _learn(_t, args, _f) {
 		if (args.length == 2) {
-			ret = RTK.id4list(_mode, _targetList, args[1], _isObject);
+			var a = args[1].split(",");
+			for (var l=0; l<a.length; l++) {
+				var o = _f ? RTK.id2object(a[l]) : a[l];
+				if (o && !_t.contains(o)) {
+					_t.push(o);
+				}
+			}
 		} else if (args.length == 3) {
-			var a = args[1].match(/^\s*([aiw])\w+\s*$/);
-			if (a) {
-				var list = args[2].split(",").map(function(o){ return a[1] + String(o); });
-				ret = RTK.id4list(_mode, _targetList, list, _isObject);
+			var t = args[1] == "item" ? "i" : args[1] == "weapon" ? "w" : args[1] == "armor" ? "a" : "";
+			var a = args[2].split(",");
+			for (var l=0; l<a.length; l++) {
+				var o = _f ? RTK.id2object(t + a[l]) : t + a[l];
+				if (o && !_t.contains(o)) {
+					_t.push(o);
+				}
 			}
 		}
-		if (_isObject && _targetList == M._list && ret > 0) {
-			M._list = M._list.filter(filter_meta);
+	};
+	function _forget(_t, args, _f) {
+		if (args.length == 2) {
+			var a = args[1].split(",");
+			for (var l=0; l<a.length; l++) {
+				if (_t.contains(a[l])) {
+					_t.splice(M._learn.indexOf(a[l]), 1);
+				}
+			}
+		} else if (args.length == 3) {
+			var t = args[1] == "item" ? "i" : args[1] == "weapon" ? "w" : args[1] == "armor" ? "a" : "";
+			var a = args[2].split(",");
+			for (var l=0; l<a.length; l++) {
+				if (_t.contains(t + a[l])) {
+					_t.splice(M._learn.indexOf(t + a[l]), 1);
+				}
+			}
 		}
 	};
 	M.command = function(args) {
 		if (args[0] == "learn") {
-			M.id4list(RTK.ADD, M._learn, args);
+			_learn(M._learn, args);
 		} else if (args[0] == "forget") {
-			M.id4list(RTK.REMOVE, M._learn, args);
-		} else if (args[0] == "reset") {
-			M._learn = [];
+			_forget(M._learn, args);
 		} else if (args[0] == "fill") {
 			var t = args[1] == "all" || !args[1] ? "item,weapon,armor" : args[1];
 			var a = M._learn.filter(function(o){
@@ -257,9 +275,9 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 			});
 			M._list = RTK.ids2objects(a).filter(filter_meta);
 		} else if (args[0] == "add") {
-			M.id4list(RTK.ADD, M._list, args, true);
+			_learn(M._list, args, true);
 		} else if (args[0] == "remove") {
-			M.id4list(RTK.REMOVE, M._list, args, true);
+			_forget(M._list, args, true);
 		} else if (args[0] == "complete") {
 			M._list = [];
 			var t = args[1] == "all" || !args[1] ? "item,weapon,armor" : args[1];

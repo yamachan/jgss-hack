@@ -1,5 +1,6 @@
 //=============================================================================
-// RTK1_Core.js  ver1.09 2016/07/01
+// RTK1_Core.js  ver1.11 2016/07/06
+// The MIT License (MIT)
 //=============================================================================
 
 /*:
@@ -65,7 +66,7 @@ function RTK() {
  * @type Number
  * @final
  */
-RTK.VERSION_NO = 1.09;
+RTK.VERSION_NO = 1.11;
 
 // ----- for Services -----
 
@@ -107,13 +108,19 @@ RTK.log = function(_v, _o) {
 		}
 	}
 };
-
 RTK.trace = function(_v) {
 	RTK.log(_v);
 	if (this._debug && Error.captureStackTrace) {
 		var o = {};
 		Error.captureStackTrace(o, RTK.trace);
 		console.dir(o.stack);
+	}
+};
+RTK._aeCount = 0;
+RTK.ae = RTK.assertEquals = function(_a, _b) {
+	RTK._aeCount++;
+	if (_a !== _b ) {
+		throw new Error("RTK.assertEquals(" + RTK._aeCount + "): expect " + String(_a) + ", but " + String(_b));
 	}
 };
 
@@ -176,6 +183,64 @@ RTK.hasId = function(_id, _n) {
 		}
 	}
 	return 0;
+};
+
+RTK.ADD = 1;
+RTK.REMOVE = 2;
+RTK.id4list = function(_mode, _targetList, _value, _isObject) {
+	var count = 0;
+	if (_value && _value instanceof Array) {
+		for (var l=0; l<_value.length; l++) {
+			count += RTK.id4list(_mode, _targetList, _value[l], _isObject);	
+		}
+		return count;
+	}
+	if (_value && "object" == typeof _value) {
+		var type = RTK.objectType(_value);
+		if (type != "" && _value.id) {
+			return RTK.id4list(_mode, _targetList, type + _value.id, _isObject);	
+		}
+	}
+	if ("string" == typeof _value && _value != "") {
+		var keys = _value.match(/^\s*([aiw])(\d+)\s*$/);
+		if (keys) {
+			var id = keys[1] + keys[2];
+			var object = RTK.id2object(id);
+			var item = _isObject ? object : id;
+			if (_mode == RTK.ADD) {
+				if (object && !_targetList.contains(item)) {
+					_targetList.push(item);
+					return 1;
+				}
+			} else if (_mode == RTK.REMOVE) {
+				if (object && _targetList.contains(item)) {
+					_targetList.splice(_targetList.indexOf(item), 1);
+					return -1;
+				}
+			}
+			return 0;
+		}
+		keys = _value.match(/^\s*([aiw])(\d+)\-(\d+)\s*$/);
+		if (keys) {
+				var start = Math.floor(Number(keys[2]));
+				var end = Math.floor(Number(keys[3]));
+				if (start > 0 && end > 0 && start < end) {
+					for (var l=start; l<=end; l++) {
+						count += RTK.id4list(_mode, _targetList, keys[1] + l, _isObject);	
+					}
+					return count;
+				}
+				return 0;
+		}
+		keys = _value.split(",");
+		if (keys.length > 1) {
+			keys.forEach(function(o){
+				count += RTK.id4list(_mode, _targetList, o, _isObject);
+			});
+			return count;
+		}
+		return 0;
+	}
 };
 
 // ----- Init -----

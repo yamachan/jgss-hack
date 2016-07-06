@@ -4,11 +4,11 @@
 
 RPGツクール MV 用に作成した、合成機能を実現するプラグインです。
 
-ダウンロード: [RTK1_Composite.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Composite.js)
+ダウンロード: [RTK1_Composite.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Composite.js) (ver1.10 2016/07/06)
 
 ## 概要
 
-[RTK1_Core プラグイン](RTK1_Core.ja.md) を前提としていますので、先に読み込んでください。
+[RTK1_Core プラグイン](RTK1_Core.ja.md) を前提としていますので、先に読み込んでください。 なるべく新しいバージョンをダウンロードして使うようにしてください。
 
 ![Screen shot - Pligin Manager](i/RTK1_Composite-01.png)
 
@@ -79,7 +79,6 @@ RTK1_Composite learn i6
 ```
 RTK1_Composite forget i6
 ```
-
 
 ## 費用を設定しよう
 
@@ -337,12 +336,57 @@ RTK1_Composite adjust workroom charge 0.5
 
 ![Screen shot - Event edit](i/RTK1_Composite-16.ja.png)
 
+### 習得リストと選択リストを使い分ける
+
+本プラグインには、プレイヤーが習得したレシピのリスト(learnリスト)と、実際に画面に表示される選択リスト(selectリスト)があります。
+
+learnリストはゲームプレイ中にだんだん増えていくもので、セーブファイルにも保存されます。 それに対してselectリストは合成のメニューやショップ、作業場を開くときに一時的に利用されるものです。
+
+以下はプレイヤーが習得するlearnリストに関連するプラグインコマンドをまとめてみたものですが、非常にシンプルになっています。 最初の "RTK1_Composite" は省略します。
+
+| コマンド | 説明 |
+| --- | --- |
+| learn #id | #id のレシピを覚える |
+| forget #id | #id のレシピを忘れる |
+| reset | レシピを全て忘れる |
+
+なお #id は i1,i3 のように複数値をカンマ区切りで設定することもできますし、i2-3 のように範囲も指定できます。 i2-4,w1 のように組み合わせても OK です。
+
+それに対し、合成画面で利用される selectリストに対する操作コマンドは多くあります。 プラグイン利用者は、次の表にある custom モードのためにこれらを使うことがおおいでしょう。
+
+| コマンド | 説明 |
+| --- | --- |
+| add #id | リストに#id のレシピを追加する |
+| remove #id | リストから#id のレシピ外す |
+| clear | リストから全てのレシピを外す |
+| clear $type | リストから type のレシピを外す<br>$type は item/weapon/armor |
+| complete | リストに全てのレシピを追加する |
+| complete $type | リストに全ての type のレシピを追加する |
+| fill | リストの内容をlearnリストと同じにする |
+
+実際に合成画面を表示するのは以下のコマンドです。
+
+| コマンド | 説明 |
+| --- | --- |
+| open | fill したリストで合成画面を開く<br>ゲームメニューから呼び出されるパーティ用の合成画面です |
+| shop | complete したリストで合成ショップ画面を開く |
+| shop $type | complete $type したリストで合成ショップ画面を開く |
+| shop custom | リストを変更せず合成ショップ画面を開く |
+| workroom | complete したリストで作業場の画面を開く |
+| workroom $type | complete $type したリストで作業場の画面を開く |
+| workroom custom | リストを変更せず作業場の画面を開く |
+
+これらの合成画面を表示するコマンドは、追加の引数で英語、日本語の表示タイトルを設定できます。
+
+(開発メモ：合成レシピの選択画面での並びが、単に追加順になっている。ID順や名前順などオプションを用意したい)
+
 ## 更新履歴
 
-| version | date | update |
+| version | date | require | update |
 | --- | --- | --- |
-| ver1.10 | 2016/07/05 | 日本語ヘルプを追加<br>作業場を追加<br>成功率と費用の調整機能を追加 |
-| [ver1.09](archive/RTK1_Composite_v1.09.js) | 2016/07/02 | 公開 |
+| ver1.11 | 2016/07/06 | RTK1_Core<br>ver1.11 以降 | #id 指定にハイフンによる範囲指定が使えるようになった<br>forget コマンドのバグを修正 |
+| [ver1.10](archive/RTK1_Composite_v1.10.js) | 2016/07/05 | RTK1_Core<br>ver1.08 以降 | 日本語ヘルプを追加<br>作業場を追加<br>成功率と費用の調整機能を追加 |
+| [ver1.09](archive/RTK1_Composite_v1.09.js) | 2016/07/02 | RTK1_Core<br>ver1.08 以降 | 公開 |
 
 
 ## ライセンス

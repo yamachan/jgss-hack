@@ -4,7 +4,7 @@
 
 Plugin to add the composite function for RPG Maker MV.
 
-Download: [RTK1_Composite.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Composite.js)
+Download: [RTK1_Composite.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Composite.js) (ver1.10 2016/07/06)
 
 ## Overview
 
