@@ -92,13 +92,85 @@ The following is game screen in English mode.
 
 ## hide parameter
 
+If you don't allow players to change the language setting everytime, you should set the 'hide' plagin parameter to 1:ON. The option munu will hide "Language" option.
+
 ## Expand game data
 
-Translate actor names, class names,,, (TBD)
+Now, you can switch system language from English to Japanese. Next, let's switch the actor name, class name and so on. You can use the plugin's official method - tag text in note area.
+
+For example, the following is a 'Class' tab of Database in English version RPG Maker MV. You can see the Japanese text with 'ja' tag, like  &lt;ja:勇者&gt; in the note are of 'Hero' class.
+
+![Screen shot - Database classes En](i/RTK1_Option_EnJa-15.png)
+
+The actor name is same. The followng screen is the game which set Japanese tag note text into all actors/classes.
 
 ![Screen shot - Game japanese](i/RTK1_Option_EnJa-09.png)
 
+If you are using Japanese version RPG Make MV, the default data in Database is in Japanese, so you should input English note text with 'en' tag, like &lt;en:Hero&gt;.
+
+![Screen shot - Database classes Ja](i/RTK1_Option_EnJa-16.png)
+
+You can set more than 2 texts with comma-separated format. For example, I set not only actor name, but also nickname and profile with the note 'ja' tag.
+
+![Screen shot - Database Actor](i/RTK1_Option_EnJa-17.png)
+
+The following is the result screen in English mode. The actor's name, nickname and profile is same as the database setting.
+
+![Screen shot - Game status En](i/RTK1_Option_EnJa-18.png)
+
+The following is the result screen in Japanese mode. The actor's name, nickname and profile is replaced by 'ja' tag information in note area.
+
+![Screen shot - Game status Ja](i/RTK1_Option_EnJa-19.png)
+
+I show you another sample. Let's set a 'ja' tagged Japanese text into Portion item's note.
+
+![Screen shot - Database Item](i/RTK1_Option_EnJa-20.png)
+
+You can see the tagged text in the Japanese mode.
+
+![Screen shot - Game japanese](i/RTK1_Option_EnJa-21.png)
+
+That's all. You can use &lt;ja:Japanese text&gt; and &lt;en:English text&gt; tag in each note area, to set the specific text depends on the lnaguage.
+
 ## Caution about expanded game data
+
+You can use the event commands which change avator's name, nickname or profile. But you need to use them carefully.
+
+![Screen shot - Event command](i/RTK1_Option_EnJa-22.png)
+
+If you use these commands, the system will replace both English and Japanese values. This is businesslike and safe work, and it doesn't have any bad effect to the current game.
+
+For example, in an event, if you use 'Change Nickname...' event command with "Iron fist girl" value against Therese, her nickname will be set so in both English and Japanese mode.
+
+With this plugin, if the value has '||' string in it, these event commands become the enhanced mode - left text will be set for English mode, right text will be set for Japanese mode.
+
+I the Therese's case, you can use the value "Iron fist girl||鉄拳少女" to the event commands, so it will work well.
+
+The following is the sample event about this;
+
+![Screen shot - Event command](i/RTK1_Option_EnJa-23.png)
+
+The old man ask you the new name of actor1. The 2nd and 3rd answer contains English and Japanese name separated by '||' string.
+
+![Screen shot - Game japanese](i/RTK1_Option_EnJa-24.png)
+
+If you choise the 2nd answer, the result is as follws in Japanese mode;
+
+![Screen shot - Game japanese](i/RTK1_Option_EnJa-25.png)
+
+With this enhance, please use these event command as you like.
+
+## Expanded type data
+
+Same as name, nickname and profile of avator, the plugin enpands texts in 'Type' tab in Database.
+
+The rule is also same, English and Japanese text separated by '||' string.
+
+![Screen shot - Database type](i/RTK1_Option_EnJa-26.png)
+
+You can see the Japanese text (in red box in above screeenshot) is used in Japanese mode as follows;
+
+![Screen shot - Game japanese](i/RTK1_Option_EnJa-27.png)
 
 ## message parameter
 
@@ -110,8 +182,8 @@ Expand text messege... (TBD)
 
 | version | date | require | update |
 | --- | --- | --- | --- |
-| ver1.12 | 2016/07/10 | RTK1_Core<br>ver1.12 or later | Battle/Event Test に対応 |
-| [ver1.04](archive/RTK1_Option_EnJa_v1.04.js) | 2016/06/27 | RTK1_Core<br>ver1.04 or later | 公開 |
+| ver1.12 | 2016/07/10 | RTK1_Core<br>ver1.12 or later | Support Battle/Event Test mode |
+| [ver1.04](archive/RTK1_Option_EnJa_v1.04.js) | 2016/06/27 | RTK1_Core<br>ver1.04 or later | Open |
 
 ## License
 
