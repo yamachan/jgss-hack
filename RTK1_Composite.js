@@ -170,7 +170,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		throw new Error('This plugin requires RTK1_Core plugin previously.');
 	}
 	if (RTK.VERSION_NO < 1.11) {
-		throw new Error('This plugin requires version 1.08 or later of RTK1_Core plugin. the current version looks ' + RTK.VERSION_NO + ".");
+		throw new Error('This plugin requires version 1.11 or later of RTK1_Core plugin. the current version looks ' + RTK.VERSION_NO + ".");
 	}
 
 	var N = "RTK1_Composite";

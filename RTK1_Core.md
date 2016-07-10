@@ -62,7 +62,7 @@ RTK.onReady(function(){
 });
 ```
 
-onReady service will wait the initiation of game data, then sets up itself, finally calls all registered functions in a sequential order.
+onReady service will wait the initiation of game data (end of Scene_Boot), then sets up itself, finally calls all registered functions in a sequential order.
 
 You don't worry about init timing and order with this service.
 
@@ -176,12 +176,12 @@ In this library's common game functions, RTK.objects2ids function is useful for 
 This onStart service looks similar with onReady service above. But this service will be called later than onReady service. This service will be called just before Scene_Map start.
 
 ```js
-RTK.onStart(function(isNewGame){
+RTK.onStart(function(mode){
   // your start code here
 });
 ```
 
-The registered function will be called with one argument (isNewGame) which will be true in new game, will be false in loaded game.
+The registered function will be called with one argument (mode) which will be 1 in new game, will be 0 in loaded game. The value 2 means battle test, 3 means event test.
 
 The important difference from onReady service is - this onStart timing is after loading save data. So if you want to use Persistent service (RTK.load function) to initiate your plugin setting, you　should use this onStart service. onReady is too early to refer the saved information.
 
@@ -221,6 +221,14 @@ By the way, the text selection in RTK.text is not case sensitive. So RTK.text("Y
 | RTK.id2object | id : String | Backward convert of the above function. |
 | RTK.objects2ids | list : Object Array | List version of RTK.object2id function.<br>It removes error "" Strings automatically.<br>e.g. [$dataArmors[2],$dataSkills[3]] => ["a2","s3"] |
 | RTK.ids2objects | list : String Array | Backward convert of the above function. |
+
+## Update history
+
+| version | date | require | update |
+| --- | --- | --- | --- |
+| ver1.12 | 2016/07/10 | N/A | Support Battle\Event Test |
+| [ver1.11](archive/RTK1_Core_v1.11.js) | 2016/07/06 | N/A | Add RTK.id2object() and other id support functions |
+| [ver1.09](archive/RTK1_Core_v1.09.js) | 2016/07/01 | N/A | Stable open |
 
 ## License
 

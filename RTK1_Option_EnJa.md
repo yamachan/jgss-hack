@@ -106,6 +106,12 @@ Expand text messege... (TBD)
 
 ## Maintenance Dictionary plugin command
 
+## Update history
+
+| version | date | require | update |
+| --- | --- | --- | --- |
+| ver1.12 | 2016/07/10 | RTK1_Core<br>ver1.12 or later | Battle/Event Test に対応 |
+| [ver1.04](archive/RTK1_Option_EnJa_v1.04.js) | 2016/06/27 | RTK1_Core<br>ver1.04 or later | 公開 |
 
 ## License
 

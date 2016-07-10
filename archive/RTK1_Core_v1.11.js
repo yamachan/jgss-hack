@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.12 2016/07/10
+// RTK1_Core.js  ver1.11 2016/07/06
 // The MIT License (MIT)
 //=============================================================================
 
@@ -66,7 +66,7 @@ function RTK() {
  * @type Number
  * @final
  */
-RTK.VERSION_NO = 1.12;
+RTK.VERSION_NO = 1.11;
 
 // ----- for Services -----
 
@@ -273,9 +273,9 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject) {
 			setTimeout(RTK_init, 100);
 		}
 	};
-	var _Scene_Boot_start = Scene_Boot.prototype.start;
-	Scene_Boot.prototype.start = function() {
-		_Scene_Boot_start.call(this);
+	var _Scene_Boot_checkPlayerLocation = Scene_Boot.prototype.checkPlayerLocation;
+	Scene_Boot.prototype.checkPlayerLocation = function() {
+		_Scene_Boot_checkPlayerLocation.call(this);
 		RTK_init();
 	};
 
@@ -284,7 +284,7 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject) {
 		_Scene_Title_commandNewGame.call(this);
 		for (var l=0; l<RTK._starts.length; l++) {
 			if ("function" == typeof RTK._starts[l]) {
-				RTK._starts[l](1);
+				RTK._starts[l](true);
 			}
 		}
 		RTK.log(N + " start [new game] (_lang:" + RTK._lang + ", _ready:" + RTK._ready + ")");
@@ -294,34 +294,10 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject) {
 		_Scene_Load_onLoadSuccess.call(this);
 		for (var l=0; l<RTK._starts.length; l++) {
 			if ("function" == typeof RTK._starts[l]) {
-				RTK._starts[l](0);
+				RTK._starts[l](false);
 			}
 		}
 		RTK.log(N + " start [load game] (_lang:" + RTK._lang + ", _ready:" + RTK._ready + ")");
-	};
-	var _Scene_Battle_start = Scene_Battle.prototype.start;
-	Scene_Battle.prototype.start = function() {
-		_Scene_Battle_start.call(this);
-		if (DataManager.isBattleTest()) {
-			for (var l=0; l<RTK._starts.length; l++) {
-				if ("function" == typeof RTK._starts[l]) {
-					RTK._starts[l](2);
-				}
-			}
-			RTK.log(N + " start [battle test] (_lang:" + RTK._lang + ", _ready:" + RTK._ready + ")");
-		}
-	};
-	var _Scene_Map_start = Scene_Map.prototype.start;
-	Scene_Map.prototype.start = function() {
-		_Scene_Map_start.call(this);
-		if (DataManager.isEventTest()) {
-			for (var l=0; l<RTK._starts.length; l++) {
-				if ("function" == typeof RTK._starts[l]) {
-					RTK._starts[l](3);
-				}
-			}
-			RTK.log(N + " start [event test] (_lang:" + RTK._lang + ", _ready:" + RTK._ready + ")");
-		}
 	};
 
 	// ----- json option -----

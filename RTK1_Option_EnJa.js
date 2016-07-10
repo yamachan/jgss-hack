@@ -1,5 +1,6 @@
 //=============================================================================
-// RTK1_Option_EnJa.js  ver1.04 2016/06/27
+// RTK1_Option_EnJa.js  ver1.12 2016/07/10
+// The MIT License (MIT)
 //=============================================================================
 
 /*:
@@ -40,7 +41,7 @@
  * @default Japanese
  *
  * @help
- * This plugin requires RTK1_Core plugin previously.
+ * This plugin requires RTK1_Core plugin (1.12 or later) previously.
  *
  * Plugin Command:
  *   RTK1_Option_EnJa english    # Change to English mode
@@ -87,7 +88,7 @@
  * @default Japanese
  *
  * @help
- * このプラグインの前に RTK1_Core プラグインを読み込んでください。
+ * このプラグインの前に RTK1_Core プラグイン(1.12以降)を読み込んでください。
  *
  * プラグインコマンド:
  *   RTK1_Option_EnJa english    # 英語モードにする
@@ -101,6 +102,9 @@
 (function(_global) {
 	if (!_global["RTK"]) {
 		throw new Error('This plugin requires RTK1_Core.js plugin previously.');
+	}
+	if (RTK.VERSION_NO < 1.12) {
+		throw new Error('This plugin requires version 1.12 or later of RTK1_Core plugin. the current version looks ' + RTK.VERSION_NO + ".");
 	}
 
 	var N = "RTK1_Option_EnJa";
@@ -391,6 +395,10 @@
 		}
 	};
 
+	RTK.onStart(function(_mode){
+		RTK.terms_change();
+		RTK.log(N + " start (mode:" + _mode + ")");
+	});
 	var _Scene_Title_create = Scene_Title.prototype.create;
 	Scene_Title.prototype.create = function() {
 		RTK.terms_change();
@@ -400,13 +408,6 @@
 	Scene_Options.prototype.terminate = function() {
 		_Scene_Options_terminate.call(this);
 		RTK.terms_change();
-	};
-	var _DataManager_createGameObjects = DataManager.createGameObjects;
-	DataManager.createGameObjects = function() {
-		_DataManager_createGameObjects.call(this);
-		if (M._switch > 0) {
-			$gameSwitches.setValue(M._switch, ConfigManager.langSelect);
-		}
 	};
 
 	// ----- Game_Actor support -----

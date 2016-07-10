@@ -59,7 +59,7 @@ json パラメータを 1 に変更すると、セーブデータ作成の際に
 
 ## onReady サービス
 
-RTK.onReady() 関数で自分のプラグイン用の初期化関数を登録しておくと、ゲームデータが生成され、RTK1_Core が準備された後の適切なタイミングで、登録された関数が登録順に呼び出されます。
+RTK.onReady() 関数で自分のプラグイン用の初期化関数を登録しておくと、ゲームデータが生成され、Scene_Boot が終了し、RTK1_Core が準備された後の適切なタイミングで、登録された関数が登録順に呼び出されます。
 
 ```js
 RTK.onReady(function(){
@@ -179,11 +179,11 @@ onSave 時には共通のゲーム用関数 RTK.objects2ids が、onLoad 時に�
 onStart サービスは onReady サービスと同様のサービスですが、登録した関数が呼ばれるタイミングがより遅く、ゲームの開始直前 (Scene_Map が開始する直前) になります。
 
 ```js
-RTK.onStart(function(isNewGame){
+RTK.onStart(function(mode){
   // your start code here
 });
 ```
-呼ばれる関数には引数 (isNewGame) が1つ渡され、新規にゲームを開始した場合には true、セーブファイルを読み込んで開始した場合には false になります。
+呼ばれる関数には引数 (mode) が1つ渡され、新規にゲームを開始した場合には 1、セーブファイルを読み込んで開始した場合には 0 になります。 なお戦闘テストのときには 2 の値、イベントテストの時には 3 の値になります。
 
 onReady サービスとの最大の違いは、セーブファイルが読み込まれた後のタイミングだということです。 よって Persistent サービスで説明した RTK.load 関数を使用し、保存していた値でプラグインを初期化する場合には、こちらの onStart サービスを利用してください。 onReady サービスは保存されたデータにアクセスするにはタイミングが早すぎるのです。
 
@@ -225,6 +225,14 @@ RTK.text("No", "いいえ");
 | RTK.id2object | id : String | 上記の関数の逆の変換を実施します |
 | RTK.objects2ids | list : Object Array | 配列に対して RTK.object2id と同様の変換を実施します<br>その際にエラーを意味する空文字列 "" は取り除きます<br>例) [$dataArmors[2],$dataSkills[3]] => ["a2","s3"] |
 | RTK.ids2objects | list : String Array | 上記の関数の逆の変換を実施します |
+
+## 更新履歴
+
+| バージョン | 公開日 | 必須ライブラリ | 更新内容 |
+| --- | --- | --- | --- |
+| ver1.12 | 2016/07/10 | N/A | Battle/Event Test に対応 |
+| [ver1.11](archive/RTK1_Core_v1.11.js) | 2016/07/06 | N/A | RTK.id2object() などid系関数を追加 |
+| [ver1.09](archive/RTK1_Core_v1.09.js) | 2016/07/01 | N/A | 安定版 公開 |
 
 ## ライセンス
 

@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_TestSuite.js  ver1.11 2016/07/06
+// RTK1_TestSuite.js  ver1.12 2016/07/10
 //=============================================================================
 
 /*:
@@ -27,6 +27,9 @@
 
 	RTK.onReady(function(){
 		RTK.log(N + " ready");
+	});
+	RTK.onStart(function(_mode){
+		RTK.log(N + " start (mode:" + _mode + ")");
 	});
 
 	function func_testSuite(){
