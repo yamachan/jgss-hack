@@ -230,7 +230,8 @@ RTK.text("No", "いいえ");
 
 | バージョン | 公開日 | 必須ライブラリ | 更新内容 |
 | --- | --- | --- | --- |
-| ver1.12 | 2016/07/10 | N/A | Battle/Event Test に対応 |
+| ver1.13 | 2016/07/12 | N/A | RTK.objectClone 関数を拡張 |
+| [ver1.12](archive/RTK1_Core_v1.12.js) | 2016/07/10 | N/A | Battle/Event Test に対応 |
 | [ver1.11](archive/RTK1_Core_v1.11.js) | 2016/07/06 | N/A | RTK.id2object() などid系関数を追加 |
 | [ver1.09](archive/RTK1_Core_v1.09.js) | 2016/07/01 | N/A | 安定版 公開 |
 

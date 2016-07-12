@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.13 2016/07/12
+// RTK1_Core.js  ver1.12 2016/07/10
 // The MIT License (MIT)
 //=============================================================================
 
@@ -66,7 +66,7 @@ function RTK() {
  * @type Number
  * @final
  */
-RTK.VERSION_NO = 1.13;
+RTK.VERSION_NO = 1.12;
 
 // ----- for Services -----
 
@@ -126,11 +126,11 @@ RTK.ae = RTK.assertEquals = function(_a, _b) {
 
 // ----- Basic JS Functions -----
 
-RTK.cloneObject = function(_o, o) {
+RTK.cloneObject = function(_o) {
 	if (null == _o || typeof _o != "object") {
 		return null;
 	}
-	o = (null != o && typeof _o == "object") ? o : _o.constructor();
+	var o = _o.constructor();
 	for (var k in _o) {
 		if (_o.hasOwnProperty(k)) o[k] = _o[k];
 	}

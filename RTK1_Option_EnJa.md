@@ -172,18 +172,97 @@ You can see the Japanese text (in red box in above screeenshot) is used in Japan
 
 ![Screen shot - Game japanese](i/RTK1_Option_EnJa-27.png)
 
+## Language translation resource control
+
+When you develop a big and long game, the number of resources also becomes big. In this case, you should add a translater, and delegate the translation to him/her. This plugin has the functions to support this process.
+
+### Language translation resource in plugin
+
+At the end of [RTK1_Option_EnJa.js](RTK1_Option_EnJa.js) file, you can see the following code;
+
+```js
+M.translation = {
+  "actors":[],
+  "classes":[],
+  "items":[],
+  "weapons":[],
+  "armors":[],
+  "enemies":[],
+  "troops":[],
+  "skills":[],
+  "states":[],
+  "t_weapons":[],
+  "t_armors":[],
+  "t_equips":[],
+  "t_skills":[],
+  "t_elements":[]
+};
+```
+
+This object (RTK.EJ.translation) will contain the translated resource - English texts for Japanese game or Japanese texts for English game. This plugin will read this object, and update switchable language resources in the plugin during its onStart initiation.
+
+### Output the translation source file
+
+To support the trnslation work, this plugin has a function to output the translation source file automatically. Start your new game with this plugin, then execute the following command (function) from RPG Maker MV's F8 console.
+
+```js
+RTK.EJ.writeTranslationBase()
+```
+![Screen shot - console](i/RTK1_Option_EnJa-28.png)
+
+After it、you can find a new 'translation_base.json' file in the save folder.
+
+![Screen shot - json file](i/RTK1_Option_EnJa-29.png)
+
+If the original game is English mode, the following English text is written into this json file as follows.
+
+```js
+{
+  "actors":[
+    ["Harold","Sword boy","Teenage boy with red hair loves Sword."],
+    ["Therese","Axe girl","Teenage girl with green hair loves Axe."],
+    ["Marsha","Mysterious majic girl","Too mysterious..."],
+    ["Lucius","Eye glasses priest","Too eye glasses..."]
+  ],
+  "classes":[
+    "Hero",
+    "Warrior",
+    "Mage",
+    "Priest"
+  ],
+  [omission]
+}
+```
+
+You should send this json file to your translater. So the translater can translate it with Text editor or a kind of json tool, then send back to you.
+
+### Apply the Language translation resource
+
+You can update the plugin's js file directly with the translated JSON data. Or, you can register the translated JSON data from your own plugin. In this case, the following function is maybe useful.
+
+```js
+RTK.EJ.applyTranslation(
+{
+  // The translated JSON data is here
+}
+);
+```
+
 ## message parameter
 
 Expand text messege... (TBD)
 
 ## Maintenance Dictionary plugin command
 
+(TBD)
+
 ## Update history
 
 | version | date | require | update |
 | --- | --- | --- | --- |
-| ver1.12 | 2016/07/10 | RTK1_Core<br>ver1.12 or later | Support Battle/Event Test mode |
-| [ver1.04](archive/RTK1_Option_EnJa_v1.04.js) | 2016/06/27 | RTK1_Core<br>ver1.04 or later | Open |
+| ver1.13 | 2016/07/12 | [RTK1_Core](RTK1_Core.md)<br>ver1.13 or later | Support Language resource file |
+| [ver1.04](archive/RTK1_Option_EnJa_v1.12.js) | 2016/07/10 | [RTK1_Core](RTK1_Core.md)<br>ver1.12 or later | Support Battle/Event Test mode |
+| [ver1.04](archive/RTK1_Option_EnJa_v1.04.js) | 2016/06/27 | [RTK1_Core](RTK1_Core.md)<br>ver1.04 or later | Open |
 
 ## License
 

@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Option_EnJa.js  ver1.13 2016/07/12
+// RTK1_Option_EnJa.js  ver1.12 2016/07/10
 // The MIT License (MIT)
 //=============================================================================
 
@@ -103,8 +103,8 @@
 	if (!_global["RTK"]) {
 		throw new Error('This plugin requires RTK1_Core.js plugin previously.');
 	}
-	if (RTK.VERSION_NO < 1.13) {
-		throw new Error('This plugin requires version 1.13 or later of RTK1_Core plugin. the current version looks ' + RTK.VERSION_NO + ".");
+	if (RTK.VERSION_NO < 1.12) {
+		throw new Error('This plugin requires version 1.12 or later of RTK1_Core plugin. the current version looks ' + RTK.VERSION_NO + ".");
 	}
 
 	var N = "RTK1_Option_EnJa";
@@ -147,20 +147,20 @@
 			t_elements_J = $dataSystem.elements;
 
 			terms_E = M._terms_E;
-			actors_E = updateGameData(actors_J, M.translation.actors, M._meta_en);
-			classes_E = updateGameData(classes_J, M.translation.classes, M._meta_en);
-			items_E = updateGameData(items_J, M.translation.items, M._meta_en);
-			weapons_E = updateGameData(weapons_J, M.translation.weapons, M._meta_en);
-			armors_E = updateGameData(armors_J, M.translation.armors, M._meta_en);
-			enemies_E = updateGameData(enemies_J, M.translation.enemies, M._meta_en);
-			troops_E = updateGameData(troops_J, M.translation.troops, M._meta_en);
-			skills_E = updateGameData(skills_J, M.translation.skills, M._meta_en);
-			states_E = updateGameData(states_J, M.translation.states, M._meta_en);
-			t_weapons_E = updateTypeData(t_weapons_J, M.translation.t_weapons);
-			t_armors_E = updateTypeData(t_armors_J, M.translation.t_armors);
-			t_equips_E = updateTypeData(t_equips_J, M.translation.t_equips);
-			t_skills_E = updateTypeData(t_skills_J, M.translation.t_skills);
-			t_elements_E = updateTypeData(t_elements_J, M.translation.t_elements);
+			actors_E = updateGameData(actors_J, M._actors, M._meta_en);
+			classes_E = updateGameData(classes_J, M._classes, M._meta_en);
+			items_E = updateGameData(items_J, M._items, M._meta_en);
+			weapons_E = updateGameData(weapons_J, M._weapons, M._meta_en);
+			armors_E = updateGameData(armors_J, M._armors, M._meta_en);
+			enemies_E = updateGameData(enemies_J, M._enemies, M._meta_en);
+			troops_E = updateGameData(troops_J, M._troops, M._meta_en);
+			skills_E = updateGameData(skills_J, M._skills, M._meta_en);
+			states_E = updateGameData(states_J, M._states, M._meta_en);
+			t_weapons_E = updateTypeData(t_weapons_J, M._t_weapons);
+			t_armors_E = updateTypeData(t_armors_J, M._t_armors);
+			t_equips_E = updateTypeData(t_equips_J, M._t_equips);
+			t_skills_E = updateTypeData(t_skills_J, M._t_skills);
+			t_elements_E = updateTypeData(t_elements_J, M._t_elements);
 		} else {
 			terms_E = $dataSystem.terms;
 			actors_E = $dataActors;
@@ -179,20 +179,20 @@
 			t_elements_E = $dataSystem.elements;
 
 			terms_J = M._terms_J;
-			actors_J = updateGameData(actors_E, M.translation.actors, M._meta_ja);
-			classes_J = updateGameData(classes_E, M.translation.classes, M._meta_ja);
-			items_J = updateGameData(items_E, M.translation.items, M._meta_ja);
-			weapons_J = updateGameData(weapons_E, M.translation.weapons, M._meta_ja);
-			armors_J = updateGameData(armors_E, M.translation.armors, M._meta_ja);
-			enemies_J = updateGameData(enemies_E, M.translation.enemies, M._meta_ja);
-			troops_J = updateGameData(troops_E, M.translation.troops, M._meta_ja);
-			skills_J = updateGameData(skills_E, M.translation.skills, M._meta_ja);
-			states_J = updateGameData(states_E, M.translation.states, M._meta_ja);
-			t_weapons_J = updateTypeData(t_weapons_E, M.translation.t_weapons);
-			t_armors_J = updateTypeData(t_armors_E, M.translation.t_armors);
-			t_equips_J = updateTypeData(t_equips_E, M.translation.t_equips);
-			t_skills_J = updateTypeData(t_skills_E, M.translation.t_skills);
-			t_elements_J = updateTypeData(t_elements_E, M.translation.t_elements);
+			actors_J = updateGameData(actors_E, M._actors, M._meta_ja);
+			classes_J = updateGameData(classes_E, M._classes, M._meta_ja);
+			items_J = updateGameData(items_E, M._items, M._meta_ja);
+			weapons_J = updateGameData(weapons_E, M._weapons, M._meta_ja);
+			armors_J = updateGameData(armors_E, M._armors, M._meta_ja);
+			enemies_J = updateGameData(enemies_E, M._enemies, M._meta_ja);
+			troops_J = updateGameData(troops_E, M._troops, M._meta_ja);
+			skills_J = updateGameData(skills_E, M._skills, M._meta_ja);
+			states_J = updateGameData(states_E, M._states, M._meta_ja);
+			t_weapons_J = updateTypeData(t_weapons_E, M._t_weapons);
+			t_armors_J = updateTypeData(t_armors_E, M._t_armors);
+			t_equips_J = updateTypeData(t_equips_E, M._t_equips);
+			t_skills_J = updateTypeData(t_skills_E, M._t_skills);
+			t_elements_J = updateTypeData(t_elements_E, M._t_elements);
 		}
 		RTK.onCall(N, function(args){
 			if (args.length == 1 && args[0].match(/^en(?:glish)?$/i)) {
@@ -274,11 +274,6 @@
 			} else if ("object" == typeof d) {
 				if (d.id) {
 					id = d.id;
-				}
-				for (var k in d) {
-					if (d.hasOwnProperty(k)) {
-						_list[id][k] = d[k];
-					}
 				}
 			}
 			id++;
@@ -492,10 +487,10 @@
 
 	/* 
 	 * If you use English version of RPG Maker MV, following "terms_E" list will not be used, will be replaced by your words in Terms tab of database tool.
-	 * In this case, you only need to update the following "terms_J" list, if you don't like the default Japansese terms settings.
+	 * In this case, you only need to update "terms_J" list, if you don't like the default Japansese terms settings.
 	 * 
 	 * もし日本語版のRPGツクールMVを利用している場合、以下に定義されている terms_J 配列は利用されず、データベース機能の用語タブで設定した値で上書きされます。
-	 * もし標準の英語表記が好ましくない場合、あなたは以下の terms_E 配列を修正することでゲーム中の英語モードの用語を修正することができます。
+	 * もし標準の英語表記が好ましくない場合、あなたは terms_E 配列を修正することでゲーム中の英語モードの用語を修正することができます。
 	 */
 
 	M._terms_E = {
@@ -512,73 +507,47 @@
 	};
 
 	// ----- Translated values -----
-	//
-	// This section will support to integrate and control translated texts in bulk.
-	// If you need to ask someone to translate game terms, this section's function and data structure will support you.
-	//
-	// ここでは主に大規模なゲーム用に、翻訳用のデータをまとめて管理する方法を提供します。
-	// もしゲーム用語の翻訳を別の誰かに依頼するのなら、このセクションにある関数とデータ構造が助けになるでしょう。
 
-	M.writeTranslationBase = function() {
-		var ret = {
-			"actors" : $dataActors.map(function(o){return o ? [o.name, o.nickname, o.profile] : null}).splice(1),
-			"classes" : $dataClasses.map(function(o){return o ? o.name : null}).splice(1),
-			"items" : $dataItems.map(function(o){return o ? [o.name, o.description] : null}).splice(1),
-			"weapons" : $dataWeapons.map(function(o){return o ? [o.name, o.description] : null}).splice(1),
-			"armors" : $dataArmors.map(function(o){return o ? [o.name, o.description] : null}).splice(1),
-			"enemies" : $dataEnemies.map(function(o){return o ? o.name : null}).splice(1),
-			"troops" : $dataTroops.map(function(o){return o ? o.name : null}).splice(1),
-			"skills" : $dataSkills.map(function(o){return o ? [o.name, o.description] : null}).splice(1),
-			"states" : $dataStates.map(function(o){return o ? o.name : null}).splice(1),
-			"t_weapons" : $dataSystem.weaponTypes.map(function(o){return o;}).splice(1),
-			"t_armors" : $dataSystem.armorTypes.map(function(o){return o;}).splice(1),
-			"t_equips" : $dataSystem.equipTypes.map(function(o){return o;}).splice(1),
-			"t_skills" : $dataSystem.skillTypes.map(function(o){return o;}).splice(1),
-			"t_elements" : $dataSystem.elements.map(function(o){return o;}).splice(1)
-		};
-		var json = JsonEx.stringify(ret);
-		RTK.writeFileSync("translation_base.json", json, true);
-	};
-	M.applyTranslation = function(o) {
-		if (o) {
-			RTK.cloneObject(o, M.translation);
-		}
-	};
-
-	/*
-	 * You can use String, String list or Object in each translation Array.
+	/* If you need to translate not only Terms but also other obejct names, please use this section.
+	 *
+	 * You can use String, String list or Object in each list_* Array.
 	 *	String - It overwrites the name attribute of the target data object.
 	 *	String list - Its elements overwrite the target data object. It depends on target type.
 	 *		Actor: name, nickname, profile, note
 	 * 		Others: name, description, note
 	 *	Object - Its attributes overwrite the target data object.
 	 *
-	 * Example (English data):
-	 * 	M.translation.actors = ["Harold", "Therese", "Marsha", "Lucius"];
-	 * 	M.translation.actors = [["Harold","Sword boy"], ["Therese","Axe girl","Teenage girl with green hair loves Axe."], "Marsha", "Lucius"];
-	 *	M.translation.classes = ["Hero", "Warrior", "Mage", "Priest"];
-	 *
 	 * Hint: The object's "id" attribute will affect the fetch function.
 	 * 	It means you can skip elements with id attribute, as follows;
-	 * 	var actors = ["name of 1st actor", {"name":"name of 100th actor","id":100}, ["name of 101th actor,nickname of 101th actor"]];
+	 * 	var list_actors = ["name of 1st actor", {"name":"name of 100th actor","id":100}, ["name of 101th actor,nickname of 101th actor"]];
 	*/
 
-	M.translation = {
-		"actors":[],
-		"classes":[],
-		"items":[],
-		"weapons":[],
-		"armors":[],
-		"enemies":[],
-		"troops":[],
-		"skills":[],
-		"states":[],
-		"t_weapons":[],
-		"t_armors":[],
-		"t_equips":[],
-		"t_skills":[],
-		"t_elements":[]
-	};
+	M._actors = [
+	//	"ハロルド",
+	//	"セレス",
+	//	"マーシャ",
+	//	"ルシウス"
+	];
 
+	M._classes = [
+	//	"勇者",
+	//	"戦士",
+	//	"魔法使い",
+	//	"僧侶"
+	];
+
+	M._items = [];
+	M._weapons = [];
+	M._armors = [];
+	M._enemies = [];
+	M._troops = [];
+	M._skills = [];
+	M._states = [];
+
+	M._t_weapons = [];
+	M._t_armors = [];
+	M._t_equips = [];
+	M._t_skills = [];
+	M._t_elements = [];
 })(this);
 
