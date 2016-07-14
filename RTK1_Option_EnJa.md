@@ -174,7 +174,7 @@ You can see the Japanese text (in red box in above screeenshot) is used in Japan
 
 ## Language translation resource control
 
-When you develop a big and long game, the number of resources also becomes big. In this case, you should add a translater, and delegate the translation to him/her. This plugin has the functions to support this process.
+When you develop a big and long game, the number of resources also becomes big. In this case, you should add a translater into your team, and delegate the translation to him/her. This plugin has the functions to support this process.
 
 ### Language translation resource in plugin
 
@@ -203,14 +203,14 @@ This object (RTK.EJ.translation) will contain the translated resource - English 
 
 ### Output the translation source file
 
-To support the trnslation work, this plugin has a function to output the translation source file automatically. Start your new game with this plugin, then execute the following command (function) from RPG Maker MV's F8 console.
+To support the translation work, this plugin has a function to create the translation source file automatically. Start your new game with this plugin, then execute the following command (function) from RPG Maker MV's F8 console.
 
 ```js
 RTK.EJ.writeTranslationBase()
 ```
 ![Screen shot - console](i/RTK1_Option_EnJa-28.png)
 
-After it、you can find a new 'translation_base.json' file in the save folder.
+After it、you can find a new 'translation_base.json' file in the 'save' folder.
 
 ![Screen shot - json file](i/RTK1_Option_EnJa-29.png)
 
