@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// RTK1_Composite.js  ver1.13 2016/07/14
+// RTK1_Composite.js  ver1.11 2016/07/06
 // The MIT License (MIT)
 //=============================================================================
 
@@ -17,10 +17,6 @@
  *
  * @param in menu
  * @desc Add Composite in menu (0:OFF 1:ON)
- * @default 0
- *
- * @param list sort
- * @desc Sort list of recipe (0:OFF 1:Name 2:ID 4:Type 8:SubType)
  * @default 0
  *
  * @param success adjust menu
@@ -66,7 +62,6 @@
  *   RTK1_Composite learn #uid[,#uid]
  *   RTK1_Composite forget item/weapon/armor #no[,#no]
  *   RTK1_Composite forget #uid [,#uid]
- *   RTK1_Composite sort #value
  *   RTK1_Composite open
  *
  *   RTK1_Composite add item/weapon/armor #no[,#no]
@@ -100,10 +95,6 @@
  *
  * @param in menu
  * @desc ゲームメニューに「合成」を表示する (0:OFF 1:ON)
- * @default 0
- *
- * @param list sort
- * @desc 合成レシピの並びをソートする (0:OFF 1:名前 2:ID 4:種別 8:タイプ)
  * @default 0
  *
  * @param success adjust menu
@@ -149,7 +140,6 @@
  *   RTK1_Composite learn #uid[,#uid]
  *   RTK1_Composite forget item/weapon/armor #no[,#no]
  *   RTK1_Composite forget #uid [,#uid]
- *   RTK1_Composite sort #value
  *   RTK1_Composite open
  *
  *   RTK1_Composite add item/weapon/armor #no[,#no]
@@ -190,7 +180,6 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 	var param = PluginManager.parameters(N);
 	M._tag = String(param['meta tag'] || "composite");
 	M._command = String(param['plugin command'] || "RTK1_Composite");
-	M._sort = Number(param['list sort'] || "0");
 
 	M._config = M._config || {
 		"menu": !!Number(param['in menu'] || "0"),
@@ -228,17 +217,12 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 	RTK.onLoad(function(){
 		M._config = RTK.load(NK + "_config") || M._config;
 		M._learn = RTK.load(NK + "_learn") || M._learn;
-		var v = RTK.load(NK + "_sort");
-		M._sort = v === undefined ? M._sort : v;
-		RTK.log(N + " load (_learn)", M._learn);
 		RTK.log(N + " load (_config)", M._config);
 	});
 	RTK.onSave(function(){
 		RTK.save(NK + "_config", M._config);
 		RTK.save(NK + "_learn", M._learn);
-		RTK.save(NK + "_sort", M._sort);
 		RTK.log(N + " save (_learn)", M._learn);
-		RTK.log(N + " save (_config)", M._config);
 	});
 
 	function filter_meta(o) {
@@ -343,10 +327,6 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 				} else if (args[2] == "charge") {
 					M._config.chS = Number(args[3]);
 				}
-			}
-		} else if (args[0] == "sort") {
-			if (args.length == 2) {
-				M._sort = Number(args[1])||0;
 			}
 		} else {
 			throw new Error('Unknown plugin command: ' + args[0]);
@@ -517,40 +497,6 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 	Window_CompositeIndex.prototype.initialize = function(x, y, cols, rows) {
 		Window_Selectable.prototype.initialize.call(this, x||0, y||0, Graphics.boxWidth, this.fittingHeight(rows||6));
 		this._maxCols = cols||3;
-		M._list = M._list.filter(RTK.isTrue);
-		if (M._sort > 0) {
-			M._list.sort(function(a, b){
-				if (M._sort & 4) {
-					var an = RTK.objectType(a).replace("a","z");
-					var bn = RTK.objectType(b).replace("a","z");
-					if (an != bn) {
-						return an > bn;
-					} else if (M._sort & 8) {
-						if (an == "i" && a.itypeId != b.itypeId) {
-							return a.itypeId < b.itypeId;
-						}
-						if (an == "w" && a.wtypeId != b.wtypeId) {
-							return a.wtypeId > b.wtypeId;
-						}
-						if (an == "z" && a.atypeId != b.atypeId) {
-							return a.atypeId > b.atypeId;
-						}
-					}
-				}
-				if (M._sort & 1) {
-					var an = a._sortName || a.name;
-					var bn = b._sortName || b.name;
-					if (an != bn) {
-						return an > bn;
-					}
-				}
-				if (M._sort & 2) {
-					if (a.id != b.id) {
-						return a.id > b.id;
-					}
-				}
-			});
-		}
 		this.refresh();
 		if (Window_CompositeIndex.maxItems == this.maxItems()) {
 			this.setTopRow(Window_CompositeIndex.lastTopRow);

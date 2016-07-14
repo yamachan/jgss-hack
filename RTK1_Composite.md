@@ -4,7 +4,7 @@
 
 Plugin to add the composite function for RPG Maker MV.
 
-Download: [RTK1_Composite.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Composite.js) (ver1.10 2016/07/06)
+Download: [RTK1_Composite.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Composite.js)
 
 ## Overview
 
@@ -239,6 +239,32 @@ RTK1_Composite remove i6
 
 Let's set up your custom composite shop for your game players.
 
+## Sort function
+
+Sort function is available in ver 1.13 or later.
+
+| value | description |
+| --- | --- |
+| 0 | Do't use sort function (default) |
+| 1 | Sort by Name |
+| 2 | Sort by ID |
+| 4 | Sort by Type (Item/Weapon/Armor) |
+| 8 | Sort by SubType (use with 4) |
+
+You can set the value with the plugin parameter, 'list sort'. If you want to set more than two values, use the sum of them.
+
+For example;
+
+* Sort by Name -> 1
+* Sort by Name and Type -> 1 + 4 -> 5
+* Sort by Name, Type and SubType -> 1 + 4 + 8 -> 13
+
+You can also use the following plugin command to change the sort order;
+
+```
+RTK1_Composite sort #value
+```
+
 ## Workroom function
 
 You also can use the workroom function which is free of charge composite shop. It's good for the workroom, workbench or craft table in players home.
@@ -286,7 +312,8 @@ In the other hand, "charge adjust workroom" is 0. The rate value 0 means "free o
 
 | version | date | require | update |
 | --- | --- | --- | --- |
-| ver1.11 | 2016/07/06 | RTK1_Core<br>ver1.11 or later | Support "i2-4" style #id list<br>Fix forget command bug. |
+| ver1.13 | 2016/07/14 | RTK1_Core<br>ver1.11 or later | Add sort command and parameter. |
+| [ver1.11](archive/RTK1_Composite_v1.11.js) | 2016/07/06 | RTK1_Core<br>ver1.11 or later | Support "i2-4" style #id list<br>Fix forget command bug. |
 | [ver1.10](archive/RTK1_Composite_v1.10.js) | 2016/07/05 | RTK1_Core<br>ver1.08 or later | Add Japanese JS comments.<br>Add workroom function.<br>Adjust function of success rate and charge. |
 | [ver1.09](archive/RTK1_Composite_v1.09.js) | 2016/07/02 | RTK1_Core<br>ver1.08 or later | Open |
 
