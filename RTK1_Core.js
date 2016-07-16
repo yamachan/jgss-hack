@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.13 2016/07/12
+// RTK1_Core.js  ver1.14 2016/07/16
 // The MIT License (MIT)
 //=============================================================================
 
@@ -66,7 +66,7 @@ function RTK() {
  * @type Number
  * @final
  */
-RTK.VERSION_NO = 1.13;
+RTK.VERSION_NO = 1.14;
 
 // ----- for Services -----
 
@@ -187,18 +187,18 @@ RTK.hasId = function(_id, _n) {
 
 RTK.ADD = 1;
 RTK.REMOVE = 2;
-RTK.id4list = function(_mode, _targetList, _value, _isObject) {
+RTK.id4list = function(_mode, _targetList, _value, _isObject, _setList) {
 	var count = 0;
 	if (_value && _value instanceof Array) {
 		for (var l=0; l<_value.length; l++) {
-			count += RTK.id4list(_mode, _targetList, _value[l], _isObject);	
+			count += RTK.id4list(_mode, _targetList, _value[l], _isObject, _setList);	
 		}
 		return count;
 	}
 	if (_value && "object" == typeof _value) {
 		var type = RTK.objectType(_value);
 		if (type != "" && _value.id) {
-			return RTK.id4list(_mode, _targetList, type + _value.id, _isObject);	
+			return RTK.id4list(_mode, _targetList, type + _value.id, _isObject, _setList);	
 		}
 	}
 	if ("string" == typeof _value && _value != "") {
@@ -226,7 +226,7 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject) {
 				var end = Math.floor(Number(keys[3]));
 				if (start > 0 && end > 0 && start < end) {
 					for (var l=start; l<=end; l++) {
-						count += RTK.id4list(_mode, _targetList, keys[1] + l, _isObject);	
+						count += RTK.id4list(_mode, _targetList, keys[1] + l, _isObject, _setList);
 					}
 					return count;
 				}
@@ -235,9 +235,12 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject) {
 		keys = _value.split(",");
 		if (keys.length > 1) {
 			keys.forEach(function(o){
-				count += RTK.id4list(_mode, _targetList, o, _isObject);
+				count += RTK.id4list(_mode, _targetList, o, _isObject, _setList);
 			});
 			return count;
+		}
+		if (_setList && _setList[_value]) {
+			return RTK.id4list(_mode, _targetList, _setList[_value], _isObject, _setList);
 		}
 		return 0;
 	}
@@ -430,6 +433,45 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject) {
 			return RTK.jp() ? (RTK._text[key]||_e) : _e;
 		}
 		return undefined;
+	};
+	RTK.sortName = function(_a, _b) {
+		var a = _a || {};
+		var b = _b || {};
+		a = a._sortName || a.name || "";
+		b = b._sortName || b.name || "";
+		if (RTK.jp()) {
+			a = (_a.meta && _a.meta.ja_sortname) ? _a.meta.ja_sortname : a;
+			b = (_b.meta && _b.meta.ja_sortname) ? _b.meta.ja_sortname : b;
+		}
+		return a == b ? 0 : a > b ? 1 : -1;
+	};
+
+	// ----- Enhance option menu -----
+
+	var _Window_Options_cursorRight = Window_Options.prototype.cursorRight;
+	Window_Options.prototype.cursorRight = function(wrap) {
+		var symbol = this.commandSymbol(this.index());
+		var m = symbol.match(/RTK(\d+)Select$/);
+		if (m) {
+			var value = this.getConfigValue(symbol) + 1;
+			value.clamp(0, Number(m[1]) - 1);
+			this.changeValue(symbol, value);
+		} else {
+			_Window_Options_cursorRight.call(this, wrap);
+		}
+	};
+
+	var _Window_Options_cursorLeft = Window_Options.prototype.cursorLeft;
+	Window_Options.prototype.cursorLeft = function(wrap) {
+		var symbol = this.commandSymbol(this.index());
+		var m = symbol.match(/RTK(\d+)Select$/);
+		if (m) {
+			var value = this.getConfigValue(symbol) - 1;
+			value.clamp(0, Number(m[1]) - 1);
+			this.changeValue(symbol, value);
+		} else {
+			_Window_Options_cursorLeft.call(this, wrap);
+		}
 	};
 
 	// ----- Experimental (not official) -----
