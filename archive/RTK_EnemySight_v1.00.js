@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// RTK_EnemySight.js  ver1.01 2016/07/16
+// RTK_EnemySight.js  ver1.00 2016/07/02
 //=============================================================================
 
 /*:
@@ -37,40 +37,40 @@
 //-----------------------------------------------------------------------------
 
 (function(_global) {
-	var N = 'RTK_EnemySight';
+	var N = 'RTK_Test';
 
 	var param = PluginManager.parameters(N);
 	var tag_name = param['tag name'] || "sight";
 
-	function _check(_d) {
-		switch (this._directionFix ? this._originalDirection : this._direction) {
-		case 2: // down
-			if (this.x == $gamePlayer.x && this.y < $gamePlayer.y && $gamePlayer.y - this.y <= _d) {
-				return true;
-			}
-			break;
-		case 4: // left
-			if (this.y == $gamePlayer.y && $gamePlayer.x < this.x && this.x - $gamePlayer.x  <= _d) {
-				return true;
-			}
-			break;
-		case 6: // right
-			if (this.y == $gamePlayer.y && this.x < $gamePlayer.x && $gamePlayer.x - this.x <= _d) {
-				return true;
-			}
-			break;
-		case 8: // up
-			if (this.x == $gamePlayer.x && this.y > $gamePlayer.y && this.y - $gamePlayer.y <= _d) {
-				return true;
-			}
-			break;
-		};
-		return false;
-	};
-
 	var _Game_Event_updateSelfMovement = Game_Event.prototype.updateSelfMovement;
 	Game_Event.prototype.updateSelfMovement = function() {
 		_Game_Event_updateSelfMovement.call(this);
+
+		function _f(_d) {
+			switch (this._directionFix ? this._originalDirection : this._direction) {
+			case 2: // down
+				if (this.x == $gamePlayer.x && this.y < $gamePlayer.y && $gamePlayer.y - this.y <= _d) {
+					return true;
+				}
+				break;
+			case 4: // left
+				if (this.y == $gamePlayer.y && $gamePlayer.x < this.x && this.x - $gamePlayer.x  <= _d) {
+					return true;
+				}
+				break;
+			case 6: // right
+				if (this.y == $gamePlayer.y && this.x < $gamePlayer.x && $gamePlayer.x - this.x <= _d) {
+					return true;
+				}
+				break;
+			case 8: // up
+				if (this.x == $gamePlayer.x && this.y > $gamePlayer.y && this.y - $gamePlayer.y <= _d) {
+					return true;
+				}
+				break;
+			};
+			return false;
+		};
 
 		var m = this.event().meta[tag_name];
 		if (m) {
@@ -78,7 +78,7 @@
 			if (r) {
 				var k = [this._mapId, this._eventId, r[2]];
 				if (!$gameSelfSwitches._data[k]) {
-					r = _check.call(this, Number(r[1]));
+					r = _f.call(this, Number(r[1]));
 					if (r) {
 						$gameSelfSwitches.setValue(k, r);
 					}
@@ -89,7 +89,7 @@
 			if (r) {
 				var k = Number(r[2]);
 				if (!$gameSwitches.value(k)) {
-					r = _check.call(this, Number(r[1]));
+					r = _f.call(this, Number(r[1]));
 					if (r) {
 						$gameSwitches.setValue(k, r);
 					}
@@ -97,4 +97,5 @@
 			}
 		}
 	};
+
 })(this);

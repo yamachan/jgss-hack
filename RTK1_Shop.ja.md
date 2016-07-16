@@ -115,10 +115,10 @@ RTK1_Shop sell switch 11
 | max_price #value | #value 以下の価格の商品を残し、他を削除する |
 | min_price #value | #value 以上の価格の商品を残し、他を削除する |
 
-事前に定義されたショップを開くには、ID の部分に none を指定します。
+事前に定義されたショップを開くには、商品の IDs を指定しません。 第二引数を指定したい場合には none を指定します。
 
 ```
-RTK1_Shop open none
+RTK1_Shop open
 RTK1_Shop open none true
 RTK1_Shop open none false トミーのセレクトショップ
 ```
@@ -132,6 +132,8 @@ RTK1_Shop max_price 100
 RTK1_Shop min_price 100
 RTK1_Shop open none true すべて%20100G%20のお店
 ```
+
+難易度が高いほど、商品の価格は高くなり、販売価格は安くなります。 資金繰りが厳しくなるわけですね。
 
 ### セット商品の登録と利用
 

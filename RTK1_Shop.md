@@ -104,7 +104,7 @@ This plugin relates with it by 'difficulty buy rate' and 'difficulty sell rate' 
 
 ![Screen shot - Plugin](i/RTK1_Shop-09.png)
 
-'difficulty buy rate' affects the shop price, the rate value work with 5 levels as follows;
+'difficulty buy rate' affects the shop price, the rate value works with 5 levels as follows;
 
 | rate | Very Easy | Easy | Normal | Hard | Very Hard |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -114,7 +114,7 @@ This plugin relates with it by 'difficulty buy rate' and 'difficulty sell rate' 
 | 0.2 | 60% | 80% | 100% | 120% | 140% |
 | 0.3 | 40% | 70% | 100% | 130% | 160% |
 
-'difficulty sell rate' affects the shop sell price, the rate value work with 5 levels as follows;
+'difficulty sell rate' affects the shop sell price, the rate value works with 5 levels as follows;
 
 | rate | Very Easy | Easy | Normal | Hard | Very Hard |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -123,6 +123,8 @@ This plugin relates with it by 'difficulty buy rate' and 'difficulty sell rate' 
 | 0.1 | 120% | 110% | 100% | 90% | 80% |
 | 0.2 | 140% | 120% | 100% | 80% | 60% |
 | 0.3 | 160% | 130% | 100% | 70% | 40% |
+
+In The Hard or Very Hard mode, the shop price becomes higher, and the sell price becomes lower. It makes the game play more difficult.
 
 ## Update history
 
