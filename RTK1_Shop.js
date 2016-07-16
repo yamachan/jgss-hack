@@ -193,6 +193,9 @@
 			this._price = this._data.map(function(o){ return Math.floor(o.price * M._config.buy * (1 + M._d_buy * M.difficulty())); });
 		} else {
 			_Window_ShopBuy_makeItemList.call(this);
+			this._price = this._price.map(function(p){
+				return Math.floor(p * M._config.buy * (1 + M._d_buy * M.difficulty()));
+			});
 		}
 	};
 
