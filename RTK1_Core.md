@@ -4,7 +4,7 @@
 
 Core functions of RTK1 library for RPG Maker MV.
 
-Download: [RTK1_Core.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Core.js) (ver1.10 2016/07/06)
+Download: [RTK1_Core.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Core.js)
 
 ## Overview
 
