@@ -51,11 +51,41 @@
  * @plugindesc 通常のショップ機能の拡張
  * @author Toshio Yamashita (yamachan)
  *
+ * @param buy rate
+ * @desc 商品の価格はこの数値を掛けたものに調整されます
+ * @default 1
+ *
+ * @param sell rate
+ * @desc 商品の売価はこの数値を掛けたものに調整されます
+ * @default 0.5
+ *
+ * @param difficulty buy rate
+ * @desc 商品の価格は難易度とこの数値を掛けたもので調整されます
+ * @default 0
+ *
+ * @param difficulty sell rate
+ * @desc 商品の売価は難易度とこの数値を掛けたもので調整されます
+ * @default 0
+ *
  * @help
  * RPGツクール MV 用に作成した、通常のショップ機能を拡張するプラグインです。
  * このプラグインの前に RTK1_Core プラグイン(1.14以降)を読み込んでください。
  *
  * プラグインコマンド:
+ *   RTK1_Shop open i2-5,w1-2
+ *   RTK1_Shop open i2-5,w1-2 true
+ *   RTK1_Shop open i2-5,w1-2 true shop%20name
+ *
+ *   RTK1_Shop clear
+ *   RTK1_Shop add i1-8
+ *   RTK1_Shop remove i2
+ *   RTK1_Shop open
+ *   RTK1_Shop open none false shop%20name
+ *
+ *   RTK1_Shop buy 2
+ *   RTK1_Shop buy switch 9
+ *   RTK1_Shop sell 0.6
+ *   RTK1_Shop sell switch 10
  *
  * マニュアル:
  *   https://github.com/yamachan/jgss-hack/blob/master/RTK1_Shop.ja.md
