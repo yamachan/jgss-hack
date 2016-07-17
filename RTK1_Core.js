@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.14 2016/07/16
+// RTK1_Core.js  ver1.14 2016/07/17
 // The MIT License (MIT)
 //=============================================================================
 
@@ -19,6 +19,10 @@
  * @param json
  * @desc Also save uncompressed JSON file (0:OFF 1:ON)
  * @default 0
+ *
+ * @param tagname for sort
+ * @desc Altername name for sort (mainly for Japanese Yomigana)
+ * @default ja_sortname
  *
  * @help This plugin does not provide plugin commands.
  * 
@@ -41,6 +45,10 @@
  * @param json
  * @desc 非圧縮jsonデータも保存する (0:OFF 1:ON)
  * @default 0
+ *
+ * @param tagname for sort
+ * @desc ソート時に代用する名称用のタグ名 (主に読み仮名用)
+ * @default ja_sortname
  *
  * @help このプラグインにはプラグインコマンドはありません。
  *
@@ -255,6 +263,7 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject, _setList) {
 	RTK._lang = Number(param['language'] || 0);
 	RTK._debug = Number(param['debug'] || 0);
 	RTK._json = Number(param['json'] || 0);
+	RTK._sortnameTag = param['tagname for sort'] || "ja_sortname";
 
 	function RTK_init(){
 		if ($dataItems && $dataSystem && $dataSystem.terms && $dataSystem.terms.basic && $dataSystem.terms.commands && $dataSystem.terms.messages && $dataMapInfos) {
@@ -440,8 +449,8 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject, _setList) {
 		a = a._sortName || a.name || "";
 		b = b._sortName || b.name || "";
 		if (RTK.jp()) {
-			a = (_a.meta && _a.meta.ja_sortname) ? _a.meta.ja_sortname : a;
-			b = (_b.meta && _b.meta.ja_sortname) ? _b.meta.ja_sortname : b;
+			a = (_a.meta && _a.meta[RTK._sortnameTag]) ? _a.meta[RTK._sortnameTag] : a;
+			b = (_b.meta && _b.meta[RTK._sortnameTag]) ? _b.meta[RTK._sortnameTag] : b;
 		}
 		return a == b ? 0 : a > b ? 1 : -1;
 	};
