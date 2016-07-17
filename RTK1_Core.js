@@ -74,6 +74,7 @@ function RTK() {
  * @type Number
  * @final
  */
+RTK.VERSION_NO = 1.15;
 
 // ----- for Services -----
 
