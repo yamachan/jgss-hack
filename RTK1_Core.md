@@ -226,7 +226,8 @@ By the way, the text selection in RTK.text is not case sensitive. So RTK.text("Y
 
 | version | date | require | update |
 | --- | --- | --- | --- |
-| ver1.14 | 2016/07/16 | N/A | Support [RTK1_Shop](RTK1_Shop.md) plugin |
+| ver1.15 | 2016/07/17 | N/A | Support [RTK1_MapLocalVariables](RTK1_MapLocalVariables.md) plugin |
+| [ver1.14](archive/RTK1_Core_v1.14.js) | 2016/07/16 | N/A | Support [RTK1_Shop](RTK1_Shop.md) plugin |
 | [ver1.13](archive/RTK1_Core_v1.13.js) | 2016/07/12 | N/A | Enhance RTK.objectClone function |
 | [ver1.12](archive/RTK1_Core_v1.12.js) | 2016/07/10 | N/A | Support Battle\Event Test |
 | [ver1.11](archive/RTK1_Core_v1.11.js) | 2016/07/06 | N/A | Add RTK.id2object() and other id support functions |

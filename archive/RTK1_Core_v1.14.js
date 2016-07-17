@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.15 2016/07/17
+// RTK1_Core.js  ver1.14 2016/07/17
 // The MIT License (MIT)
 //=============================================================================
 
@@ -74,6 +74,7 @@ function RTK() {
  * @type Number
  * @final
  */
+RTK.VERSION_NO = 1.14;
 
 // ----- for Services -----
 
@@ -100,8 +101,6 @@ RTK._save = [];
 RTK.onSave = function(_func){ if ("function" == typeof _func) RTK._save.push(_func); };
 RTK._load = [];
 RTK.onLoad = function(_func){ if ("function" == typeof _func) RTK._load.push(_func); };
-RTK._mapStart = [];
-RTK.onMapStart = function(_func){ if ("function" == typeof _func) RTK._mapStart.push(_func); };
 
 // ----- for Debug -----
 
@@ -334,19 +333,6 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject, _setList) {
 				}
 			}
 			RTK.log(N + " start [event test] (_lang:" + RTK._lang + ", _ready:" + RTK._ready + ")");
-		}
-	};
-
-	var _SceneManager_onSceneStart = SceneManager.onSceneStart;
-	SceneManager.onSceneStart = function() {
-		_SceneManager_onSceneStart.call(this);
-		if ($gameMap.mapId() > 0) {
-			for (var l=0; l<RTK._mapStart.length; l++) {
-				if ("function" == typeof RTK._mapStart[l]) {
-					RTK._mapStart[l]($gameMap.mapId());
-				}
-			}
-			RTK.log(N + " mapStart [" + $gameMap.mapId() + "] (_lang:" + RTK._lang + ", _ready:" + RTK._ready + ")");
 		}
 	};
 

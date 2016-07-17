@@ -230,7 +230,8 @@ RTK.text("No", "いいえ");
 
 | バージョン | 公開日 | 必須ライブラリ | 更新内容 |
 | --- | --- | --- | --- |
-| ver1.14 | 2016/07/16 | N/A | [RTK1_Shop](RTK1_Shop.ja.md) プラグインに対応 |
+| ver1.15 | 2016/07/17 | N/A | [RTK1_MapLocalVariables](RTK1_MapLocalVariables.ja.md) プラグインに対応 |
+| [ver1.14](archive/RTK1_Core_v1.14.js) | 2016/07/16 | N/A | [RTK1_Shop](RTK1_Shop.ja.md) プラグインに対応 |
 | [ver1.13](archive/RTK1_Core_v1.13.js) | 2016/07/12 | N/A | RTK.objectClone 関数を拡張 |
 | [ver1.12](archive/RTK1_Core_v1.12.js) | 2016/07/10 | N/A | Battle/Event Test に対応 |
 | [ver1.11](archive/RTK1_Core_v1.11.js) | 2016/07/06 | N/A | RTK.id2object() などid系関数を追加 |
