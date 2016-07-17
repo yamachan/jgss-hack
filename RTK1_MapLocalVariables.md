@@ -1,10 +1,10 @@
 [Japanese version](RTK1_MapLocalVariables.ja.md)
 
-# [RTK1_Shop](RTK1_MapLocalVariables.js) Plugin
+# [RTK1_MapLocalVariables](RTK1_MapLocalVariables.js) Plugin
 
 Plugin to use selected variables as map local ones for RPG Maker MV.
 
-Download:  [RTK1_Shop.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_MapLocalVariables.js)
+Download:  [RTK1_MapLocalVariables.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_MapLocalVariables.js)
 
 ## Overview
 
