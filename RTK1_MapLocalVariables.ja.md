@@ -2,7 +2,7 @@
 
 # [RTK1_MapLocalVariables](RTK1_MapLocalVariables.js) プラグイン
 
-RPGツクール MV 用に作成した、標準のショップ機能を実現するプラグインです。
+RPGツクール MV 用に作成した、マップローカル変数を実現するプラグインです。
 
 ダウンロード: [RTK1_MapLocalVariables.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_MapLocalVariables.js)
 
