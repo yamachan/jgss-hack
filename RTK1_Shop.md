@@ -1,4 +1,4 @@
-[Japanese version](RTK1_Shop.ja.md)
+[Japanese version](RTK1_Shop.ja.md) | [Back to toppage](README.md)
 
 # [RTK1_Shop](RTK1_Shop.js) Plugin
 
@@ -206,3 +206,5 @@ In The Hard or Very Hard mode, the shop price becomes higher, and the sell price
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php)
 
 You don't need to display my copyright, if you keep my comments in .js files. Of course, I'll be happy, when you will display it. :-)
+
+[Back to toppage](README.md)

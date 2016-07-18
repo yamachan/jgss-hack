@@ -1,4 +1,4 @@
-[Japanese version](RTK1_MapLocalVariables.ja.md)
+[Japanese version](RTK1_MapLocalVariables.ja.md) | [Back to toppage](README.md)
 
 # [RTK1_MapLocalVariables](RTK1_MapLocalVariables.js) Plugin
 
@@ -19,50 +19,52 @@ The default plugin parameters are 0, the plugin doesn't avtive in this setting.
 
 ## Overview
 
-まずはマップでローカルに使用する変数の範囲を決めてください。 このマニュアルでは変数 15 ～ 20 をマップローカル変数に利用することにします。
+At first, you should decide the variable range for the map local. In this document, I use variable 15 - 20 for this purpose.
 
-変数の範囲をプラグインパラメータで指定してください。
+You should set the range into the plugin parameters;
 
 ![Screen shot - Plugin](i/RTK1_MapLocalVariables-03.png)
 
-それにあわせて、その範囲の変数にわかりやすい名前を付けておくことをお勧めします。 このマニュアルでは "Map local A" から "Map local F" まで名前を付けてみました。
+In addtion, I suggest to set the good and proper names against these game variables. For example, I use names from "Map local A" to "Map local F" as follows;
 
 ![Screen shot - Plugin](i/RTK1_MapLocalVariables-04.png)
 
-マップローカル変数は、マップごとに用意され、0以外の値はセーブファイルにも保存されます。 セーブファイルの肥大化を防ぐためにも、変数の数はあまり多く設定せず、また不要になった値は 0 クリアしておきましょう。
+The map local variables is available for each map, and will use save file's space. So please try to keep the range size will be fit against your game. (But in face, this plugin has simple data compression logic)
 
 ## How about map local variables?
 
-マップローカル変数に指定しても、通常の変数とほとんど変わりません。イベントなどで同様に利用できます。ただし通常の変数に対し、以下の点が異なります。
+Map local variables are almost same as normal game variables. You can use them for your event commands, script values, event trigers, and so on.
 
-* マップを移動するとマップローカル変数は値が変化します
-  * そのマップに初めて入った時、マップローカル変数は全て0クリアされます
-  * マップを移動する際、マップローカル変数はプラグインによって保存されます
-  * そのマップに2度目以降に入った時、前回保存したマップローカル変数の値が復活します
+But the following points are different;
 
-基本的には、そのマップでしか使用しない値で、かつ保存される必要があるものをマップローカル変数に格納します。
+* The map local variables change when you transfer the map
+  * At the first entry into a map, all map local variables are set by 0
+  * The map local variables are automatically saved when you transfer the map
+  * At the 2nd or later entry into a map, all map local variables are recovered from saved area
 
-## 理解のために
+Basically, you should use the map local variables only for values which are map unique and necessary to be saved.
 
-例えば、以下のように変数の値を表示するだけのシンプルなイベントを作成し、コピー＆ペーストで各マップに配置します。
+## Sample to understand
+
+For example, let's add a simple event which shows game variables;
 
 ![Screen shot - Event edit](i/RTK1_MapLocalVariables-05.png)
 
-マップ上にゲーム変数を設定するイベントを追加し、上記のイベントで値を確認します。
+Let's kick an event which change the game variabes, then check the game variable's values with the 1st event;
 
 ![Screen shot - Event message](i/RTK1_MapLocalVariables-06.png)
 
-そして異なったマップに移動し、変数が 0 クリアされているのを確認します。
+Let's move the another map, then check all local values became '0';
 
 ![Screen shot - Event message](i/RTK1_MapLocalVariables-07.png)
 
-そしてこの例のマップでは、左上のシスターに話しかけると変数 17 に 7 を設定するようになっています。 話しかけて結果を確認します。
+And in this map, the left-top sister event sets the game valiable 17 by 7. Let's talk with her, then check the game variable's values with the 1st event;
 
 ![Screen shot - Event message](i/RTK1_MapLocalVariables-08.png)
 
-これでふたつのマップを移動し、それぞれの看板で異なった変数値が表示されることを確認してください。 これらの値はセーブして再起動しても変わらないはずです。
+Now, the local map variables are set and availavle in each map.
 
-これらの変数はマップごとに違った値を扱える別の存在になった、つまりはマップローカル変数になったということです。
+Let's move among these 2 maps, and check the each variables keep map's local value. This situation will be kept, after save and load this game.
 
 ## Update history
 
@@ -75,3 +77,5 @@ The default plugin parameters are 0, the plugin doesn't avtive in this setting.
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php)
 
 You don't need to display my copyright, if you keep my comments in .js files. Of course, I'll be happy, when you will display it. :-)
+
+[Back to toppage](README.md)

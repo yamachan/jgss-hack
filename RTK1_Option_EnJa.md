@@ -1,4 +1,4 @@
-[Japanese version](RTK1_Option_EnJa.ja.md)
+[Japanese version](RTK1_Option_EnJa.ja.md) | [Back to toppage](README.md)
 
 # [RTK1_Option_EnJa](RTK1_Option_EnJa.js) Plugin
 
@@ -269,3 +269,5 @@ Expand text messege... (TBD)
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php)
 
 You don't need to display my copyright, if you keep my comments in .js files. Of course, I'll be happy, when you will display it. :-)
+
+[Back to toppage](README.md)

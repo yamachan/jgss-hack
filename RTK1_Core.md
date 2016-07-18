@@ -1,4 +1,4 @@
-[Japanese version](RTK1_Core.ja.md)
+[Japanese version](RTK1_Core.ja.md) | [Back to toppage](README.md)
 
 # [RTK1_Core](RTK1_Core.js) Plugin
 
@@ -238,3 +238,5 @@ By the way, the text selection in RTK.text is not case sensitive. So RTK.text("Y
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php)
 
 You don't need to display my copyright, if you keep my comments in .js files. Of course, I'll be happy, when you will display it. :-)
+
+[Back to toppage](README.md)
