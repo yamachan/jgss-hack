@@ -1,4 +1,4 @@
-[English version](RTK1_Option_EnJa.md)
+[English version](RTK1_Option_EnJa.md) | [トップページに戻る](README.ja.md)
 
 # [RTK1_Option_EnJa](RTK1_Option_EnJa.js) プラグイン
 
@@ -267,3 +267,5 @@ RTK.EJ.applyTranslation(
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php) です。
 
 提供されるjsファイルからコメント等を削除しないのであれば、著作権表示は不要です。 むろん表示いただくのは歓迎します！
+
+[トップページに戻る](README.ja.md)

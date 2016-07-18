@@ -1,8 +1,8 @@
-[English version](RTK1_Shop.md)
+[English version](RTK1_Shop.md) | [トップページに戻る](README.ja.md)
 
 # [RTK1_Shop](RTK1_Shop.js) プラグイン
 
-RPGツクール MV 用に作成した、標準のショップ機能を実現するプラグインです。
+RPGツクール MV 用に作成した、標準のショップ機能を拡張するプラグインです。
 
 ダウンロード: [RTK1_Shop.js](https://raw.githubusercontent.com/yamachan/jgss-hack/master/RTK1_Shop.js)
 
@@ -206,3 +206,5 @@ RTK1_Difficulty プラグインは 「とても簡単」から「とても難し
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php) です。
 
 提供されるjsファイルからコメント等を削除しないのであれば、著作権表示は不要です。 むろん表示いただくのは歓迎します！
+
+[トップページに戻る](README.ja.md)
