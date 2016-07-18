@@ -1,4 +1,4 @@
-[English version](RTK1_Core.md)
+[English version](RTK1_Core.md) | [トップページに戻る](README.ja.md)
 
 # [RTK1_Core](RTK1_Core.js) プラグイン
 
@@ -242,3 +242,5 @@ RTK.text("No", "いいえ");
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php) です。
 
 提供されるjsファイルからコメント等を削除しないのであれば、著作権表示は不要です。 むろん表示いただくのは歓迎します！
+
+[トップページに戻る](README.ja.md)

@@ -19,8 +19,8 @@ RPGツクールMV と JavaScript ベースの Game Scripting System (JGSS) を�
 | プラグイン | 説明ページ | description |
 |:-----------|:-----------:|:-------------|
 | [RTK_TroopEncounter](RTK_TroopEncounter.js) | [日本語](RTK_TroopEncounter.ja.md) | マップでの敵との遭遇をコントロール |
-| [RTK_VariablePacker](RTK_VariablePacker.js) | N/A | Plugin command to pack/unpack variables |
-| [RTK_EnemySight](RTK_EnemySight.js) | N/A | Switch is ON when event see player within n tiles |
+| [RTK_VariablePacker](RTK_VariablePacker.js) | N/A | 変数をパック/アンパックするプラグインコマンド |
+| [RTK_EnemySight](RTK_EnemySight.js) | N/A | マップでイベントがプレイヤーを見かけるとスイッチをON |
 
 ## ライセンス
 

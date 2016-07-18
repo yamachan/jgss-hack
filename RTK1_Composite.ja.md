@@ -1,4 +1,4 @@
-[English version](RTK1_Composite.md)
+[English version](RTK1_Composite.md) | [トップページに戻る](README.ja.md)
 
 # [RTK1_Composite](RTK1_Composite.js) プラグイン
 
@@ -417,3 +417,5 @@ learnリストはゲームプレイ中にだんだん増えていくもので、
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php) です。
 
 提供されるjsファイルからコメント等を削除しないのであれば、著作権表示は不要です。 むろん表示いただくのは歓迎します！
+
+[トップページに戻る](README.ja.md)
