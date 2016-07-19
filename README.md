@@ -20,7 +20,7 @@ My study memo and output for JavaScript based Game Scripting System (JGSS) on RP
 |:-----------|:-----------:|:-------------|
 | [RTK_TroopEncounter](RTK_TroopEncounter.js) | [Japanese](RTK_TroopEncounter.ja.md) | Control to encount Troops in Map |
 | [RTK_VariablePacker](RTK_VariablePacker.js) | N/A | Plugin command to pack/unpack variables |
-| [RTK_EnemySight](RTK_EnemySight.js) | N/A | Switch is ON when event see player within n tiles |
+| [RTK_EnemySight](RTK_EnemySight.js) | [Japanese](RTK_EnemySight.ja.md) | Switch is ON when event see player within n tiles |
 
 ## License
 
