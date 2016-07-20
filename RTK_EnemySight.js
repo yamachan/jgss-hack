@@ -145,21 +145,3 @@
 		}
 	};
 })(this);
-
-Game_CharacterBase.prototype.canPass = function(x, y, d) {
-    var x2 = $gameMap.roundXWithDirection(x, d);
-    var y2 = $gameMap.roundYWithDirection(y, d);
-    if (!$gameMap.isValid(x2, y2)) {
-        return false;
-    }
-    if (this.isThrough() || this.isDebugThrough()) {
-        return true;
-    }
-    if (!this.isMapPassable(x, y, d)) {
-        return false;
-    }
-    if (this.isCollidedWithCharacters(x2, y2)) {
-        return false;
-    }
-    return true;
-};
