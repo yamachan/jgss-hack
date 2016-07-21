@@ -312,7 +312,8 @@ In the other hand, "charge adjust workroom" is 0. The rate value 0 means "free o
 
 | version | date | require | update |
 | --- | --- | --- | --- |
-| ver1.13 | 2016/07/14 | RTK1_Core<br>ver1.11 or later | Add sort command and parameter. |
+| ver1.15 | 2016/07/22 | RTK1_Core<br>ver1.11 or later | Add auto learn function. |
+| [ver1.13](archive/RTK1_Composite_v1.13.js) | 2016/07/14 | RTK1_Core<br>ver1.11 or later | Add sort command and parameter. |
 | [ver1.11](archive/RTK1_Composite_v1.11.js) | 2016/07/06 | RTK1_Core<br>ver1.11 or later | Support "i2-4" style #id list<br>Fix forget command bug. |
 | [ver1.10](archive/RTK1_Composite_v1.10.js) | 2016/07/05 | RTK1_Core<br>ver1.08 or later | Add Japanese JS comments.<br>Add workroom function.<br>Adjust function of success rate and charge. |
 | [ver1.09](archive/RTK1_Composite_v1.09.js) | 2016/07/02 | RTK1_Core<br>ver1.08 or later | Open |

@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// RTK1_Composite.js  ver1.13 2016/07/14
+// RTK1_Composite.js  ver1.15 2016/07/22
 // The MIT License (MIT)
 //=============================================================================
 
@@ -21,6 +21,10 @@
  *
  * @param list sort
  * @desc Sort list of recipe (0:OFF 1:Name 2:ID 4:Type 8:SubType)
+ * @default 0
+ *
+ * @param auto learn
+ * @desc Learn a recipe automatically with composition in shop (0:OFF 1:ON)
  * @default 0
  *
  * @param success adjust menu
@@ -104,6 +108,10 @@
  *
  * @param list sort
  * @desc 合成レシピの並びをソートする (0:OFF 1:名前 2:ID 4:種別 8:タイプ)
+ * @default 0
+ *
+ * @param auto learn
+ * @desc ショップで合成したレシピを自動で覚える (0:OFF 1:ON)
  * @default 0
  *
  * @param success adjust menu
@@ -191,6 +199,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 	M._tag = String(param['meta tag'] || "composite");
 	M._command = String(param['plugin command'] || "RTK1_Composite");
 	M._sort = Number(param['list sort'] || "0");
+	M._auto = Number(param['auto learn'] || "0");
 
 	M._config = M._config || {
 		"menu": !!Number(param['in menu'] || "0"),
@@ -205,6 +214,10 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 
 	M._list = M._list || [];
 	M._learn = M._learn || [];
+	M.recipe = function(_id) {
+		return M._learn.contains(_id);
+	};
+
 	RTK.onReady(function(){
 		RTK.text("Composite", "合成");
 		RTK.text("Material", "材料");
@@ -285,7 +298,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		} else if (args[0] == "clear") {
 			var t = args[1] == "all" || !args[1] ? "item,weapon,armor" : args[1];
 			M._list = M._list.filter(function(o){
-				return !(t.contains("item") && DataManager.isItem(o)) && !(t.contains("weapon") && DataManager.isWeapon(o)) && !(t.contains("armor") && DataManager.isArmor(o));
+				return (!t.contains("item") && DataManager.isItem(o)) || (!t.contains("weapon") && DataManager.isWeapon(o)) || (!t.contains("armor") && DataManager.isArmor(o));
 			});
 		} else if (args[0] == "shop") {
 			if (args[1] != "custom") {
@@ -414,6 +427,13 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		}
 		if(Math.random() < nk.rate){
 			SoundManager.playShop();
+			var meta = _i.meta || {};
+			if (meta[M._tag + " auto"] || (M._auto && !meta[M._tag + " !auto"])) {
+				var id = RTK.object2id(_i);
+				if (!M._learn.contains(id)) {
+					M.command(["learn", id]);
+				}
+			}
 		} else {
 			SoundManager.playMiss();
 			if (nk.fail == "0") {
@@ -538,11 +558,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 					}
 				}
 				if (M._sort & 1) {
-					var an = a._sortName || a.name;
-					var bn = b._sortName || b.name;
-					if (an != bn) {
-						return an > bn;
-					}
+					return RTK.sortName(a, b);
 				}
 				if (M._sort & 2) {
 					if (a.id != b.id) {
