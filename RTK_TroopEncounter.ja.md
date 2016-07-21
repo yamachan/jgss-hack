@@ -78,6 +78,15 @@ RTK_TroopEncounter items #IDs
 RTK_TroopEncounter items reset
 ```
 
+アイテムと同様に "amulet weapons" や "amulet armors" プラグインパラメータで、武器や防具によるエンカウント制御もできます。 これらは装備していても有効です。 プラグインコマンドもアイテム同様に用意されています。
+
+```
+RTK_TroopEncounter weapons #IDs
+RTK_TroopEncounter weapons reset
+RTK_TroopEncounter armors #IDs
+RTK_TroopEncounter armors reset
+```
+
 ## ステートによるエンカウント制御
 
 本プラグインには "amulet states" というプラグインパラメータがあり、初期値として 0 が指定されています。
@@ -97,11 +106,26 @@ RTK_TroopEncounter states #IDs
 RTK_TroopEncounter states reset
 ```
 
+## レベルによるエンカウント制御
+
+パーティの最大レベル (メンバーのうち、最もレベルの高いメンバーのレベル) をもとにエンカウントを制御することもできます。
+
+敵のメモ欄に &lt;encount_lv:10&gt; と記載すると、この敵を含んだ敵グループは、パーティにレベル10以上のメンバーが居るときだけエンカウントします。
+
+敵のメモ欄に &lt;encount_!lv:10&gt; と記載するとその逆で、この敵を含んだ敵グループは、パーティにレベル10以上のメンバーが居るとエンカウントしなくなります。
+
+これらは組み合わせて使用することもできます。 敵のメモ欄に &lt;encount_lv:10&gt;&lt;encount_!lv:20&gt; と記載すると、この敵を含んだ敵グループは、パーティにレベル10以上のメンバーが居るとエンカウントするようになります。 しかしパーティが成長し、メンバーがレベル20以上になるとエンカウントしなくなります。
+
+もうひとつ珍しい制御方法として、レベルの倍数指定があります。 敵のメモ欄に &lt;encount_%lv:5&gt; と記載すると、この敵を含んだ敵グループは、パーティメンバーの最高レベルが 5の倍数 のときだけエンカウントします。 隠し敵キャラ的に利用してみてください。
+
+これら制御をうまく使って、レベルが低いときには弱い敵に、レベルが高くなると強い敵に、など敵とのエンカウントを工夫してみてください。
+
 ## 更新履歴
 
 | バージョン | 公開日 | 必須ライブラリ | 更新内容 |
 | --- | --- | --- | --- |
-| ver1.02 | 2016/07/18 | なし | amulet item 機能の追加<br>amulet states 機能の追加 |
+| ver1.03 | 2016/07/21 | なし | amulet weapons 機能の追加<br>amulet armors 機能の追加<br>レベルによる制御の追加 |
+| [ver1.02](RTK_TroopEncounter_v1.02.js) | 2016/07/18 | なし | amulet item 機能の追加<br>amulet states 機能の追加 |
 | [ver1.01](RTK_TroopEncounter_v1.01.js) | 2016/07/16 | なし | encount switch パラメータ追加<br>!sw モードの追加 |
 | [ver1.00](RTK_TroopEncounter_v1.00.js) | 2016/06/26 | なし | 公開 |
 

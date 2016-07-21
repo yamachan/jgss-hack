@@ -144,37 +144,3 @@
 	};
 
 })(this);
-
-/*
-Game_Unit.prototype.aliveMembers = function() {
-    return this.members().filter(function(member) {
-        return member.isAlive();
-    });
-};
-Game_Unit.prototype.tgrSum = function() {
-    return this.aliveMembers().reduce(function(r, member) {
-        return r + member.tgr;
-    }, 0);
-};
-Game_Party.prototype.highestLevel = function() {
-    return Math.max.apply(null, this.members().map(function(actor) {
-        return actor.level;
-    }));
-};
-Game_Party.prototype.partyAbility = function(abilityId) {
-    return this.battleMembers().some(function(actor) {
-        return actor.partyAbility(abilityId);
-    });
-};
-Game_Battler.prototype.addState = function(stateId) {
-    if (this.isStateAddable(stateId)) {
-        if (!this.isStateAffected(stateId)) {
-            this.addNewState(stateId);
-            this.refresh();
-        }
-        this.resetStateCounts(stateId);
-        this._result.pushAddedState(stateId);
-    }
-};
-
-*/
