@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// RTK_EnemySight.js  ver1.03 2016/07/23
+// RTK_EnemySight.js  ver1.02 2016/07/20
 //=============================================================================
 
 /*:
@@ -63,21 +63,6 @@
 	var followers = Number(param['followers'] || "0");
 	var st = Number(param['sight through'] || "0");
 
-	function _canPass(x, y, d) {
-		var x2 = $gameMap.roundXWithDirection(x, d);
-		var y2 = $gameMap.roundYWithDirection(y, d);
-		if (!$gameMap.isValid(x2, y2)) {
-			return false;
-		}
-		if (!this.isMapPassable(x, y, d)) {
-			return false;
-		}
-		if (Game_CharacterBase.prototype.isCollidedWithEvents.call(this, x2, y2) || this.isCollidedWithVehicles(x2, y2)) {
-			return false;
-		}
-		return true;
-	};
-
 	function _check(_d, _x, _y) {
 		var dir = this._directionFix ? this._originalDirection : this._direction;
 		switch (dir) {
@@ -85,7 +70,7 @@
 			if (this.x == _x && this.y < _y && _y - this.y <= _d) {
 				if (!st) {
 					for (var y=this.y; y<_y - 1; y++) {
-						if (!_canPass.call(this, _x, y, dir)) { return false; }
+						if (!this.canPass(_x, y, dir)) { return false; }
 					}
 				}
 				return true;
@@ -95,7 +80,7 @@
 			if (this.y == _y && _x < this.x && this.x - _x  <= _d) {
 				if (!st) {
 					for (var x=this.x; x>_x + 1; x--) {
-						if (!_canPass.call(this, x, _y, dir)) { return false; }
+						if (!this.canPass(x, _y, dir)) { return false; }
 					}
 				}
 				return true;
@@ -105,7 +90,7 @@
 			if (this.y == _y && this.x < _x && _x - this.x <= _d) {
 				if (!st) {
 					for (var x=this.x; x<_x - 1; x++) {
-						if (!_canPass.call(this, x, _y, dir)) { return false; }
+						if (!this.canPass(x, _y, dir)) { return false; }
 					}
 				}
 				return true;
@@ -115,7 +100,7 @@
 			if (this.x == _x && this.y > _y && this.y - _y <= _d) {
 				if (!st) {
 					for (var y=this.y; y>_y + 1; y--) {
-						if (!_canPass.call(this, _x, y, dir)) { return false; }
+						if (!this.canPass(_x, y, dir)) { return false; }
 					}
 				}
 				return true;
