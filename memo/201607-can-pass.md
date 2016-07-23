@@ -141,3 +141,20 @@ Game_Event.prototype.isCollidedWithEvents = function(x, y) {
 ```
 
 The 'isCollidedWithEvents' function was overwritten in 'Game_Event' class... And as the result, an event is always collided with other Events...
+
+## Addtional comment as 2016/07/23
+
+The '$gameMap.eventsXyNt' function checks the target event's isThrough() as follows;
+
+```js
+Game_Map.prototype.eventsXyNt = function(x, y) {
+    return this.events().filter(function(event) {
+        return event.posNt(x, y);
+    });
+};
+Game_CharacterBase.prototype.posNt = function(x, y) {
+    // No through
+    return this.pos(x, y) && !this.isThrough();
+};
+
+```
