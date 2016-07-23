@@ -21,6 +21,7 @@ RPGツクールMV と JavaScript ベースの Game Scripting System (JGSS) を�
 | [RTK_TroopEncounter](RTK_TroopEncounter.js) | [日本語](RTK_TroopEncounter.ja.md) | マップでの敵との遭遇をコントロール |
 | [RTK_VariablePacker](RTK_VariablePacker.js) | N/A | 変数をパック/アンパックするプラグインコマンド |
 | [RTK_EnemySight](RTK_EnemySight.js) | [日本語](RTK_EnemySight.ja.md) | マップでイベントがプレイヤーを見かけるとスイッチをON |
+| [RTK_EventMatch](RTK_EventMatch.js) | [日本語](RTK_EventMatch.ja.md) | マップでイベントの条件が全て揃うとスイッチをON |
 
 ## ライセンス
 
