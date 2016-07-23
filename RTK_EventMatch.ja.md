@@ -126,7 +126,7 @@ VX Ace のページですが [押せる岩を作る](https://tkool.jp/products/r
 
 ![Screen shot - Game play](i/RTK_EventMatch-17.png)
 
-まずはさきほどの「十字に岩を並べる」ら4つの岩と炎のイベントをコピーしましょう。
+まずはさきほどの「十字に岩を並べる」から4つの岩と炎のイベントをコピーしましょう。
 
 ![Screen shot - Map edit](i/RTK_EventMatch-11.png)
 
@@ -134,7 +134,7 @@ VX Ace のページですが [押せる岩を作る](https://tkool.jp/products/r
 
 そして大事なのがメモ欄に記載するタグです。1つ目の緑のクリスタルは岩と同じ &lt;event match_sr:5,1&gt; のままにしておいてください。 しかしその次の黄、青、赤はそれぞれリージョンの番号を増やしていきます。
 
-実際に設定するタグの値は以下になります。
+実際にメモ欄に設定するタグの値は以下になります。
 
 * 緑のクリスタル &lt;event match_sr:5,1&gt;
 * 黄のクリスタル &lt;event match_sr:5,2&gt;
