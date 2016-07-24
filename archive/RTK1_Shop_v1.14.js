@@ -1,15 +1,11 @@
 ﻿//=============================================================================
-// RTK1_Shop.js  ver1.15 2016/07/25
+// RTK1_Shop.js  ver1.14 2016/07/16
 // The MIT License (MIT)
 //=============================================================================
 
 /*:
  * @plugindesc Enhance normal shop function.
  * @author Toshio Yamashita (yamachan)
- *
- * @param buy category
- * @desc Use category for buy menu (0:OFF 1:ON)
- * @default 0
  *
  * @param buy rate
  * @desc Calcurate buy price with this rate
@@ -32,9 +28,6 @@
  * This plugin requires RTK1_Core plugin (1.14 or later) previously.
  *
  * Plugin Command:
- *   RTK1_Shop category on
- *   RTK1_Shop category off
- *
  *   RTK1_Shop open i2-5,w1-2
  *   RTK1_Shop open i2-5,w1-2 true
  *   RTK1_Shop open i2-5,w1-2 true shop%20name
@@ -58,10 +51,6 @@
  * @plugindesc 通常のショップ機能の拡張
  * @author Toshio Yamashita (yamachan)
  *
- * @param buy category
- * @desc 購入メニューもカテゴリー表示する (0:OFF 1:ON)
- * @default 0
- *
  * @param buy rate
  * @desc 商品の価格はこの数値を掛けたものに調整されます
  * @default 1
@@ -83,9 +72,6 @@
  * このプラグインの前に RTK1_Core プラグイン(1.14以降)を読み込んでください。
  *
  * プラグインコマンド:
- *   RTK1_Shop category on
- *   RTK1_Shop category off
- *
  *   RTK1_Shop open i2-5,w1-2
  *   RTK1_Shop open i2-5,w1-2 true
  *   RTK1_Shop open i2-5,w1-2 true shop%20name
@@ -122,7 +108,6 @@
 	var param = PluginManager.parameters(N);
 	M._d_buy = Number(param['difficulty buy rate'] || "0");
 	M._d_sell = Number(param['difficulty sell rate'] || "0");
-	M._cat = Number(param['buy category'] || "0");
 
 	M._config = M._config || {
 		"buy": Number(param['buy rate'] || "1"),
@@ -138,12 +123,10 @@
 	};
 
 	RTK.onLoad(function(){
-		M._cat = RTK.load(NK + "_cat") || M._cat;
 		M._config = RTK.load(NK + "_config") || M._config;
 		RTK.log(N + " load (_config)", M._config);
 	});
 	RTK.onSave(function(){
-		RTK.save(NK + "_cat", M._cat);
 		RTK.save(NK + "_config", M._config);
 		RTK.log(N + " save (_config)", M._config);
 	});
@@ -212,10 +195,6 @@
 			} else {
 				M._config.set[key] = RTK.objects2ids(M._list).join(",");
 			}
-		} else if (args[0] == "category" && args[1] == "on") {
-			M._cat = 1;
-		} else if (args[0] == "category" && args[1] == "off") {
-			M._cat = 0;
 		}
 		RTK.log(N + " command (" + args.join(" ") + ")");
 	};
@@ -240,155 +219,14 @@
 	var _Window_ShopBuy_makeItemList = Window_ShopBuy.prototype.makeItemList;
 	Window_ShopBuy.prototype.makeItemList = function() {
 		if (this._shopGoods == M._list) {
-			if (M._cat) {
-				this._data = M._list.filter(function(o){
-					if ((this._category == "item" && DataManager.isItem(o)) || (this._category == "weapon" && DataManager.isWeapon(o)) || (this._category == "armor" && DataManager.isArmor(o))) {
-						return o.price > 0;
-					}
-				}, this);
-			} else {
-				this._data = M._list.filter(function(o){ return o.price > 0; });
-			}
+			this._data = M._list.filter(function(o){ return o.price > 0; });
 			this._price = this._data.map(function(o){ return Math.floor(o.price * M._config.buy * (1 + M._d_buy * M.difficulty())); });
 		} else {
-			if (M._cat) {
-				this._data = [];
-				this._price = [];
-				this._shopGoods.forEach(function(goods) {
-					var item = null;
-					switch (goods[0]) {
-					case 0:
-						if (this._category == "item") {
-							item = $dataItems[goods[1]];
-						}
-						break;
-					case 1:
-						if (this._category == "weapon") {
-							item = $dataWeapons[goods[1]];
-						}
-						break;
-					case 2:
-						if (this._category == "armor") {
-							item = $dataArmors[goods[1]];
-						}
-						break;
-					}
-					if (item) {
-						this._data.push(item);
-						this._price.push(goods[2] === 0 ? item.price : goods[3]);
-					}
-				}, this);
-			} else {
-				_Window_ShopBuy_makeItemList.call(this);
-			}
+			_Window_ShopBuy_makeItemList.call(this);
 			this._price = this._price.map(function(p){
 				return Math.floor(p * M._config.buy * (1 + M._d_buy * M.difficulty()));
 			});
 		}
-	};
-
-	// ----- buy category -----
-
-	Scene_Shop.prototype.createBuyCategoryWindow = function() {
-		this._buyCategoryWindow = new RTK_Window_ItemCategory();
-		this._buyCategoryWindow.setHelpWindow(this._helpWindow);
-		this._buyCategoryWindow.y = this._dummyWindow.y;
-		this._buyCategoryWindow.hide();
-		this._buyCategoryWindow.deactivate();
-		this._buyCategoryWindow.setHandler('ok',     this.onBuyCategoryOk.bind(this));
-		this._buyCategoryWindow.setHandler('cancel', this.onBuyCategoryCancel.bind(this));
-		this.addWindow(this._buyCategoryWindow);
-	};
-	Scene_Shop.prototype.onBuyCategoryOk = function() {
-		this.activateBuyWindow();
-		this._buyWindow.select(0);
-	};
-	Scene_Shop.prototype.onBuyCategoryCancel = function() {
-		this._commandWindow.activate();
-		this._dummyWindow.show();
-		this._statusWindow.hide();
-		this._buyCategoryWindow.hide();
-		this._buyWindow.hide();
-	};
-
-	var _Scene_Shop_createBuyWindow = Scene_Shop.prototype.createBuyWindow;
-	Scene_Shop.prototype.createBuyWindow = function() {
-		_Scene_Shop_createBuyWindow.call(this);
-		if (M._cat) {
-			this.createBuyCategoryWindow();
-			this._buyWindow.height -= this._buyCategoryWindow.height;
-			this._buyWindow.y += this._buyCategoryWindow.height;
-			this._buyWindow.setCategory = function(category) {
-				if (this._category !== category) {
-					this._category = category;
-					this.refresh();
-					this.resetScroll();
-				}
-			};
-			this._buyCategoryWindow.setItemWindow(this._buyWindow);
-		}
-	};
-	var _Scene_Shop_commandBuy = Scene_Shop.prototype.commandBuy;
-	Scene_Shop.prototype.commandBuy = function() {
-		if (M._cat) {
-			this._dummyWindow.hide();
-			this._buyCategoryWindow.show();
-			this._buyCategoryWindow.activate();
-			this._buyWindow.show();
-			this._buyWindow.deselect();
-			this._buyWindow.refresh();
-			this._statusWindow.show();
-		} else {
-			_Scene_Shop_commandBuy.call(this);
-		}
-	};
-	var _Scene_Shop_onBuyCancel = Scene_Shop.prototype.onBuyCancel;
-	Scene_Shop.prototype.onBuyCancel = function() {
-		if (M._cat) {
-			this._buyWindow.deselect();
-			this._buyCategoryWindow.activate();
-			this._statusWindow.setItem(null);
-			this._helpWindow.clear();
-		} else {
-			_Scene_Shop_onBuyCancel.call(this);
-		}
-	};
-	var _Scene_Shop_onBuyOk = Scene_Shop.prototype.onBuyOk;
-	Scene_Shop.prototype.onBuyOk = function() {
-		if (M._cat) {
-			this._numberWindow.height = this._dummyWindow.height - this._buyCategoryWindow.height;
-			this._numberWindow.y = this._dummyWindow.y + this._buyCategoryWindow.height;
-		}
-		_Scene_Shop_onBuyOk.call(this);
-	};
-	var _Scene_Shop_onSellOk = Scene_Shop.prototype.onSellOk;
-	Scene_Shop.prototype.onSellOk = function() {
-		if (M._cat) {
-			this._numberWindow.height = this._dummyWindow.height;
-			this._numberWindow.y = this._dummyWindow.y;
-		}
-		_Scene_Shop_onSellOk.call(this);
-	};
-
-	// ----- RTK_Window_ItemCategory -----
-
-	function RTK_Window_ItemCategory() {
-		this.initialize.apply(this, arguments);
-	}
-	RTK_Window_ItemCategory.prototype = Object.create(Window_ItemCategory.prototype);
-	RTK_Window_ItemCategory.prototype.constructor = RTK_Window_ItemCategory;
-
-	RTK_Window_ItemCategory.prototype.initialize = function() {
-		Window_HorzCommand.prototype.initialize.call(this, 0, 0);
-	};
-	RTK_Window_ItemCategory.prototype.windowWidth = Window_ShopBuy.prototype.windowWidth;
-	RTK_Window_ItemCategory.prototype.maxCols = function() {
-		return 3;
-	};
-	RTK_Window_ItemCategory.prototype.makeCommandList = function() {
-		this.addCommand(TextManager.item,    'item');
-		this.addCommand(TextManager.weapon,  'weapon');
-		this.addCommand(TextManager.armor,   'armor');
 	};
 
 })(this);

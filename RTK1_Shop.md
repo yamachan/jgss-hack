@@ -16,6 +16,27 @@ Normally, you don't need to change parameters.
 
 ![Screen shot - Plugin](i/RTK1_Shop-02.png)
 
+## Category in buy menu
+
+The default shop's buy menu doesn't have a category selection;
+
+![Screen shot - Shop](i/RTK1_Shop-10.png)
+
+If you change the plugin parameter, "buy category" from 0 to 1;
+
+![Screen shot - Plugin parameter](i/RTK1_Shop-11.png)
+
+Then, it has a category selection;
+
+![Screen shot - Shop](i/RTK1_Shop-12.png)
+
+You can also use plugin command to change this option;
+
+```
+RTK1_Shop category on
+RTK1_Shop category off
+```
+
 ## 1st step
 
 To open the normal shop, you may use the following event command;
@@ -199,7 +220,8 @@ In The Hard or Very Hard mode, the shop price becomes higher, and the sell price
 
 | version | date | require | update |
 | --- | --- | --- | --- |
-| ver1.14 | 2016/07/15 | [RTK1_Core](RTK1_Core.md)<br>ver1.14 or later | Open |
+| ver1.15 | 2016/07/25 | [RTK1_Core](RTK1_Core.md)<br>ver1.14 or later | Add a selection in buy menu |
+| [ver1.14](archive/RTK1_Shop_v1.14.js) | 2016/07/15 | [RTK1_Core](RTK1_Core.md)<br>ver1.14 or later | Open |
 
 ## License
 

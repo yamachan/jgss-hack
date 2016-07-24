@@ -11,7 +11,7 @@ RPGツクールMV と JavaScript ベースの Game Scripting System (JGSS) を�
 | [RTK1_Core](RTK1_Core.js) | [英語](RTK1_Core.md) / [日本語](RTK1_Core.ja.md) | RTK1系ライブラリの基本(Core)部分 |
 | [RTK1_Option_EnJa](RTK1_Option_EnJa.js) | [英語](RTK1_Option_EnJa.md) / [日本語](RTK1_Option_EnJa.ja.md) | オプションメニューで英語/日本語環境の切り替え |
 | [RTK1_Composite](RTK1_Composite.js) | [英語](RTK1_Composite.md) / [日本語](RTK1_Composite.ja.md) | アイテム・武器・防具の合成メニュー＆ショップ |
-| [RTK1_Shop](RTK1_Shop.js) | [英語](RTK1_Shop.md) / [日本語](RTK1_Shop.ja.md) | 標準のショップ機能を拡張 |
+| [RTK1_Shop](RTK1_Shop.js) | [英語](RTK1_Shop.md) / [日本語](RTK1_Shop.ja.md) | 標準のショップ機能を拡張<br>購入時のカテゴリ表示、価格の調整、販売リストの管理など |
 | [RTK1_MapLocalVariables](RTK1_MapLocalVariables.js) | [英語](RTK1_MapLocalVariables.md) / [日本語](RTK1_MapLocalVariables.ja.md) | マップローカル変数を提供 |
 
 ## 単独 プラグイン

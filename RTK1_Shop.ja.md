@@ -16,6 +16,27 @@ RPGツクール MV 用に作成した、標準のショップ機能を拡張す�
 
 ![Screen shot - Plugin](i/RTK1_Shop-02.png)
 
+## 購入画面のカテゴリ表示
+
+ショップの購入画面はカテゴリ分けされていませんが
+
+![Screen shot - Shop](i/RTK1_Shop-10.ja.png)
+
+プラグインパラメータの "buy category" を 0 から 1 に変更すると
+
+![Screen shot - Plugin parameter](i/RTK1_Shop-11.png)
+
+以下のようにカテゴリ分けして表示されるようになります。
+
+![Screen shot - Shop](i/RTK1_Shop-12.ja.png)
+
+ゲーム中にプラグインコマンドで変更することもできます。
+
+```
+RTK1_Shop category on
+RTK1_Shop category off
+```
+
 ## 基本的な使い方
 
 ショップを開くには、以下のようにイベントコマンドを使います。
@@ -199,7 +220,8 @@ RTK1_Difficulty プラグインは 「とても簡単」から「とても難し
 
 | バージョン | 公開日 | 必須ライブラリ | 更新内容 |
 | --- | --- | --- | --- |
-| ver1.14 | 2016/07/15 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.14 以降 | 公開 |
+| ver1.15 | 2016/07/25 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.14 以降 | 購入時のカテゴリ表示機能を追加 |
+| [ver1.14](archive/RTK1_Shop_v1.14.js) | 2016/07/15 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.14 以降 | 公開 |
 
 ## ライセンス
 
