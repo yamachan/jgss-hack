@@ -23,6 +23,12 @@ RPGツクールMV と JavaScript ベースの Game Scripting System (JGSS) を�
 | [RTK_EnemySight](RTK_EnemySight.js) | [日本語](RTK_EnemySight.ja.md) | マップでイベントがプレイヤーを見かけるとスイッチをON |
 | [RTK_EventMatch](RTK_EventMatch.js) | [日本語](RTK_EventMatch.ja.md) | マップでイベントの条件が全て揃うとスイッチをON |
 
+## 資料
+
+| タイトル | 概要 |
+|:-----------|:-----------:|
+| [RPGツクールMV プラグイン作成入門 (1)](guide/plugin-dev-01.ja.md) | 簡単なプラグインを作成してみる<br>パラメータとコマンドを実装してみる |
+
 ## ライセンス
 
 [The MIT License (MIT)](https://opensource.org/licenses/mit-license.php) です。
