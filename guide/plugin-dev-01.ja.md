@@ -1,4 +1,4 @@
-[トップページに戻る](../README.ja.md)
+[トップページに戻る](../README.ja.md) | [次回の入門](plugin-dev-02.ja.md)
 
 # RPGツクールMV プラグイン作成入門 (1)
 
@@ -399,4 +399,4 @@ pluginCommand 関数では、最初のコマンド名が command 引数で渡さ
 
 いろいろプラグインを作成し、楽しんでみてください。
 
-[トップページに戻る](../README.ja.md)
+[トップページに戻る](../README.ja.md) | [次回の入門](plugin-dev-02.ja.md)
