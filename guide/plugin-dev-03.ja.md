@@ -286,7 +286,7 @@ Window_MapName.prototype.drawText　を変更すると、Window_MapName クラ�
 			text = this.convertEscapeCharacters(text);
 			return Window_MapName.prototype.drawText.call(this, text, x, y, maxWidth, align);
 		}
-    return ret;
+		return ret;
 	};
 })(this);
 ```
