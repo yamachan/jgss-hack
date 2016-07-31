@@ -1,4 +1,4 @@
-[トップページに戻る](../README.ja.md) | [前回の入門](plugin-dev-01.ja.md)
+[トップページに戻る](../README.ja.md) | [前回の入門](plugin-dev-01.ja.md) | [次回の入門](plugin-dev-03.ja.md)
 
 # RPGツクールMV プラグイン作成入門 (2)
 
@@ -144,8 +144,7 @@ RPGツクールMVで作成したゲームには、以下の3種類のセーブ�
 			"_depth":0,
 			"_mapId":0,
 			"_eventId":0,
-			"_list":null,"_index":0,"_waitCount":0,"_waitMode":"","_comments":"","_character":null,"_childInterpreter":null,"_branch":{},
-			"_params":[],"_indent":0,"_frameCount":47,"_freezeChecker":17,
+      // 途中省略
 			"@":"Game_Interpreter"
 		},
 		"_mapId":1,
@@ -398,4 +397,4 @@ Game_Enemy.prototype.name = function() {
 
 ではまた！
 
-[トップページに戻る](../README.ja.md) | [前回の入門](plugin-dev-01.ja.md)
+[トップページに戻る](../README.ja.md) | [前回の入門](plugin-dev-01.ja.md) | [次回の入門](plugin-dev-03.ja.md)
