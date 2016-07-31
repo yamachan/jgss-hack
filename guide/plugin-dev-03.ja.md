@@ -232,11 +232,12 @@ Scene_Map.prototype.createMapNameWindow = function() {
 ```js
 var _Scene_Map_createMapNameWindow = Scene_Map.prototype.createMapNameWindow;
 Scene_Map.prototype.createMapNameWindow = function() {
-    _Scene_Map_createMapNameWindow.call(this);
+    var ret = _Scene_Map_createMapNameWindow.call(this);
     this._mapNameWindow.drawText = function(text, x, y, maxWidth, align) {
       text = this.convertEscapeCharacters(text);
       return Window_MapName.prototype.drawText.call(this, text, x, y, maxWidth, align);
     }
+    return ret;
 };
 ```
 
@@ -280,11 +281,12 @@ Window_MapName.prototype.drawText　を変更すると、Window_MapName クラ�
 
 	var _Scene_Map_createMapNameWindow = Scene_Map.prototype.createMapNameWindow;
 	Scene_Map.prototype.createMapNameWindow = function() {
-		_Scene_Map_createMapNameWindow.call(this);
+		var ret = _Scene_Map_createMapNameWindow.call(this);
 		this._mapNameWindow.drawText = function(text, x, y, maxWidth, align) {
 			text = this.convertEscapeCharacters(text);
 			return Window_MapName.prototype.drawText.call(this, text, x, y, maxWidth, align);
 		}
+    return ret;
 	};
 })(this);
 ```
