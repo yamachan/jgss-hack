@@ -105,13 +105,190 @@ PluginManager.parameters = function(name) {
 })(this);
 ```
 
-この関数(RTK_Sample.hasPlugin)を使えば、前提となるプラグインが導入済みかどうかを簡単に調べることができます。 前回作成した RTK_ShowID プラグインが導入されているかを、コンソールから確認してみましょう。
+この関数(RTK_Sample.hasPlugin)を使えば、前提となるプラグインが導入済みかどうかを簡単に調べることができます。 前回作成した RTK_ShowID プラグインが導入されているかどうかを、コンソールから確認してみましょう。
 
 ![Screen shot - console](i/plugin-dev-03-01.png)
 
-## セクション名
+## 制御文字を使いたい、にもいろいろある
 
-書き途中
+イベントでメッセージを表示するとき、制御文字って便利ですよね。 でも制御文字って使える場所が限られていて 「ここの場所でも使いたい！」 って要望がよくあります。 最近ですと某掲示板で
 
+> マップ表示名に制御文字\\n[n]を使いたい
+
+というご要望があがったりしていました。
+
+内部的に、制御文字を使える場合は drawTextEx() 関数、使えない場合は drawText() 関数が使われているようです。 なので該当の部分だけ、drawTextEx() 関数を使用してあげれば、たいてい解決したりします。
+
+極端な話、マップ表示名に制御文字を使いたいだけであれば、以下の一行でもいちおう動作したりはします。 いや、動作するように見えなくもないです。
+
+```js
+Window_MapName.prototype.drawText = Window_MapName.prototype.drawTextEx;
+```
+
+記法のマナーとか以前に、実はこの2つの関数に互換性はありません。 それぞれの引数を比べると違いがわかります。
+
+```js
+Window_Base.prototype.drawText = function(text, x, y, maxWidth, align) {
+    this.contents.drawText(text, x, y, maxWidth, this.lineHeight(), align);
+};
+
+Window_Base.prototype.drawTextEx = function(text, x, y) {
+    // 定義は省略
+};
+```
+
+実際にマップ名の表示をしている部分を参照すると、問題点がはっきりしますね。 drawText() 関数を drawTextEx() 関数に置き換えるだけだと、align が無いので表示文字列がセンタリング(中央に寄せて表示)されないのです。
+
+```js
+Window_MapName.prototype.refresh = function() {
+    this.contents.clear();
+    if ($gameMap.displayName()) {
+        var width = this.contentsWidth();
+        this.drawBackground(0, 0, width, this.lineHeight());
+        this.drawText($gameMap.displayName(), 0, 0, width, 'center');
+    }
+};
+```
+
+さて、ここで対応策を考えましょう。 元の依頼は \\n[n] を使いたい、つまりは値の置き換えを使いたがっています。 複雑な表示制御ではありません。
+
+drawTextEx() 関数の処理を追いかけると、値の置き換えを実行してくれる関数があることに気がつきます。
+
+```js
+Window_Base.prototype.convertEscapeCharacters = function(text) {
+    text = text.replace(/\\/g, '\x1b');
+    text = text.replace(/\x1b\x1b/g, '\\');
+    text = text.replace(/\x1bV\[(\d+)\]/gi, function() {
+        return $gameVariables.value(parseInt(arguments[1]));
+    }.bind(this));
+    text = text.replace(/\x1bV\[(\d+)\]/gi, function() {
+        return $gameVariables.value(parseInt(arguments[1]));
+    }.bind(this));
+    text = text.replace(/\x1bN\[(\d+)\]/gi, function() {
+        return this.actorName(parseInt(arguments[1]));
+    }.bind(this));
+    text = text.replace(/\x1bP\[(\d+)\]/gi, function() {
+        return this.partyMemberName(parseInt(arguments[1]));
+    }.bind(this));
+    text = text.replace(/\x1bG/gi, TextManager.currencyUnit);
+    return text;
+};
+```
+
+これをさきほどの refresh 関数に組み込んでみましょう。
+
+```js
+Window_MapName.prototype.refresh = function() {
+    this.contents.clear();
+    if ($gameMap.displayName()) {
+        var width = this.contentsWidth();
+        this.drawBackground(0, 0, width, this.lineHeight());
+        this.drawText(this.convertEscapeCharacters($gameMap.displayName()), 0, 0, width, 'center');
+    }
+};
+```
+
+これでご要望に応え、マップ名表示で制御文字が使えるようになりました！ 最初の一歩としては上出来ではないでしょうか？
+
+### さらにその先へ？
+
+さきほどの 「マップ名表示で制御文字が使える」 お題、確かに動作に問題はありません。 しかし 「マナーの良い」 競合しないプラグインを考えた場合、ちょっとだけ気になることがあります。
+
+そう、さきほどの例では refresh 関数を置きかえていました。 どうしても仕方ない場合を除き、関数の置き換えはなるべく避けたいものです。 なんとかならないでしょうか？
+
+こういった場合には注目すべきポイントがありまして、「書き換えた部分に最も近い部分」 が利用可能なことがおおいです。 今回は drawText() 関数が近いですね。 うまく利用できないでしょうか？
+
+以下のように利用しちゃいましょう。
+
+```js
+var _Window_MapName_drawText = Window_MapName.prototype.drawText;
+Window_MapName.prototype.drawText = function(text, x, y, maxWidth, align) {
+    text = this.convertEscapeCharacters(text);
+    return _Window_MapName_drawText.call(this, text, x, y, maxWidth, align);
+};
+```
+
+これであれば既存の関数の置き換えはせず、拡張だけで済んでしまいます。 より競合しにくい 「マナーの良い」 コードだと言えそうです。
+
+### さらにさらにその先へ？
+
+マナーを気にすると、更に先があります。 しかしここまで必要かどうかは、個人の価値観に依存するような気もします… このセクションは話半分で流し読んでください。 お好きな方のみ楽しんでください。
+
+さきほどのコードは確かにマップ名表示では競合しなさそうですが、まだ心配があります。 Window_MapName クラスが他で利用されていないか、ということです。
+
+ちょっとした1行のテキストを表示できる機能は便利なので、マップ名表示以外に使っている場合があるかもしれません。 またこのクラスを継承して、自分なりの表示クラスを定義する方もいるでしょう。 つまり Window_MapName というクラスを自分が勝手に変更して本当に誰にも迷惑をかけないか、という非常にレアな心配をするわけです。
+
+そんな小心者の方、まあ僕もそうですが、以下のような利用する側のコードも検討しては如何でしょうか？
+
+```js
+Scene_Map.prototype.createMapNameWindow = function() {
+    this._mapNameWindow = new Window_MapName();
+    this.addChild(this._mapNameWindow);
+};
+```
+
+これに以下のように追加すれば、さきほどと同じ効果が発揮できます。
+
+```js
+var _Scene_Map_createMapNameWindow = Scene_Map.prototype.createMapNameWindow;
+Scene_Map.prototype.createMapNameWindow = function() {
+    _Scene_Map_createMapNameWindow.call(this);
+    this._mapNameWindow.drawText = function(text, x, y, maxWidth, align) {
+      text = this.convertEscapeCharacters(text);
+      return Window_MapName.prototype.drawText.call(this, text, x, y, maxWidth, align);
+    }
+};
+```
+
+変なコードですか？ マナー気にしすぎ開発者の裏技 「インスタンスでの関数置き換え」 を使ってます。 確かに少しマニアックなコードではあります。
+
+Window_MapName.prototype.drawText　を変更すると、Window_MapName クラスを利用する全てに影響します。 ならばクラスは変更せず、インスタンスを生成するまで待って、そのインスタンスだけを変更してしまえ！という技です。
+
+例えばタイ焼きの金型があって、100個のタイ焼きを作るとします。 ちょっとデザインを変えたい場合、金型を変えてしまうと100個全てのタイ焼きが影響されます。 そこで実際にタイ焼きを焼いてしまい、1個のタイ焼きに対して目的の修正をしてしまいます。 …あまり良い例えではないですかね。
+
+まあともかく、これでマップ画面で使われる Window_MapName に限り、制御文字に対応することが可能になったわけです。 他で Window_MapName を使っても影響はゼロです。
+
+うーむ、やはりマニアックすぎて、入門っぽくなくなってしまいましたね… 次回から気をつけたいとおもいます。
+
+## 今回のコード
+
+今回、ご紹介したプラグインのコードをあわせると、以下のようになります。
+
+```js
+//=============================================================================
+// RTK_Test.js	2016/07/31
+// The MIT License (MIT)
+//=============================================================================
+
+/*:
+ * @plugindesc テスト用プラグイン
+ * @author Toshio Yamashita (yamachan)
+ *
+ * @help このプラグインにはプラグインコマンドはありません。
+ * テスト用に作成したものなので、実際に利用する場合には適当にリネームしてください
+ */
+
+(function(_global) {
+	// ここにプラグイン処理を記載
+	var N = 'RTK_Test';
+	var param = PluginManager.parameters(N);
+
+	_global["RTK_Sample"] = _global["RTK_Sample"] || {};
+	RTK_Sample.hasPlugin = function(_name){
+		return !!PluginManager._parameters[_name.toLowerCase()];      
+	}
+
+	var _Scene_Map_createMapNameWindow = Scene_Map.prototype.createMapNameWindow;
+	Scene_Map.prototype.createMapNameWindow = function() {
+		_Scene_Map_createMapNameWindow.call(this);
+		this._mapNameWindow.drawText = function(text, x, y, maxWidth, align) {
+			text = this.convertEscapeCharacters(text);
+			return Window_MapName.prototype.drawText.call(this, text, x, y, maxWidth, align);
+		}
+	};
+})(this);
+```
+
+ではまた！
 
 [トップページに戻る](../README.ja.md) | [前回の入門](plugin-dev-02.ja.md)
