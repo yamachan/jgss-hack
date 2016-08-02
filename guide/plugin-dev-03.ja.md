@@ -101,7 +101,7 @@ PluginManager.parameters = function(name) {
     _global["RTK_Sample"] = _global["RTK_Sample"] || {};
     RTK_Sample.hasPlugin = function(_name){
       return !!PluginManager._parameters[_name.toLowerCase()];      
-    }
+    };
 })(this);
 ```
 
@@ -277,7 +277,7 @@ Window_MapName.prototype.drawText　を変更すると、Window_MapName クラ�
 	_global["RTK_Sample"] = _global["RTK_Sample"] || {};
 	RTK_Sample.hasPlugin = function(_name){
 		return !!PluginManager._parameters[_name.toLowerCase()];      
-	}
+	};
 
 	var _Scene_Map_createMapNameWindow = Scene_Map.prototype.createMapNameWindow;
 	Scene_Map.prototype.createMapNameWindow = function() {

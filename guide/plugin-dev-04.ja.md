@@ -1,4 +1,4 @@
-[トップページに戻る](../README.ja.md) | [前回の入門](plugin-dev-03.ja.md)
+[トップページに戻る](../README.ja.md) | [前回の入門](plugin-dev-03.ja.md) | [次回の入門](plugin-dev-05.ja.md)
 
 # RPGツクールMV プラグイン作成入門 (4)
 
@@ -10,7 +10,7 @@ RPGツクールMV で利用する JavaScript ベースの Game Scripting System 
 
 [作成入門 (3)](plugin-dev-03.ja.md) ではグローバル変数の定義を説明し、前提となるプラグインをチェックする関数を定義してみて、また制御文字を使えるようにする拡張について説明しました。
 
-今回はプラグイン開発の環境に特有の、JavaScript言語の拡張のうち便利なものを幾つか紹介します。
+今回はプラグイン開発の環境に特有の、JavaScript言語の拡張のうち便利そうなものを幾つか紹介します。 今後も発見したものは追記していきますね。
 
 ## JavaScript言語の拡張について
 
@@ -52,6 +52,8 @@ RPGツクールMVの開発環境においても、js フォルダにある rpg_c
 
 ## データ処理に便利な関数
 
+以下のようにデータ形式を変換したり、圧縮したりする関数も用意されています。
+
 | 関数名と引数 | 概要 | 利用例 |
 | --- | --- | --- |
 | JsonEx.stringify(object) | オブジェクトをJSON文字列に変換する | JsonEx.stringify({"value":1,"flag":true}) => '{"value":1,"flag":true}' |
@@ -59,10 +61,10 @@ RPGツクールMVの開発環境においても、js フォルダにある rpg_c
 | JsonEx.makeDeepCopy(object) | 対象オブジェクトをコピーする<br>深いコピーで含まれるオブジェクトも複製する | JsonEx.makeDeepCopy([1,[2,3]]) => [1,[2,3]]<br>この場合含まれる[2,3]は元の要素とは異なったオブジェクトになる |
 | LZString.compress(string) | 文字列を圧縮する | LZString.compress("source string") => 圧縮された文字列 |
 | LZString.decompress(string) | 上記の逆変換 |LZString.decompress(圧縮された文字列) => "source string" |
-| LZString.compressToBase64(string) | 文字列を圧縮しBase64表現に変換する<br>Base64表記はURLパラメータに指定したり、テキストメッセージに追加するのに適しています | LZString.compressToBase64("source string") => "M4ewrgTgxgpgBMALhAlgOwOZAAA=" |
-| LZString.decompressFromBase64(string) | 上記の逆変換 | LZString.compressToBase64("M4ewrgTgxgpgBMALhAlgOwOZAAA=") => "source string" |
-|  |  | |
-
+| LZString.compressToEncodedURIComponent(string) | 文字列を圧縮しBase64表現に変換する<br>この表記はURLパラメータに指定するのに適しています | LZString.compressToEncodedURIComponent("source string") => "M4ewrgTgxgpgBMALhAlgOwOZAAA$" |
+| LZString.decompressFromEncodedURIComponent(string) | 上記の逆変換 | LZString.decompressFromEncodedURIComponent("M4ewrgTgxgpgBMALhAlgOwOZAAA$") => "source string" |
+| LZString.compressToBase64(string) | 文字列を圧縮しBase64表現に変換する<br>この表記はテキストメッセージに追加するのに適しています | LZString.compressToBase64("source string") => "M4ewrgTgxgpgBMALhAlgOwOZAAA=" |
+| LZString.decompressFromBase64(string) | 上記の逆変換 | LZString.decompressFromBase64("M4ewrgTgxgpgBMALhAlgOwOZAAA=") => "source string" |
 
 ## その他 便利な値や関数
 
@@ -77,9 +79,18 @@ RPGツクールMVの開発環境においても、js フォルダにある rpg_c
 | Utils.rgbToCssColor(r, g, b) | CSSの色指定文字列を作成する | Utils.rgbToCssColor(1,2,3) => "rgb(1,2,3)" |
 | Bitmap.snap(stage) | ゲーム画面をキャプチャしてbitmap画像を返す | Bitmap.snap(SceneManager._scene) => 新規作成されたゲーム画面のbitmapオブジェクト |
 
-## 書き途中
+## 便利なシステム変数や関数
 
-TBD...
+プラグイン中でよく参照する、ゲーム内のシステム変数や関数をまとめておきます。
 
+| 関数名と引数 | 概要 | 利用例 |
+| --- | --- | --- |
+| DataManager.isBattleTest() | バトルテストの時に true を返す |  |
+| DataManager.isEventTest() | イベントテストの時に true を返す |  |
+| SceneManager._scene | 現在の Scene オブジェクト |  |
 
-[トップページに戻る](../README.ja.md) | [前回の入門](plugin-dev-03.ja.md)
+## 最後に
+
+今回はちょっと短いですが、情報は引き続き更新していきます。 見つけた便利な関数などは順次紹介していきますね！
+
+[トップページに戻る](../README.ja.md) | [前回の入門](plugin-dev-03.ja.md) | [次回の入門](plugin-dev-05.ja.md)
