@@ -166,7 +166,7 @@ Game_Picture の情報更新と、Sprite_Picture の画面反映は別の処理�
 $gameScreen.showPicture(pictureId, name, origin, x, y, scaleX, scaleY, opacity, blendMode);
 ```
 
-前から少し不満だったのは、pictureId の管理です。 空いている番号を探すのがけっこう面倒ではありませんか？ そこでプラグインの RTK_Sample グローバス変数に以下の便利関数を定義してみましょう。
+前から少し不満だったのは、pictureId の管理です。 空いている番号を探すのがけっこう面倒ではありませんか？ そこでプラグインの RTK_Sample グローバル変数に以下の便利関数を定義してみましょう。
 
 ```js
 RTK_Sample.nextPictureId = function(){
