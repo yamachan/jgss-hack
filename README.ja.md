@@ -22,6 +22,7 @@ RPGツクールMV と JavaScript ベースの Game Scripting System (JGSS) を�
 | [RTK_VariablePacker](RTK_VariablePacker.js) | N/A | 変数をパック/アンパックするプラグインコマンド |
 | [RTK_EnemySight](RTK_EnemySight.js) | [日本語](RTK_EnemySight.ja.md) | マップでイベントがプレイヤーを見かけるとスイッチをON |
 | [RTK_EventMatch](RTK_EventMatch.js) | [日本語](RTK_EventMatch.ja.md) | マップでイベントの条件が全て揃うとスイッチをON |
+| [RTK_ActorTraits](RTK_ActorTraits.js) | N/A | アクターに特徴を追加するプラグインコマンド |
 
 ## 資料
 
