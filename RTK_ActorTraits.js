@@ -4,6 +4,34 @@
 //=============================================================================
 
 /*:
+ * @plugindesc Plugin commands to add traits against actors
+ * @author Toshio Yamashita (yamachan)
+ *
+ * @help
+ * Add plugin commands to add traits against actors.
+ * Plugin commands:
+ *  RTK_ActorTraits list	# List actors' current traits to the console
+ *  RTK_ActorTraits add n {}	# Add {} trait against #n actor
+ *  RTK_ActorTraits remove n {}	# Remove {} trait from #n actor
+ *  RTK_ActorTraits clear n	# Remove #n actor's all addtional traits
+ *  RTK_ActorTraits clear all	# Remove all actors' all addtional traits
+ *
+ * The prefix "n" shows the actor's id. This is a default, so you can omit it.
+ * e.g. RTK_ActorTraits add n3 {} => Add {} trait against #3 actor
+ *
+ * The prefix "v" shows the game valiable. The value will be used as the actor #.
+ * 例) RTK_ActorTraits add v10 {} => Add {} trait against the actor which is found by the game valiable #10.
+ *
+ * The prefix "p" shows the party member. The value will be used as the order # of the party member list.
+ * 例) RTK_ActorTraits add p1 {} => Add {} trait against the 1st actor in the party.
+ *
+ * To know the correct trait object value {}, set the trait to an actor, then use "list" command
+ * e.g. {"code":43,"dataId":13,"value":1} is to enable to use #13 skill
+ * e.g. {"code":51,"dataId":7,"value":1} is to enable to equip #7 weapon
+ * e.g. {"code":52,"dataId":3,"value":1} is to enable to equip #3 armor
+ */
+
+/*:ja
  * @plugindesc アクターに特徴を追加するプラグインコマンド
  * @author Toshio Yamashita (yamachan)
  *

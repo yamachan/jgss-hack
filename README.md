@@ -22,6 +22,8 @@ My study memo and output for JavaScript based Game Scripting System (JGSS) on RP
 | [RTK_VariablePacker](RTK_VariablePacker.js) | N/A | Plugin command to pack/unpack variables |
 | [RTK_EnemySight](RTK_EnemySight.js) | [Japanese](RTK_EnemySight.ja.md) | Set switch when an event see player within n tiles |
 | [RTK_EventMatch](RTK_EventMatch.js) | [Japanese](RTK_EventMatch.ja.md) | Set switch when all conditions are met in map events |
+| [RTK_ActorTraits](RTK_ActorTraits.js) | N/A | Plugin commands to add traits against actors |
+| [RTK_ActionRate](RTK_ActionRate.js) | N/A | Set action's success rate by note tag |
 
 ## License
 

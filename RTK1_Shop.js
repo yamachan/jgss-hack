@@ -12,19 +12,19 @@
  * @default 0
  *
  * @param buy rate
- * @desc Calcurate buy price with this rate
+ * @desc Calculate buy price with this rate
  * @default 1
  *
  * @param sell rate
- * @desc Calcurate sell price with this rate
+ * @desc Calculate sell price with this rate
  * @default 0.5
  *
  * @param difficulty buy rate
- * @desc Calcurate buy price with RTK1_Difficulty plugin
+ * @desc Calculate buy price with RTK1_Difficulty plugin
  * @default 0
  *
  * @param difficulty sell rate
- * @desc Calcurate sell price with RTK1_Difficulty plugin
+ * @desc Calculate sell price with RTK1_Difficulty plugin
  * @default 0
  *
  * @help
