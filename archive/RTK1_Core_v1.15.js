@@ -1,5 +1,5 @@
 //=============================================================================
-// RTK1_Core.js  ver1.16 2016/08/16
+// RTK1_Core.js  ver1.15 2016/07/17
 // The MIT License (MIT)
 //=============================================================================
 
@@ -74,7 +74,7 @@ function RTK() {
  * @type Number
  * @final
  */
-RTK.VERSION_NO = 1.16;
+RTK.VERSION_NO = 1.15;
 
 // ----- for Services -----
 
@@ -341,7 +341,7 @@ RTK.id4list = function(_mode, _targetList, _value, _isObject, _setList) {
 	var _SceneManager_onSceneStart = SceneManager.onSceneStart;
 	SceneManager.onSceneStart = function() {
 		_SceneManager_onSceneStart.call(this);
-		if ($gameMap && $gameMap.mapId() > 0) {
+		if ($gameMap.mapId() > 0) {
 			for (var l=0; l<RTK._mapStart.length; l++) {
 				if ("function" == typeof RTK._mapStart[l]) {
 					RTK._mapStart[l]($gameMap.mapId());
