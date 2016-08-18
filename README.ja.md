@@ -24,6 +24,7 @@ RPGツクールMV と JavaScript ベースの Game Scripting System (JGSS) を�
 | [RTK_EventMatch](RTK_EventMatch.js) | [日本語](RTK_EventMatch.ja.md) | マップでイベントの条件が全て揃うとスイッチをON |
 | [RTK_ActorTraits](RTK_ActorTraits.js) | N/A | アクターに特徴を追加するプラグインコマンド |
 | [RTK_ActionRate](RTK_ActionRate.js) | N/A | メモ欄のタグでアクションの成功レートを調整する |
+| [RTK_ActionLimit](RTK_ActionLimit.js) | N/A | メモ欄のタグでアクションの実行回数などを制限する |
 
 ## 資料
 
