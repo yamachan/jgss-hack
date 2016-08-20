@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// RTK_ActionLimit.js  ver1.02 2016/08/20
+// RTK_ActionLimit.js  ver1.01 2016/08/18
 // The MIT License (MIT)
 //=============================================================================
 
@@ -18,10 +18,6 @@
  *   <condition actor:n,m,,>	# Actors (ID: n,m,,) can use this
  *   <condition class:n,m,,>	# Classes (ID: n,m,,) can use this
  *   <condition max:n>		# Can use #n times in a battle
- *   <condition max +turn:n>	# Increase max per n turn
- *   <condition max +level:n>	# Increase max per n party members' max level
- *   <condition req item:n>	# Require to use %n item before this
- *   <condition req item:n>	# Require to use %n skill before this
  *
  * If you add the prefix "v" to the number n, it means a value in the game variables.
  * e.g. <condition switch:v10> Can use this when the switch selected by the game variable #10 is ON.
@@ -43,10 +39,6 @@
  *   <condition actor:n,m,,>	# n,m,,番のアクターだけが戦闘で利用できる
  *   <condition class:n,m,,>	# n,m,,番のクラスだけが戦闘で利用できる
  *   <condition max:n>		# 1度の戦闘でn回だけ利用できる
- *   <condition max +turn:n>	# nターンごとに利用回数がプラスされる
- *   <condition max +level:n>	# パーティの最大レベルが n に達すると利用回数がプラスされる
- *   <condition req item:n>	# その戦闘中にn番のアイテムを使用後に利用可能になる
- *   <condition req skill:n>	# その戦闘中にn番のスキルを使用後に利用可能になる
  *
  * 単独の数値 n の前に "v" を付与すると、その番号が示すゲーム変数の値が代わりに利用される
  * 例) <condition switch:v10> は変数10番に入っている値に対応するスイッチがONのときだけ利用できる
@@ -59,6 +51,7 @@
 	var tag = String(param['meta tag'] || "condition");
 	var items = [];
 	var skills = [];
+
 
 	function conv(_s, _default) {
 		if (_s.match(/^\s*[\d.]+\s*$/)) {
@@ -95,22 +88,6 @@
 		}
 		return ret;
 	}
-	function plus(_m) {
-		var ret = 0;
-		if (_m[tag + " max +turn"]) {
-			var r = conv(_m[tag + " max +turn"], 0);
-			if (r > 0) {
-				ret += Math.floor($gameTroop.turnCount() / r);
-			}
-		}
-		if (_m[tag + " max +level"]) {
-			var r = conv(_m[tag + " max +level"], 0);
-			if (r > 0) {
-				ret += Math.floor($gameParty.highestLevel() / r);
-			}
-		}
-		return ret;
-	}
 
 	var _Scene_Battle_create = Scene_Battle.prototype.create;
 	Scene_Battle.prototype.create = function() {
@@ -122,6 +99,7 @@
 	var _Game_BattlerBase_isOccasionOk = Game_BattlerBase.prototype.isOccasionOk;
 	Game_BattlerBase.prototype.isOccasionOk = function(item) {
 		var ret = _Game_BattlerBase_isOccasionOk.call(this, item);
+
 		if (ret && $gameParty.inBattle()) {
 			var meta = item && (item.meta || {});
 			if (meta[tag + " switch"]) {
@@ -137,33 +115,21 @@
 				if (v > 0) {
 					if (DataManager.isItem(item)) {
 						items[item.id] = items[item.id] === undefined ? 0 : items[item.id];
-						if (items[item.id] + count(item.id, "item") >= v + plus(meta)) {
+						if (items[item.id] + count(item.id, "item") >= v) {
 							return false;
 						}
 					} else if (DataManager.isSkill(item)) {
 						skills[item.id] = skills[item.id] === undefined ? 0 : skills[item.id];
-						if (skills[item.id] + count(item.id, "skill") >= v + plus(meta)) {
+						if (skills[item.id] + count(item.id, "skill") >= v) {
 							return false;
 						}
 					}
 				}
 			}
-			if (meta[tag + " req item"]) {
-				var v = conv(meta[tag + " req item"], 0);
-				if (v > 0 && !items[v]) {
-					return false;
-				}
-			}
-			if (meta[tag + " req skill"]) {
-				var v = conv(meta[tag + " req skill"], 0);
-				if (v > 0 && !skills[v]) {
-					return false;
-				}
-			}
 			if (BattleManager.actor()) {
 				if (meta[tag + " actor"]) {
 					var v = conv(meta[tag + " actor"], 0);
-					if (v > 0) {
+					if (v) {
 						if (v != BattleManager.actor().actor().id) {
 							return false;
 						}
@@ -175,7 +141,7 @@
 				}
 				if (meta[tag + " class"]) {
 					var v = conv(meta[tag + " class"], 0);
-					if (v > 0) {
+					if (v) {
 						if (v != BattleManager.actor()._classId) {
 							return false;
 						}
@@ -194,7 +160,10 @@
 	Game_Party.prototype.consumeItem = function(item) {
 		var ret = _Game_Party_consumeItem.call(this, item);
 		if ($gameParty.inBattle()) {
-			items[item.id] = items[item.id] === undefined ? 1 : items[item.id] + 1;
+			var meta = item && (item.meta || {});
+			if (meta[tag + " max"]) {
+				items[item.id] = items[item.id] === undefined ? 1 : items[item.id] + 1;
+			}
 		}
 		return ret;
 	};
@@ -203,8 +172,12 @@
 	Game_BattlerBase.prototype.paySkillCost = function(skill) {
 		var ret = _Game_BattlerBase_paySkillCost.call(this, skill);
 		if ($gameParty.inBattle()) {
-			skills[skill.id] = skills[skill.id] === undefined ? 1 : skills[skill.id] + 1;
+			var meta = skill && (skill.meta || {});
+			if (meta[tag + " max"]) {
+				skills[skill.id] = skills[skill.id] === undefined ? 1 : skills[skill.id] + 1;
+			}
 		}
 		return ret;
 	};
+
 })(this);
