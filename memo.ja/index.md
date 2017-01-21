@@ -9,5 +9,6 @@ RPGツクールMV で利用する JavaScript ベースの Game Scripting System 
 | タイトル | 概要 |
 |:-----------|:-------------|
 | [JGSS ver1.2.0 から ver1.3.4 への変化 (前編)](201401-jgss134.md) | plugins.js, rpg_core.js について |
+| [JGSS ver1.2.0 から ver1.3.4 への変化 (後編)](201401-jgss134_2.md) | rpg_sprites.js, rpg_objects.js, rpg_scenes.js, rpg_managers.js について |
 
 [トップページに戻る](../README.ja.md)
