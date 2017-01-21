@@ -30,6 +30,7 @@ RPGツクールMV と JavaScript ベースの Game Scripting System (JGSS) を�
 
 | タイトル | 概要 |
 |:-----------|:-----------|
+| [RPGツクールMV JGSS 技術メモ](memo.ja/index.md) | ver1.2.0 から ver1.3.4 への変化のまとめ、など |
 | [RPGツクールMV プラグイン作成入門 (1)](guide/plugin-dev-01.ja.md) | 簡単なプラグインを作成してみる<br>パラメータとコマンドを実装してみる |
 | [RPGツクールMV プラグイン作成入門 (2)](guide/plugin-dev-02.ja.md) | 状態をセーブファイルに保存する<br>エネミーも対象にしてみる<br>プラグインとしてとりあえず完成させる |
 | [RPGツクールMV プラグイン作成入門 (3)](guide/plugin-dev-03.ja.md) | グローバル変数の定義<br>前提となるプラグインをチェックする<br>制御文字を使いたい、にもいろいろある |
