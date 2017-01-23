@@ -6,9 +6,10 @@ RPGツクールMV で利用する JavaScript ベースの Game Scripting System 
 
 ## 技術メモの一覧
 
-| タイトル | 概要 |
-|:-----------|:-------------|
-| [JGSS ver1.2.0 から ver1.3.4 への変化 (前編)](201401-jgss134.md) | plugins.js, rpg_core.js について |
-| [JGSS ver1.2.0 から ver1.3.4 への変化 (後編)](201401-jgss134_2.md) | rpg_sprites.js, rpg_objects.js, rpg_scenes.js, rpg_managers.js について |
+| タイトル | 対象ver | 概要 |
+|:-----------|:--:|:-------------|
+| [JGSS ver1.2.0 から ver1.3.4 への変化 (前編)](201401-jgss134.md) | 1.3.4 | plugins.js, rpg_core.js について |
+| [JGSS ver1.2.0 から ver1.3.4 への変化 (後編)](201401-jgss134_2.md) | 1.3.4 |  rpg_sprites.js, rpg_objects.js, rpg_scenes.js, rpg_managers.js について |
+| [マップ移動中のコードの流れ](201701-scenes.md) | 1.3.4 | マップ上でキャラが動いている時のコード |
 
 [トップページに戻る](../README.ja.md)
