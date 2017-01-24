@@ -30,7 +30,7 @@
 
 (function(_global) {
 	// ここにプラグイン処理を記載
-	var N = 'RTK_Test';
+	var N = 'RTK_ShowID';
 	var param = PluginManager.parameters(N);
 	var show_id = Number(param['アクター名の後にIDを表示'])||1;
 	var show_eid = Number(param['エネミー名の後にIDを表示'])||1;
@@ -42,7 +42,7 @@
 		if (f === undefined ? show_id : f) {
 			return ret + ":" + this.actorId();
 		} else {
-			return ret;          
+			return ret;
 		}
 	};
 
@@ -53,7 +53,7 @@
 		if (f === undefined ? show_eid : f) {
 			return ret + ":" + this.enemyId();
 		} else {
-			return ret;          
+			return ret;
 		}
 	};
 
