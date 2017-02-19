@@ -36,6 +36,7 @@ RPGツクールMV と JavaScript ベースの Game Scripting System (JGSS) を�
 | [RPGツクールMV プラグイン作成入門 (3)](guide/plugin-dev-03.ja.md) | グローバル変数の定義<br>前提となるプラグインをチェックする<br>制御文字を使いたい、にもいろいろある |
 | [RPGツクールMV プラグイン作成入門 (4)](guide/plugin-dev-04.ja.md) | プラグイン開発の環境に特有のJavaScript言語の拡張のうち便利そうなものを幾つか紹介 |
 | [RPGツクールMV プラグイン作成入門 (5)](guide/plugin-dev-05.ja.md) | 画面表示の仕組みを理解しよう |
+| 技術メモ: [ショップ販売のカテゴリ化プラグインを作成してみる](201702-window2.md) | 作成入門の番外編、プラグイン作成の例として |
 
 ## ライセンス
 
