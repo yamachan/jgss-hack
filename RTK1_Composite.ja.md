@@ -452,7 +452,8 @@ RTK.CP.recipe("i5")
 
 | バージョン | 公開日 | 必須ライブラリ | 更新内容 |
 | --- | --- | --- | --- |
-| ver1.15 | 2016/07/22 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | 自動学習を追加 |
+| ver1.16 | 2017/03/14 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | 長いアイテム名と被らないように 材料: 表示を少し右に移動 |
+| [ver1.15](archive/RTK1_Composite_v1.15.js) | 2016/07/22 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | 自動学習を追加 |
 | [ver1.13](archive/RTK1_Composite_v1.13.js) | 2016/07/14 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | sort コマンドおよびパラメーターを追加 |
 | [ver1.11](archive/RTK1_Composite_v1.11.js) | 2016/07/06 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | #id 指定にハイフンによる範囲指定が使えるようになった<br>forget コマンドのバグを修正 |
 | [ver1.10](archive/RTK1_Composite_v1.10.js) | 2016/07/05 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.08 以降 | 日本語ヘルプを追加<br>作業場を追加<br>成功率と費用の調整機能を追加 |

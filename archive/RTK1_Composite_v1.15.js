@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// RTK1_Composite.js  ver1.16 2017/03/14
+// RTK1_Composite.js  ver1.15 2016/07/22
 // The MIT License (MIT)
 //=============================================================================
 
@@ -494,7 +494,6 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 			this._exeWindow.deselect();
 			this._exeWindow.deactivate();
 			this._indexWindow.activate();
-			this._indexWindow.select(Window_CompositeIndex.lastIndex);
 		}.bind(this));
 		this._exeWindow.setHandler('ok', function(){
 			this._exeWindow.deselect();
@@ -559,15 +558,13 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 					}
 				}
 				if (M._sort & 1) {
-					var sn = RTK.sortName(a, b);
-					if (sn != 0) {
-						return sn;
-					}
+					return RTK.sortName(a, b);
 				}
 				if (M._sort & 2) {
-					return a.id == b.id ? 0 : a.id > b.id;
+					if (a.id != b.id) {
+						return a.id > b.id;
+					}
 				}
-				return a.id == b.id ? 0 : a.id > b.id; // Error is same as 2
 			});
 		}
 		this.refresh();
@@ -656,7 +653,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 
 		if (item[NK]) {
 			this.changeTextColor(this.systemColor());
-			this.drawText(RTK.text("Material") + ":", x * 1.1, y, 120);
+			this.drawText(RTK.text("Material") + ":", x * 0.9, y, 120);
 			this.resetTextColor();
 			y += lineHeight;
 
