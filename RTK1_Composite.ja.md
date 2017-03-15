@@ -448,6 +448,38 @@ RTK.CP.recipe("i5")
 
 さきほどの本と基本は同じですが、お金が不足している場合を分け、会話を分岐させています。 5000G で　Large Bow (ID=7 の武器) のレシピを教えてもらえます。
 
+## おまけ情報
+
+日本語モードの文言なのですが、プラグイン中で以下のように RTK1 共通の辞書に登録しています。
+
+```js
+RTK.onReady(function(){
+  RTK.text("Composite", "合成");
+  RTK.text("Material", "材料");
+  RTK.text("Charge", "費用");
+  RTK.text("Success", "成功率");
+  RTK.text("Execute", "実行");
+  RTK.text("Quantity", "所持数");
+  RTK.text("Composite Shop", "合成の店");
+  RTK.text("Item Composite Shop", "アイテム合成の店");
+  RTK.text("Weapon Composite Shop", "武器合成の店");
+  RTK.text("Armor Composite Shop", "防具合成の店");
+  RTK.text("Custom Composite Shop", "特別な合成の店");
+  RTK.text("Get", "入手");
+  RTK.text("Composite Workroom", "合成の作業場");
+  RTK.text("Item Composite Workroom", "アイテム合成の作業場");
+  RTK.text("Weapon Composite Workroom", "武器合成の作業場");
+  RTK.text("Armor Composite Workroom", "防具合成の作業場");
+  RTK.text("Custom Composite Workroom", "特別な合成の作業場");
+  RTK.log(N + " ready", M._config);
+});
+```
+
+これら登録はゲーム中にスクリプトで置き換えることができます。
+
+![Screen shot - Event edit](i/RTK1_Composite-23.ja.png)
+
+
 ## 更新履歴
 
 | バージョン | 公開日 | 必須ライブラリ | 更新内容 |
