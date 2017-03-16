@@ -1,5 +1,5 @@
 ﻿//=============================================================================
-// RTK1_Composite.js  ver1.17 2017/03/16
+// RTK1_Composite.js  ver1.16 2017/03/14
 // The MIT License (MIT)
 //=============================================================================
 
@@ -541,22 +541,20 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		M._list = M._list.filter(RTK.isTrue);
 		if (M._sort > 0) {
 			M._list.sort(function(a, b){
-				if (a == null) { return 1 }
-				if (b == null) { return 0 }
 				if (M._sort & 4) {
 					var an = RTK.objectType(a).replace("a","z");
 					var bn = RTK.objectType(b).replace("a","z");
 					if (an != bn) {
-						return an > bn ? 1 : -1;
+						return an > bn;
 					} else if (M._sort & 8) {
 						if (an == "i" && a.itypeId != b.itypeId) {
-							return a.itypeId < b.itypeId ? 1 : -1;
+							return a.itypeId < b.itypeId;
 						}
 						if (an == "w" && a.wtypeId != b.wtypeId) {
-							return a.wtypeId > b.wtypeId ? 1 : -1;
+							return a.wtypeId > b.wtypeId;
 						}
 						if (an == "z" && a.atypeId != b.atypeId) {
-							return a.atypeId > b.atypeId ? 1 : -1;
+							return a.atypeId > b.atypeId;
 						}
 					}
 				}
@@ -567,9 +565,9 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 					}
 				}
 				if (M._sort & 2) {
-					return a.id == b.id ? 0 : (a.id > b.id ? 1 : -1);
+					return a.id == b.id ? 0 : a.id > b.id;
 				}
-				return 0;
+				return a.id == b.id ? 0 : a.id > b.id; // Error is same as 2
 			});
 		}
 		this.refresh();
