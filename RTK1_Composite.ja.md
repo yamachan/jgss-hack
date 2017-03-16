@@ -485,7 +485,7 @@ RTK.onReady(function(){
 | バージョン | 公開日 | 必須ライブラリ | 更新内容 |
 | --- | --- | --- | --- |
 | ver1.17 | 2017/03/16 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | レシピ並びのソートバグを修正<br> (丁寧に報告いただいた [サイリ](https://twitter.com/sairi55)さんに感謝) |
-| [ver1.16](archive/RTK1_Composite_v1.16.js) | 2016/07/22 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | 長いアイテム名と被らないように 材料: 表示を少し右に移動<br>「実行」をキャンセルしてリストに戻ったとき選択が失われる問題を修正 |
+| [ver1.16](archive/RTK1_Composite_v1.16.js) | 2017/03/14 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | 長いアイテム名と被らないように 材料: 表示を少し右に移動<br>「実行」をキャンセルしてリストに戻ったとき選択が失われる問題を修正 |
 | [ver1.15](archive/RTK1_Composite_v1.15.js) | 2016/07/22 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | 自動学習を追加 |
 | [ver1.13](archive/RTK1_Composite_v1.13.js) | 2016/07/14 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | sort コマンドおよびパラメーターを追加 |
 | [ver1.11](archive/RTK1_Composite_v1.11.js) | 2016/07/06 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | #id 指定にハイフンによる範囲指定が使えるようになった<br>forget コマンドのバグを修正 |
