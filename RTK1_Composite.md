@@ -174,7 +174,7 @@ RTK1_Composite shop item en_name
 RTK1_Composite shop all en_name
 ```
 
-If you set the 4th argument, it will be a Japanese shop name. The following sample will switch en_name and ja_name with using language setting of the game.
+If you set the 4th argument, it will be a Japanese shop name. The following sample will switch en_name and ja_name with using language setting of the game. (This function is for RTK1_Option_EnJa.js plugin.)
 
 ```
 RTK1_Composite shop all en_name ja_name
@@ -183,7 +183,7 @@ RTK1_Composite shop all en_name ja_name
 We can't use white space " " in plugin argument, so please use "%20" in lieu of it, as follows;
 
 ```
-RTK1_Composite shop all English%20name 日本語の名称
+RTK1_Composite shop all English%20name ja_name
 ```
 
 ![Screen shot - Composite shop](i/RTK1_Composite-14.png)
