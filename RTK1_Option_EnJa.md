@@ -256,6 +256,66 @@ Expand text messege... (TBD)
 
 (TBD)
 
+## Support other language
+
+This plugin can handle 2 languages - English and Japanese. If you want to add the 3rd language into this plugin, maybe, it's not easy. But you can develop your original translated version of this plugin which will support English and your language.
+
+For example, if you want to support French, you can develop your 'RTK1_Option_EnFr' plugin.
+
+At first, please copy 'RTK1_Option_EnJa.js' file to 'RTK1_Option_EnFr.js' file. Then, please change the following code;
+
+```js
+var N = "RTK1_Option_EnJa";
+var NK = "RTK_EJ";
+var M = RTK["EJ"] = RTK._modules[N] = {};
+```
+
+to folllowing;
+
+```js
+var N = "RTK1_Option_EnFr";
+var NK = "RTK_EF";
+var M = RTK["EF"] = RTK._modules[N] = {};
+```
+
+And sorry to say, the following XXXX word is hard corded, so please replace by 'Language' in French (maybe, same 'Language'?).
+
+```js
+var _Window_Options_makeCommandList = Window_Options.prototype.makeCommandList;
+Window_Options.prototype.makeCommandList = function() {
+  _Window_Options_makeCommandList.call(this);
+  if (M._hide == 0) {
+    this.addCommand(ConfigManager.langSelect ? "XXXX" : "Language", "langSelect");
+  }
+};
+```
+
+Oh, I found one more hard code... Please update /^ja(?:panese)?$/i pattern with your language (e.g. /^fr(?:ench)?$/i).
+
+```js
+RTK.onCall(N, function(args){
+  if (args.length == 1 && args[0].match(/^en(?:glish)?$/i)) {
+    RTK.terms_change(false);
+    ConfigManager.save();
+  } else if (args.length == 1 && args[0].match(/^ja(?:panese)?$/i)) {
+    RTK.terms_change(true);
+    ConfigManager.save();
+  }
+});
+```
+
+Finally, please set your translated words into;
+
+```js
+M._terms_J = {
+  // The translated JSON data is here
+};
+```
+
+Of course, you should add the plugin help in JS comments with your language option (e.g. :fr).
+
+Now I know the current code of this plugin has some hard coded values for Japanese. It's not cool. I will try to remove them in next version.
+
 ## Update history
 
 | version | date | require | update |
