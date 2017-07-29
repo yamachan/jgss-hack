@@ -17,6 +17,7 @@ RPGツクールMV で利用する JavaScript ベースの Game Scripting System 
 | 2017年3月 | [ハクスラRPG的なプラグインを作ってみる1](201703-hsrpg1.md) | 1.3.4 | まずはプラグインの構想とアイテム表示の色指定と数量の非表示 |
 | 2017年3月 | [JGSS ver1.3.4 から ver1.4.0 への変化](201703-jgss140.md) | 1.4.0 | JavaScriptコードにほとんど変化なし |
 | 2017年7月 | [JGSS ver1.4.0 から ver1.5.0 への変化 (その1)](201707-jgss150.md) | 1.5.0 | rpg_core.js の ImageCache,RequestQueue クラスについて |
+| 2017年7月 | [JGSS ver1.4.0 から ver1.5.0 への変化 (その2)](201707-jgss150_2.md) | 1.5.0 | rpg_core.js の ResourceHandler,JsonEx,その他の拡張 について |
 
 
 [トップページに戻る](../README.ja.md)
