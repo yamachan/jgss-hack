@@ -19,6 +19,6 @@ RPGツクールMV で利用する JavaScript ベースの Game Scripting System 
 | 2017年7月 | [JGSS ver1.4.0 から ver1.5.0 への変化 (その1)](201707-jgss150.md) | 1.5.0 | rpg_core.js の ImageCache,RequestQueue クラスについて |
 | 2017年7月 | [JGSS ver1.4.0 から ver1.5.0 への変化 (その2)](201707-jgss150_2.md) | 1.5.0 | rpg_core.js の ResourceHandler,JsonEx,その他の拡張 について |
 | 2017年7月 | [JGSS ver1.4.0 から ver1.5.0 への変化 (その3)](201707-jgss150_3.md) | 1.5.0 | rpg_objects.js と rpg_manager.js について |
-
+| 2017年7月 | [JGSS ver1.4.0 から ver1.5.0 への変化 (その4)](201707-jgss150_4.md) | 1.5.0 | rpg_sprites.js、rpg_windows.js、rpg_scenes.js について |
 
 [トップページに戻る](../README.ja.md)
