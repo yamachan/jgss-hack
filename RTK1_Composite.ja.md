@@ -16,6 +16,8 @@ RPGツクール MV 用に作成した、合成機能を実現するプラグイ�
 
 ![Screen shot - Plugin](i/RTK1_Composite-02.png)
 
+※ 標準で読み込まれる MadeWithMv は設定が ON になっていると副作用を発生させるので、使用するなら、これらプラグインより前(上)に配置してください。
+
 ## 基本的な使い方
 
 プラグインを導入すると、ゲーム中のメニューで「合成」が使えるようになります。
@@ -479,12 +481,81 @@ RTK.onReady(function(){
 
 ![Screen shot - Event edit](i/RTK1_Composite-23.ja.png)
 
+## 2020年2月の更新 (ver1.18)
+
+プラグインのご利用ありがとうございます。ご要望をいただいたので、2年11ヶ月ぶりに ver1.18 にバージョンアップしてみました。
+
+まず細かいところで、shop と workroom の起動時に learn オプションを追加しました。
+
+```
+RTK1_Composite workroom learn
+```
+
+これは単に以下の2つのコマンドを実行するのと同じで、記述を少し楽にするだけのものです。
+このままだと従来と同様に破壊的な動作 (セットした custom リストを上書きしてしまう) になります。
+
+```
+RTK1_Composite fill
+RTK1_Composite workroom custom
+```
+
+この破壊的な動作に関して、改善を検討したのですが、、、
+内部的にわりと大きな書き換えになること、従来と動作が変わってしまう (上書きを前提として動作しているゲームが動かなくなる) 可能性を考え、以下のライブラリ機能で代用することにしました。
+
+複雑な用法において「毎回、custom リストを設定して使ってください」「コモンイベントにリスト設定処理をまとめて管理すると少し楽です」というのも使い勝手が悪いと思うので、簡単なライブラリ機能を追加してみました。
+代表的なコモンイベントの使い方を、プラグイン内部に取り込んだ、という感じです。
+
+追加されたコマンドは以下の4つになります。
+
+| コマンド | 説明 |
+| --- | --- |
+| save $lib_name | 現在の custom 用のリストを $lib_name という名称でライブラリとして保管する |
+| load $lib_name | $lib_name という名称で保管したライブラリで custom 用リストを置き換える |
+| append $lib_name | $lib_name という名称で保管したライブラリを custom 用リストに追加する |
+| delete $lib_name | $lib_name という名称のライブラリを削除する |
+
+ライブラリ名はスペースを含まず、既存の名称 (all, item, weapon, armor, learn, custom) と被らなければ何でもokで、幾つでも定義できます。ただしセーブファイルに保存されるので、あまり大量に定義しないことをお勧めします。不要になったら ``delete`` で削除してください。
+
+ショップなどの利用で custom リストが破壊 (そのショップのリストで上書き) されてしまいますので、以下のように一時保管することで破壊を免れることができます。
+
+```
+RTK1_Composite save _tmp
+RTK1_Composite shop learn
+RTK1_Composite load _tmp
+```
+
+これだと冗長なので、``shop-safe`` コマンドを追加しましたので、上記の3行は以下のように1行でも記述できます。
+
+```
+RTK1_Composite shop-safe learn
+```
+
+同様に ``workroom-safe`` コマンドも追加しました。これら2つのコマンドは ``_tmp`` という名前のライブラリ名を暗黙のうちに使いますので、この名前を使わないように注意してください。
+
+もうひとつ想定している使い方としては、ベースとなるリスト、特定の店種用の追加リストなど数個を用意し、物語の進展と共にそれを更新していくことです。例えば洞窟のなかの店では、以下のように事前定義した2つのライブラリを合成できます。
+
+```
+RTK1_Composite load base-list
+RTK1_Composite append dungeon-list
+RTK1_Composite shop custom
+```
+
+またこの場合、ゲームの進行にあわせて以下の手順で base-list の項目を更新 (アイテムを1つ追加する) ことができます。
+
+```
+RTK1_Composite load base-list
+RTK1_Composite add i5
+RTK1_Composite save base-list
+```
+
+以上、久しぶりの更新ですので、何か問題がありましたら [前のバージョン](archive/RTK1_Composite_v1.17.js) に戻してお使いください。
 
 ## 更新履歴
 
 | バージョン | 公開日 | 必須ライブラリ | 更新内容 |
 | --- | --- | --- | --- |
-| ver1.17 | 2017/03/16 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | レシピ並びのソートバグを修正<br> (丁寧に報告いただいた [サイリ](https://twitter.com/sairi55)さんに感謝) |
+| ver1.18 | 2020/02/19 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | learn 指定を簡易追加。<br>save/load/append/delete のライブラリ用コマンドを追加。<br>shop-safe/workroom-safe のコマンドを追加。<br> (ご要望いただいた [kuro](https://twitter.com/rpgmaker_kuro)さんに感謝) |
+| [ver1.17](archive/RTK1_Composite_v1.17.js) | 2017/03/16 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | レシピ並びのソートバグを修正<br> (丁寧に報告いただいた [サイリ](https://twitter.com/sairi55)さんに感謝) |
 | [ver1.16](archive/RTK1_Composite_v1.16.js) | 2017/03/14 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | 長いアイテム名と被らないように 材料: 表示を少し右に移動<br>「実行」をキャンセルしてリストに戻ったとき選択が失われる問題を修正 |
 | [ver1.15](archive/RTK1_Composite_v1.15.js) | 2016/07/22 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | 自動学習を追加 |
 | [ver1.13](archive/RTK1_Composite_v1.13.js) | 2016/07/14 | [RTK1_Core](RTK1_Core.ja.md)<br>ver1.11 以降 | sort コマンドおよびパラメーターを追加 |

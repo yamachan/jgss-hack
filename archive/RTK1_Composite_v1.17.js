@@ -1,5 +1,5 @@
-//=============================================================================
-// RTK1_Composite.js  ver1.18 2020/02/19
+﻿//=============================================================================
+// RTK1_Composite.js  ver1.17 2017/03/16
 // The MIT License (MIT)
 //=============================================================================
 
@@ -212,23 +212,12 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		"set" : {}
 	};
 
+	M._list = M._list || [];
+	M._learn = M._learn || [];
 	M.recipe = function(_id) {
 		return M._learn.contains(_id);
 	};
-	M._list = M._list  || [];
-	M._learn = M._learn || [];
-	M._lib = M._lib || {};
-	M._safe_flag = false;
 
-	RTK.onStart(function(_new_flag){
-		if (_new_flag) {
-			M._list = [];
-			M._learn = [];
-			M._lib = {};
-		}
-		M._safe_flag = false;
-		RTK.log(N + " start", _new_flag);
-	});
 	RTK.onReady(function(){
 		RTK.text("Composite", "合成");
 		RTK.text("Material", "材料");
@@ -241,33 +230,27 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		RTK.text("Weapon Composite Shop", "武器合成の店");
 		RTK.text("Armor Composite Shop", "防具合成の店");
 		RTK.text("Custom Composite Shop", "特別な合成の店");
-		RTK.text("Learn Composite Shop", "学習済みの合成の店");
 		RTK.text("Get", "入手");
 		RTK.text("Composite Workroom", "合成の作業場");
 		RTK.text("Item Composite Workroom", "アイテム合成の作業場");
 		RTK.text("Weapon Composite Workroom", "武器合成の作業場");
 		RTK.text("Armor Composite Workroom", "防具合成の作業場");
 		RTK.text("Custom Composite Workroom", "特別な合成の作業場");
-		RTK.text("Learn Composite Workroom", "学習済みの作業場");
 		RTK.log(N + " ready", M._config);
 	});
 	RTK.onLoad(function(){
 		M._config = RTK.load(NK + "_config") || M._config;
 		M._learn = RTK.load(NK + "_learn") || M._learn;
-		M._lib = RTK.load(NK + "_lib") || M._lib;
 		var v = RTK.load(NK + "_sort");
 		M._sort = v === undefined ? M._sort : v;
 		RTK.log(N + " load (_learn)", M._learn);
-		RTK.log(N + " load (_lib)", M._lib);
 		RTK.log(N + " load (_config)", M._config);
 	});
 	RTK.onSave(function(){
 		RTK.save(NK + "_config", M._config);
 		RTK.save(NK + "_learn", M._learn);
-		RTK.save(NK + "_lib", M._lib);
 		RTK.save(NK + "_sort", M._sort);
 		RTK.log(N + " save (_learn)", M._learn);
-		RTK.log(N + " save (_lib)", M._lib);
 		RTK.log(N + " save (_config)", M._config);
 	});
 
@@ -290,11 +273,6 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		}
 	};
 	M.command = function(args) {
-		RTK.log(N + " command (" + args.join(" ") + ")");
-		if (M._safe_flag) {
-			M._safe_flag = false;
-			M.command(["load", "_tmp"]);
-		}
 		if (args[0] == "learn") {
 			M.id4list(RTK.ADD, M._learn, args);
 		} else if (args[0] == "forget") {
@@ -322,32 +300,9 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 			M._list = M._list.filter(function(o){
 				return (!t.contains("item") && DataManager.isItem(o)) || (!t.contains("weapon") && DataManager.isWeapon(o)) || (!t.contains("armor") && DataManager.isArmor(o));
 			});
-		} else if (args[0] == "save") {
-			if (!!args[1]) {
-				M._lib[args[1]] = RTK.objects2ids(M._list);
-			}
-		} else if (args[0] == "delete") {
-			if (!!args[1]) {
-				delete M._lib[args[1]];
-			}
-		} else if (args[0] == "append") {
-			if (!!args[1] && !!M._lib[args[1]]) {
-				M._list = RTK.ids2objects(M._lib[args[1]]).filter(filter_meta);
-			}
-		} else if (args[0] == "load") {
-			M.command(["clear"]);
-			M.command(["append", args[1]]);
-		} else if (args[0] == "shop" || args[0] == "shop-safe") {
-			if (args[0].endsWith("-safe")) {
-				M.command(["save", "_tmp"]);
-			}
-			if (!args[1] || ["all","item","weapon","armor"].includes(args[1])) {
+		} else if (args[0] == "shop") {
+			if (args[1] != "custom") {
 				M.command(["complete", args[1]]);
-			} else if (args[1] == "learn") {
-				M.command(["clear"]);
-				M.command(["fill"]);
-			} else if (args[1] != "custom") {
-				M.command(["load", args[1]]);
 			}
 			if (args[2]) {
 				M._Title = args[3] ? (RTK.jp() ? args[3] : args[2]) : args[2];
@@ -356,21 +311,10 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 				M._Title = RTK.text((args[1] == "all" || !args[1] ? "" : RTK.ucfirst(args[1], " ")) + "Composite Shop");
 			}
 			M._mode = 0;
-			if (args[0].endsWith("-safe")) {
-				M._safe_flag = true;
-			}
 			SceneManager.push(Scene_CompositeMenu);
-		} else if (args[0] == "workroom" || args[0] == "workroom-safe") {
-			if (args[0].endsWith("-safe")) {
-				M.command(["save", "_tmp"]);
-			}
-			if (!args[1] || ["all","item","weapon","armor"].includes(args[1])) {
+		} else if (args[0] == "workroom") {
+			if (args[1] != "custom") {
 				M.command(["complete", args[1]]);
-			} else if (args[1] == "learn") {
-				M.command(["clear"]);
-				M.command(["fill"]);
-			} else if (args[1] != "custom") {
-				M.command(["load", args[1]]);
 			}
 			if (args[2]) {
 				M._Title = args[3] ? (RTK.jp() ? args[3] : args[2]) : args[2];
@@ -379,9 +323,6 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 				M._Title = RTK.text((args[1] == "all" || !args[1] ? "" : RTK.ucfirst(args[1], " ")) + "Composite Workroom");
 			}
 			M._mode = 2;
-			if (args[0].endsWith("-safe")) {
-				M._safe_flag = true;
-			}
 			SceneManager.push(Scene_CompositeMenu);
 		} else if (args[0] == "open") {
 			M.command(["clear"]);
@@ -423,6 +364,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 		} else {
 			throw new Error('Unknown plugin command: ' + args[0]);
 		}
+		RTK.log(N + " command (" + args.join(" ") + ")");
 	};
 	RTK.onCall(M._command, M.command.bind(this));
 
@@ -489,7 +431,7 @@ function Window_RTK_SingleCommand() { this.initialize.apply(this, arguments); }
 			if (meta[M._tag + " auto"] || (M._auto && !meta[M._tag + " !auto"])) {
 				var id = RTK.object2id(_i);
 				if (!M._learn.contains(id)) {
-					M.id4list(RTK.ADD, M._learn, ["learn", id]);
+					M.command(["learn", id]);
 				}
 			}
 		} else {
